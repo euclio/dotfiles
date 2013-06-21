@@ -11,7 +11,7 @@ mkdir -p dotfile_backup
 for file in ${dotfiles[@]}; do
     name=$(basename $file)
     if [ -e ${HOME}/${name} ]; then
-        mv ${HOME}/${name} dotfile_backup
+        mv ${HOME}/${name} ${dotfile_backup}
     fi
     ln -sf ${dotfile_dir}/$file ${HOME}/$name
 done
