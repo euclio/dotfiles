@@ -1,0 +1,3 @@
+[submodule ".vim"]
+	path = .vim
+	url = http://www.github.com/euclio/vim-settings.git
