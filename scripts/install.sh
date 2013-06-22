@@ -5,7 +5,7 @@
 
 # Dotfiles that should be managed by this script
 declare -a dotfiles=('.vim' '.vim/.vimrc' '.vim/.gvimrc'
-                     '.bashrc')
+                     '.bashrc' '.bash_aliases')
 
 cd `dirname $0`
 dotfile_backup=${HOME}/dotfiles.old
@@ -29,7 +29,9 @@ for file in ${dotfiles[@]}; do
 
     # Just overwrite whatever is there (it's not a file)
     cd ~
-    rm ${file_link}
-    ln -sfv ${file_relpath} ${file_link}
+    if [ -e ${file_link} ]; then
+        rm ${file_link}
+    fi
+    ln -sf ${file_relpath} ${file_link}
     echo "Linked ~/$(basename ${file_link}) to ${file_relpath}"
 done
