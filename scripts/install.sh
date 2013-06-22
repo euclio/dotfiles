@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
 # Simple script that symlinks dotfiles in the home directory to those in the
-# dotfiles directory. This script assumes that it is 
+# dotfiles directory.
 
 # Dotfiles that should be managed by this script
 declare -a dotfiles=('.vim' '.vim/.vimrc' '.vim/.gvimrc'
-                     '.bashrc' '.swapcapslock')
+                     '.bashrc')
 
 cd `dirname $0`
 dotfile_backup=${HOME}/dotfiles.old
