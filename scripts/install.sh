@@ -5,7 +5,8 @@
 
 # Dotfiles that should be managed by this script
 declare -a dotfiles=('.vim' '.vim/.vimrc' '.vim/.gvimrc'
-                     '.bashrc' '.bash_aliases')
+                     '.bashrc' '.bash_aliases'
+                     '.Xdefaults' '.xsession')
 
 cd `dirname $0`
 dotfile_backup=${HOME}/dotfiles.old
