@@ -6,10 +6,13 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# Make default editor into vim
+export EDITOR=vi
+
 # Use vi-style keybindings when in the terminal
 set -o vi
 
-# Make Ubuntu advertise 256 color support (from Ubuntu default .bash_profile)
+# Make terminal advertise 256 color support (from Ubuntu default .bash_profile)
 if [ "$TERM" = "xterm" ] ; then
     if [ -z "$COLORTERM" ] ; then
         if [ -z "$XTERM_VERSION" ] ; then
