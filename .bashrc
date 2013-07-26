@@ -12,6 +12,9 @@ export EDITOR=vi
 # Use vi-style keybindings when in the terminal
 set -o vi
 
+# Enable autocomplete in Python interpreter
+export PYTHONSTARTUP=~/.pythonrc
+
 # Make terminal advertise 256 color support (from Ubuntu default .bash_profile)
 if [ "$TERM" = "xterm" ] ; then
     if [ -z "$COLORTERM" ] ; then
