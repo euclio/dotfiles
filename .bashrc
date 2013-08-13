@@ -41,6 +41,11 @@ if [ "$TERM" = "xterm" ] ; then
     fi
 fi
 
+# Start tmux on login if it exists and is not already running
+if which tmux 2>&1 >/dev/null; then
+  [[ -z "$TMUX" ]] && exec tmux
+fi
+
 # Allows bash aliases to be stored in a different file
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
