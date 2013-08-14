@@ -1,0 +1,6 @@
+new -s default -n main
+neww -n new
+splitw -h -l 100 -t main
+splitw -v -l 12 -t main
+clock-mode
+selectp -t 0
