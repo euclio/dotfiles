@@ -3,37 +3,52 @@
 # Simple script that symlinks dotfiles in the home directory to those in the
 # dotfiles directory.
 
-# Dotfiles that should be managed by this script
-declare -a dotfiles=('.vim' '.vim/.vimrc' '.vim/.gvimrc'
-                     '.bashrc' '.bash_aliases'
-                     '.Xdefaults' '.xsession'
-                     '.pythonrc' '.tmux.conf')
-
-cd `dirname $0`
+# Where existing dotfiles should be backed up
 dotfile_backup=${HOME}/dotfiles.old
-script_dir=`pwd -P`
+
+# The directory containing this script
+script_dir=$(cd $(dirname $0); pwd -P)
+
+# The directory containing the dotfiles
 dotfile_dir=$(dirname ${script_dir})
 
-mkdir -p ${dotfile_backup}
-for file in ${dotfiles[@]}; do
-    name=$(basename $file)
-    file_link=${HOME}/${name}
-    if [ -f ${file_link} -a ! -h ${file_link} ]; then
-        # Back up the current dotfile
-        mv ${file_link} ${dotfile_backup}
-        echo "Backed up ${file_link}"
+function link_file () {
+    name=$(basename $1)
+    if [[ ${name} != .* ]]; then
+        link_name=${HOME}/${name/_/.}
+    else
+        link_name=${HOME}/${name}
     fi
-    file_abspath=${dotfile_dir}/${file}
-    # Get the relative path to the dotfile, removing the initial '../'
-    file_relpath=$(python -c "import os.path; \
-                              print os.path.relpath('${file_abspath}', \
-                                                    '${file_link}')[3:]")
 
-    # Just overwrite whatever is there (it's not a file)
-    cd ~
-    if [ -e ${file_link} ]; then
-        rm ${file_link}
+    # If the dotfile already exists, back it up
+    if [ -f ${link_name} -a ! -h ${link_name} ]; then
+        mkdir -p ${dotfile_backup}
+        mv ${link_name} ${dotfile_backup}
+        echo "Backed up ${link_name}"
     fi
-    ln -sf ${file_relpath} ${file_link}
-    echo "Linked ~/$(basename ${file_link}) to ${file_relpath}"
+
+    # Get the relative path to the dotfile, removing the initial '../'
+    file_relpath=$(
+        python -c "import os.path; \
+            print os.path.relpath('$1', '${link_name}')[3:]")
+
+    # Overwrite whatever is there (it's not a file)
+    cd ~
+    if [ -e ${link_name} ]; then
+        rm ${link_name}
+    fi
+    ln -sf ${file_relpath} ${link_name}
+    echo "Linked ~/$(basename ${link_name}) to ~/${file_relpath}"
+}
+
+# Match any file that has a leading underscore
+dotfiles=(${dotfile_dir}/_*)
+
+for file in ${dotfiles[@]}; do
+    link_file ${file}
+    if [ "${file}" == "${dotfile_dir}/_vim" ]; then
+        # We need to link the vimrc and gvimrc
+        link_file "${file}/.vimrc"
+        link_file "${file}/.gvimrc"
+    fi
 done

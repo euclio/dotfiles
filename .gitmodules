@@ -1,4 +1,4 @@
-[submodule ".vim"]
-	path = .vim
+[submodule "_vim"]
+	path = _vim
 	url = https://github.com/euclio/vim-settings
 	branch = master
