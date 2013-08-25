@@ -1,6 +1,7 @@
-new -s default -n main
-neww -n new
-splitw -h -l 100 -t main
-splitw -v -l 12 -t main
+new-session -s default -n main
+split-window -h -l 100 -t main
+split-window -v -l 12
 clock-mode
-selectp -t 0
+new-window -n new
+select-window -t main
+select-pane -L
