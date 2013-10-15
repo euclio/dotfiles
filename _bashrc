@@ -46,6 +46,11 @@ if which tmux 2>&1 >/dev/null; then
   [[ -z "$TMUX" ]] && exec tmux attach
 fi
 
+# SSH into a tmux session
+function ssht() {
+    ssh $* -t 'tmux attach || tmux || /bin/bash'
+}
+
 # Allows bash aliases to be stored in a different file
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
