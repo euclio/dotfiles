@@ -44,7 +44,7 @@ if which tmux 2>&1 >/dev/null; then
 fi
 
 # SSH into a tmux session
-function ssht() {
+ssht() {
     ssh $* -t 'tmux attach || tmux || /bin/bash'
 }
 
