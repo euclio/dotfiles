@@ -1,2 +1,5 @@
 # Colorize ls by default
 alias ls='ls --color=auto'
+
+# Chiptune music stream
+alias kohina='mplayer -prefer-ipv4 -playlist http://anka.org:8080/fresh.ogg.m3u'
