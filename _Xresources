@@ -1,6 +1,8 @@
 URxvt.font:                     xft:Inconsolata:size=12
 URxvt*letterSpace:              -1
 
+URxvt*loginShell:               true
+
 ! Extensions
 URxvt.perl-ext-common:          vtwheel
 
