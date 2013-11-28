@@ -1,6 +1,9 @@
 URxvt.font:                     xft:Inconsolata:size=12
 URxvt*letterSpace:              -1
 
+! Extensions
+URxvt.perl-ext-common:          vtwheel
+
 ! Solarized Colorscheme: http://github.com/solarized/xresources
 ! This line is necessary for the colors to come out correctly
 URxvt.intensityStyles:          false
