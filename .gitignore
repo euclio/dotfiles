@@ -1,2 +1,5 @@
 *.swp
+
+# Ignored Settings
 _config/chromium
+_config/pulse
