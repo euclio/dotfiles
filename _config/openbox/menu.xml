@@ -27,6 +27,14 @@
         </startupnotify>
       </action>
     </item>
+    <item label="Eclipse">
+      <action name="Execute">
+        <command>eclipse</command>
+        <startupnotify>
+          <enabled>yes</enabled>
+        </startupnotify>
+      </action>
+    </item>
     <separator label="System" />
     <item label="Reconfigure Openbox">
       <action name="Reconfigure" />
