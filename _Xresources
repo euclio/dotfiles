@@ -4,7 +4,10 @@ URxvt*letterSpace:              -1
 URxvt*loginShell:               true
 
 ! Extensions
-URxvt.perl-ext-common:          vtwheel
+URxvt.perl-ext-common:          vtwheel,url-select
+URxvt.keysym.M-u:               perl:url-select:select_next
+URxvt.url-select.launcher:      /usr/bin/chromium
+URxvt.url-select.underline:     true
 
 ! Solarized Colorscheme: http://github.com/solarized/xresources
 ! This line is necessary for the colors to come out correctly
