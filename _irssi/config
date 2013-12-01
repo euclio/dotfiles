@@ -273,3 +273,4 @@ settings = {
 hilights = (
   { text = "euclio"; color = "%M"; nick = "yes"; word = "yes"; }
 );
+ignores = ( { level = "JOINS PARTS QUITS"; } );
