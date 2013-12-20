@@ -105,6 +105,7 @@ chatnets = {
   };
   SILC = { type = "SILC"; };
   fn = { type = "IRC"; };
+  bb = { type = "IRC"; };
 };
 
 channels = (
