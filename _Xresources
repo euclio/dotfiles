@@ -1,4 +1,4 @@
-URxvt.font:                     xft:Inconsolata:size=12:antialias=true:hinting=true, xft:Inconsolata for Powerline
+URxvt.font:                     xft:Inconsolata\-g:size=12:antialias=true:hinting=true, xft:DejaVu Sans Mono, xft:Inconsolata for Powerline,
 URxvt*letterSpace:              -1
 
 URxvt*loginShell:               true
