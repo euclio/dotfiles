@@ -1,5 +1,8 @@
 xrdb ~/.Xresources
 
+# Use a normal cursor for X
+xsetroot -cursor_name left_ptr
+
 # Enable custom keyboard mappings
 xmodmap $HOME/.xmodmap
 
