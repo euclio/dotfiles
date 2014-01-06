@@ -1,5 +1,5 @@
-# Make default editor into vi (usually symlinked to vim)
-export EDITOR=vim
+# Make default editor into vim
+export EDITOR=/usr/bin/vim
 
 # Use vi-style keybindings when in the terminal
 set -o vi
