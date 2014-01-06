@@ -4,3 +4,5 @@ xrdb ~/.Xresources
 xmodmap $HOME/.xmodmap
 
 exec openbox-session
+# Disable touchpad while typing
+syndaemon -t -k -i 2 -d &
