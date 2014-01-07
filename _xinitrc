@@ -6,6 +6,9 @@ xsetroot -cursor_name left_ptr
 # Enable custom keyboard mappings
 xmodmap $HOME/.xmodmap
 
-exec openbox-session
 # Disable touchpad while typing
 syndaemon -t -k -i 2 -d &
+
+# Set background image and start window manager
+feh --bg-scale ~/.config/wallpaper/comments.jpg
+exec xmonad
