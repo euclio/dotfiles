@@ -1,2 +1,0 @@
-tint2 &
-urxvt -sl 0 -e bash -c "tmux new-session" &
