@@ -60,3 +60,6 @@ man() {
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+# Add ruby gem executables to PATH
+PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
