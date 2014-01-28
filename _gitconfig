@@ -7,3 +7,7 @@
 	helper = cache --timeout=3600
 [core]
 	editor = vim
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[merge]
+	tool = fugitive
