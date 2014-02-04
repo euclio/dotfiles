@@ -1,6 +1,7 @@
 *.swp
 *.o
 *.hi
+*.pyc
 
 # Xmonad files
 _xmonad/xmonad-x86_64-linux
