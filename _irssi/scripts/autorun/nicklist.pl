@@ -1,1 +1,1 @@
-../nicklist.pl
+../nicklist/nicklist.pl

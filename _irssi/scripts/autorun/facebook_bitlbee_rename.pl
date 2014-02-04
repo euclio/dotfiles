@@ -1,1 +1,1 @@
-../facebook_bitlbee_rename.pl
+../facebook-bitlbee-rename/facebook_bitlbee_rename.pl
