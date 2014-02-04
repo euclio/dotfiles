@@ -11,3 +11,7 @@
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 [merge]
 	tool = fugitive
+[branch "master"]
+	rebase = true
+[branch]
+	autosetuprebase = always
