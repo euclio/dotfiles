@@ -28,7 +28,7 @@ def link_file(filename):
     if dotfilename[0] != '.':
         dotfilename = '.' + dotfilename
 
-    link_name = expanduser(os.path.join('~', dotfilename))
+    link_name = os.path.join(os.path.realpath(expanduser('~')), dotfilename)
 
     # Back up any existing file or directory at the desired link location
     if os.path.isfile(link_name) or os.path.isdir(link_name):
@@ -54,7 +54,7 @@ def backup_file(filename):
     Returns:
         A boolean indicating whether the backup succeeded or failed.
     """
-    dotfile_backup = _ARGS.backup
+    dotfile_backup = os.path.realpath(_ARGS.backup)
     if os.path.exists(dotfile_backup):
         if not os.path.isdir(dotfile_backup):
             raise ValueError('The specified backup directory already exists '
