@@ -5,6 +5,3 @@
 [submodule "_irssi/scripts/facebook-bitlbee-rename"]
 	path = _irssi/scripts/facebook-bitlbee-rename
 	url = https://github.com/avar/irssi-bitlbee-facebook-rename.git
-[submodule "_irssi/scripts/nicklist"]
-	path = _irssi/scripts/nicklist
-	url = https://github.com/ConX/nicklist.pl
