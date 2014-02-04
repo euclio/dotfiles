@@ -30,15 +30,17 @@ def link_file(filename):
 
     link_name = os.path.join(os.path.realpath(expanduser('~')), dotfilename)
 
-    # Back up any existing file or directory at the desired link location
-    if os.path.isfile(link_name) or os.path.isdir(link_name):
-        if os.path.islink(link_name):
-            os.remove(link_name)
-        else:
-            backup_succeeded = backup_file(link_name)
-            if not backup_succeeded:
-                print('did not link {}'.format(link_name), file=sys.stderr)
-                return
+    # Remove existing symbolic links and back up any existing file or directory
+    # at the desired link location
+    if os.path.islink(link_name):
+        if _ARGS.verbose:
+            print('removing symbolic link at {}'.format(link_name))
+        os.remove(link_name)
+    elif os.path.isfile(link_name) or os.path.isdir(link_name):
+        backup_succeeded = backup_file(link_name)
+        if not backup_succeeded:
+            print('did not link {}'.format(link_name), file=sys.stderr)
+            return
 
     # Get the relative path to the actual dotfile
     file_relpath = os.path.join(
