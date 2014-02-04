@@ -41,7 +41,9 @@ def link_file(filename):
                 return
 
     # Get the relative path to the actual dotfile
-    file_relpath = os.path.relpath(filename, link_name)[3:]
+    file_relpath = os.path.join(
+        os.path.relpath(os.path.dirname(filename), os.path.dirname(link_name)),
+        os.path.basename(filename))
 
     if _ARGS.verbose:
         print('linking {} to {}'.format(link_name, file_relpath))
