@@ -9,3 +9,6 @@ _xmonad/xmonad.errors
 # Ignored Settings
 _config/chromium
 _config/pulse
+
+# Ignore GTK file chooser settings
+_config/gtk-2.0/gtkfilechooser.ini
