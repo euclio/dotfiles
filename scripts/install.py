@@ -104,8 +104,8 @@ def main():
                 subprocess.check_output(['vim', '--version']).decode('utf-8'))
         # Split the string into lines, then examine the first line:
         #   VIM - Vi IMproved <VERSION>
-        vim_version = float(vim_version_output.split('\n')[0].split(' ')[4])
-        if vim_version < 7.4:
+        vim_version = vim_version_output.split('\n')[0].split(' ')[4]
+        if vim_version < '7.4':
             link_file(os.path.join(dotfile_dir, '_vim', 'vimrc'))
             link_file(os.path.join(dotfile_dir, '_vim', 'gvimrc'))
     except OSError as err:
