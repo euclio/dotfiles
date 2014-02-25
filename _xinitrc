@@ -9,6 +9,9 @@ xmodmap $HOME/.xmodmap
 # Disable touchpad while typing
 syndaemon -t -k -i 2 -d &
 
+# Enable key remapping
+xbindkeys
+
 # Set background image and start window manager
 feh --bg-scale ~/.config/wallpaper/comments.jpg
 exec xmonad
