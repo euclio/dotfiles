@@ -286,7 +286,10 @@ settings = {
     hilight_color = "= %R";
 
   };
-  "perl/core/scripts" = { nicklist_width = "40"; nicklist_height = "80"; };
+  "perl/core/scripts" = {
+    nicklist_width = "19";
+    nicklist_height = "119";
+  };
 };
 hilights = (
   { text = "euclio"; color = "%M"; nick = "yes"; word = "yes"; }
