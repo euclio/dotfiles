@@ -1,4 +1,4 @@
-URxvt.font:                     xft:Inconsolata\-g:size=12:antialias=true:hinting=true,xft:DejaVu Sans Mono:size=12,xft:Inconsolata for Powerline:size=12,xft:FreeMono:size=12
+URxvt.font:                     xft:Inconsolata\-g:pixelsize=18:antialias=true:hinting=true:autohint=true,xft:DejaVu Sans Mono:pixelsize=18:antialias=true:hinting=true:autohint=true,xft:Inconsolata for Powerline:pixelsize=18,xft:FreeMono:pixelsize=18
 URxvt*letterSpace:              -1
 URxvt.scrollBar:                false
 
