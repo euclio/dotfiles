@@ -17,7 +17,7 @@ myConfig = defaultConfig
     , layoutHook         = myLayoutHook
     }
 
-myTerminal = "urxvt -sl 0"
+myTerminal = "urxvt"
 myNormalBorderColor = "#d0d0d0"
 myFocusedBorderColor = "#ffa500"
 myLayoutHook = smartBorders $ layoutHook defaultConfig
