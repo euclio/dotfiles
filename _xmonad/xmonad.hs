@@ -17,7 +17,7 @@ myConfig = defaultConfig
     , layoutHook         = myLayoutHook
     }
 
-myTerminal = "urxvt -sl 0 -e bash -c \"tmux new-session\""
+myTerminal = "urxvt -sl 0"
 myNormalBorderColor = "#d0d0d0"
 myFocusedBorderColor = "#ffa500"
 myLayoutHook = smartBorders $ layoutHook defaultConfig
