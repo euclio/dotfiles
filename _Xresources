@@ -4,8 +4,6 @@ URxvt.scrollBar:                false
 
 URxvt*loginShell:               true
 
-URxvt*.transparent:             true
-URxvt*.shading:                 15
 
 ! Extensions
 URxvt.perl-ext-common:          vtwheel,url-select
