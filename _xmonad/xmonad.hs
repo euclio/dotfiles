@@ -6,6 +6,21 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
 import XMonad.Util.Run
 
+myTerminal              = "urxvt"
+myNormalBorderColor     = "#d0d0d0"
+myFocusedBorderColor    = "#ffa500"
+
+myLayoutHook            = smartBorders $ avoidStruts $
+                          layoutHook defaultConfig
+
+myManageHook = (isFullscreen --> doFullFloat) <+> manageHook defaultConfig <+> manageDocks
+
+myLogHook h = dynamicLogWithPP $ xmobarPP
+    {   ppOutput = hPutStrLn h
+    ,   ppOrder = \(ws:_:t:_) -> [ws,t]
+    }
+
+main :: IO()
 main = do
     h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
     xmonad $ defaultConfig
@@ -18,13 +33,3 @@ main = do
         , layoutHook         = myLayoutHook
         , logHook            = myLogHook h
         }
-
-myTerminal = "urxvt"
-myNormalBorderColor = "#d0d0d0"
-myFocusedBorderColor = "#ffa500"
-myLayoutHook = smartBorders $ avoidStruts $ layoutHook defaultConfig
-myManageHook = (isFullscreen --> doFullFloat) <+> manageHook defaultConfig <+> manageDocks
-myLogHook h = dynamicLogWithPP $ xmobarPP
-    {   ppOutput = hPutStrLn h
-    ,   ppOrder = \(ws:_:t:_) -> [ws,t]
-    }
