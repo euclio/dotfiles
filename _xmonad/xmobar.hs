@@ -1,6 +1,6 @@
 Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
-       , bgColor = "black"
-       , fgColor = "grey"
+       , bgColor = "#1c1b1a"
+       , fgColor = "#ffffff"
        , position = Bottom
        , commands = [ Run Weather "KONT" ["-t"," <tempF>F","-L","64","-H","77","--normal","green","--high","red","--low","lightblue"] 36000
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
