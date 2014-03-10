@@ -4,6 +4,7 @@ URxvt.scrollBar:                false
 
 URxvt*loginShell:               true
 
+URxvt*urgentOnBell:             true
 
 ! Extensions
 URxvt.perl-ext-common:          vtwheel,url-select

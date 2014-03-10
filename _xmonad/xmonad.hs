@@ -3,6 +3,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
 import XMonad.Util.Run
 
@@ -18,12 +19,18 @@ myManageHook = (isFullscreen --> doFullFloat) <+> manageHook defaultConfig <+> m
 myLogHook h = dynamicLogWithPP $ xmobarPP
     {   ppOutput = hPutStrLn h
     ,   ppOrder = \(ws:_:t:_) -> [ws,t]
+    ,   ppUrgent = xmobarColor "yellow" "red"
+    }
+
+myUrgentConfig = UrgencyConfig
+    {   suppressWhen = OnScreen
     }
 
 main :: IO()
 main = do
     h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-    xmonad $ defaultConfig
+    xmonad $ withUrgencyHookC NoUrgencyHook myUrgentConfig
+        defaultConfig
         { terminal           = myTerminal
         , modMask            = mod4Mask
         , normalBorderColor  = myNormalBorderColor
