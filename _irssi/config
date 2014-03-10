@@ -285,6 +285,10 @@ settings = {
     theme = "solarized-universal";
     hilight_color = "= %R";
 
+    beep_msg_level = "MSGS NOTICES INVITES DCC DCCMSGS HILIGHT";
+    bell_beeps = "yes";
+    beep_when_window_active = "yes";
+    beep_when_away = "yes";
   };
   "perl/core/scripts" = {
     nicklist_width = "19";
