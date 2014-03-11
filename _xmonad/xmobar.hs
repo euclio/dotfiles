@@ -9,9 +9,10 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                     , Run Battery ["-t", "Batt: <left>% (<timeleft>)<acstatus>",
                                    "--", "-O", " <fc=yellow>⚡</fc>",
                                    "-i", "", "-o", ""] 10
+                    , Run Com "/bin/bash" ["-c", "~/dotfiles/scripts/get_volume.sh"] "vol" 10
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %battery% | %cpu% | %memory%     <fc=#ee9a00>%date%</fc> | %KONT%"
+       , template = "%StdinReader% }{ %battery% | %vol% | %cpu% | %memory%     <fc=#ee9a00>%date%</fc> | %KONT%"
        }
