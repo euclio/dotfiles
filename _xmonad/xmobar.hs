@@ -9,7 +9,7 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                     , Run BatteryP ["BAT0"]
                                    ["-t", "Batt: <left>% (<timeleft>)<acstatus>",
                                    "--", "-f", "AC0/online",
-                                   "-O", " <fc=yellow>⚡</fc>",
+                                   "-O", " <fc=yellow>++</fc>",
                                    "-i", "", "-o", ""] 10
                     , Run Com "/bin/bash" ["-c", "~/dotfiles/scripts/get_volume.sh"] "vol" 10
                     , Run StdinReader
