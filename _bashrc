@@ -1,6 +1,10 @@
 # Make default editor into vim
 export EDITOR=/usr/bin/vim
 
+# Use vim as the manpager
+export MANPAGER="/bin/sh -c \"col -b |
+    vim -R +AirlineToggle -c 'set ft=man ts=8 nolist noru nonu nornu noma tw=0 ls=0' -\""
+
 # Use vi-style keybindings when in the terminal
 set -o vi
 
