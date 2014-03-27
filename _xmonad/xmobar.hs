@@ -1,4 +1,4 @@
-Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
+Config { font = "xft:Terminus (TTF)"
        , bgColor = "#1c1b1a"
        , fgColor = "#ffffff"
        , position = Bottom
