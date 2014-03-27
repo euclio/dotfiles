@@ -5,7 +5,7 @@ Xft.hinting:            true
 Xft.autohint:           true
 
 ! URxvt Settings
-URxvt.font:                     xft:Inconsolata\-g:pixelsize=18,xft:DejaVu Sans Mono:pixelsize=18xft:Inconsolata for Powerline:pixelsize=18,xft:FreeMono:pixelsize=18
+URxvt.font:                     xft:Inconsolata\-g:pixelsize=18,xft:DejaVu Sans Mono:pixelsize=18,xft:Inconsolata for Powerline:pixelsize=18,xft:FreeMono:pixelsize=18
 URxvt*letterSpace:              -1
 URxvt.scrollBar:                false
 
