@@ -7,7 +7,7 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
 import XMonad.Util.Run
 
-myTerminal              = "urxvt"
+myTerminal              = "urxvt -e fish"
 myNormalBorderColor     = "#d0d0d0"
 myFocusedBorderColor    = "#ffa500"
 
