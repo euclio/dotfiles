@@ -23,4 +23,5 @@ function fish_greeting
     # No greeting
 end
 
+source ~/.config/fish/colors.fish
 source ~/.aliases
