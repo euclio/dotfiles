@@ -1,6 +1,9 @@
 # Editor
 set -x EDITOR /usr/bin/vim
 
+# Shell
+set -x SHELL /usr/bin/fish
+
 # Use vim as manpager
 set -x MANPAGER "/bin/sh -c \"col -b |                                  \
     vim -R +AirlineToggle                                               \
