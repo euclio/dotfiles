@@ -18,13 +18,5 @@ set -x PYTHONSTARTUP ~/.pythonrc
 # Add gem executables to PATH
 set PATH $PATH (ruby -e 'puts Gem.user_dir')/bin
 
-function ssht
-    ssh $argv -t "tmux attach || tmux || /bin/bash"
-end
-
-function fish_greeting
-    # No greeting
-end
-
 source ~/.config/fish/colors.fish
 source ~/.aliases
