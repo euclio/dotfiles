@@ -14,7 +14,18 @@ myFocusedBorderColor    = "#ffa500"
 myLayoutHook            = smartBorders $ avoidStruts $
                           layoutHook defaultConfig
 
-myManageHook = (isFullscreen --> doFullFloat) <+> manageHook defaultConfig <+> manageDocks
+
+myManageHook = composeAll . concat $
+    [ [ isFullscreen --> doFullFloat ]
+    , [ appName =? c --> doFloat | c <- myFloatApps ]
+    , [ manageDocks ]
+    ]
+  where
+    myFloatApps =
+        [ "crx_nckgahadagoaajjgafhacjanaoiihapd" -- Chrome Hangouts Extension
+        ]
+
+
 
 myLogHook h = dynamicLogWithPP $ xmobarPP
     {   ppOutput = hPutStrLn h
@@ -36,7 +47,7 @@ main = do
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
         , handleEventHook    = fullscreenEventHook
-        , manageHook         = myManageHook
+        , manageHook         = myManageHook <+> manageHook defaultConfig
         , layoutHook         = myLayoutHook
         , logHook            = myLogHook h
         }
