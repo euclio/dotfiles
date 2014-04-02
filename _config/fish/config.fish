@@ -19,4 +19,5 @@ set -x PYTHONSTARTUP ~/.pythonrc
 set PATH $PATH (ruby -e 'puts Gem.user_dir')/bin
 
 source ~/.config/fish/colors.fish
+source ~/.config/fish/scripts/virtualfish/virtual.fish
 source ~/.aliases
