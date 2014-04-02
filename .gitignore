@@ -8,6 +8,7 @@ _xmonad/xmonad-x86_64-linux
 _xmonad/xmonad.errors
 
 # Ignored Settings
+_config/autostart
 _config/chromium
 _config/deluge
 _config/fish/fish_history
