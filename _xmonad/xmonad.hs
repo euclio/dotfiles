@@ -1,8 +1,9 @@
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.Place
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
 import XMonad.Util.Run
@@ -16,7 +17,8 @@ myLayoutHook            = smartBorders $ avoidStruts $
 
 
 myManageHook = composeAll . concat $
-    [ [ isFullscreen --> doFullFloat ]
+    [ [ placeHook myPlacement ]
+    , [ isFullscreen --> doFullFloat ]
     , [ appName =? c --> doFloat | c <- myFloatApps ]
     , [ manageDocks ]
     ]
@@ -25,7 +27,7 @@ myManageHook = composeAll . concat $
         [ "crx_nckgahadagoaajjgafhacjanaoiihapd" -- Chrome Hangouts Extension
         ]
 
-
+myPlacement = withGaps (0, 0, 22, 0) (inBounds (smart (1, 1)))
 
 myLogHook h = dynamicLogWithPP $ xmobarPP
     {   ppOutput = hPutStrLn h
