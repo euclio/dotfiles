@@ -18,6 +18,8 @@ set -x PYTHONSTARTUP ~/.pythonrc
 # Add gem executables to PATH
 set PATH $PATH (ruby -e 'puts Gem.user_dir')/bin
 
+set VIRTUALFISH_HOME ~/repos
+
 source ~/.config/fish/colors.fish
 source ~/.config/fish/scripts/virtualfish/virtual.fish
 source ~/.aliases
