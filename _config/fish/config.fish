@@ -19,6 +19,8 @@ set -x PYTHONSTARTUP ~/.pythonrc
 set PATH $PATH (ruby -e 'puts Gem.user_dir')/bin
 
 set VIRTUALFISH_HOME ~/repos
+# Add virtualenvwrapper-style aliases to virtualfish
+set VIRTUALFISH_COMPAT_ALIASES
 
 source ~/.config/fish/colors.fish
 source ~/.config/fish/scripts/virtualfish/virtual.fish
