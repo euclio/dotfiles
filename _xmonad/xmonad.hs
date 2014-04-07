@@ -17,17 +17,16 @@ myLayoutHook            = smartBorders $ avoidStruts $
 
 
 myManageHook = composeAll . concat $
-    [ [ placeHook myPlacement ]
-    , [ isFullscreen --> doFullFloat ]
-    , [ appName =? c --> doFloat | c <- myFloatApps ]
+    [ [ isFullscreen --> doFullFloat ]
+    , [ appName =? c --> (placeHook chatPlacement <+> doFloat) | c <- myChatApps ]
     , [ manageDocks ]
     ]
   where
-    myFloatApps =
+    myChatApps =
         [ "crx_nckgahadagoaajjgafhacjanaoiihapd" -- Chrome Hangouts Extension
         ]
 
-myPlacement = withGaps (0, 0, 22, 0) (inBounds (smart (1, 1)))
+chatPlacement = withGaps (0, 0, 22, 0) (inBounds (smart (1, 1)))
 
 myLogHook h = dynamicLogWithPP $ xmobarPP
     {   ppOutput = hPutStrLn h
