@@ -6,6 +6,8 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
+import XMonad.Util.EZConfig
+import XMonad.Util.Paste
 import XMonad.Util.Run
 
 myTerminal              = "urxvt -e fish"
@@ -52,3 +54,6 @@ main = do
         , layoutHook         = myLayoutHook
         , logHook            = myLogHook h
         }
+        `additionalKeys`
+        [ ((0, xK_Insert), pasteSelection)
+        ]
