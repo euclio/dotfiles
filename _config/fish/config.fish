@@ -10,9 +10,6 @@ set -x MANPAGER "/bin/sh -c \"col -b |                                  \
         -c 'set ft=man ts=8 nolist noru nonu nornu noma nosc tw=0 ls=0' \
         -\""
 
-# Activate vi-mode
-fish_vi_key_bindings
-
 # Enable autocomplete in Python interpreter
 set -x PYTHONSTARTUP ~/.pythonrc
 
