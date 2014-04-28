@@ -10,11 +10,13 @@ Config { font = "xft:Terminus (TTF)"
                                    ["-t", "Batt: <left>% (<timeleft>)<acstatus>",
                                    "--", "-f", "AC0/online",
                                    "-O", " <fc=yellow>++</fc>",
+                                   "-l", "red",
                                    "-i", "", "-o", ""] 10
+                    , Run Wireless "wlp3s0" [] 10
                     , Run Com "/bin/bash" ["-c", "~/dotfiles/scripts/get_volume.sh"] "vol" 10
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %battery% | %vol% | %cpu% | %memory%     <fc=#ee9a00>%date%</fc> | %KONT%"
+       , template = "%StdinReader% }{ %wlp3s0wi% | %battery% | %vol% | %cpu% | %memory%     <fc=#ee9a00>%date%</fc> | %KONT%"
        }
