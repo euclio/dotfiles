@@ -54,6 +54,6 @@ main = do
         , layoutHook         = myLayoutHook
         , logHook            = myLogHook h
         }
-        `additionalKeys`
-        [ ((0, xK_Insert), pasteSelection)
+        `additionalKeysP`
+        [ ("S-<Insert>", pasteSelection)
         ]
