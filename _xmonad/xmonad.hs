@@ -70,4 +70,5 @@ main = do
         }
         `additionalKeysP`
         [ ("S-<Insert>", pasteSelection)
+        , ("M-S l", spawn "xlock")
         ]
