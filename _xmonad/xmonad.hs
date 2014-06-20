@@ -39,7 +39,7 @@ myManageHook = composeAll . concat $
         ]
 
 chatPlacement :: Placement
-chatPlacement = withGaps (0, 0, 22, 0) (inBounds (smart (1, 1)))
+chatPlacement = withGaps (0, 20, 20, 0) (inBounds (smart (1, 1)))
 
 myLogHook :: Handle -> X()
 myLogHook h = dynamicLogWithPP $ xmobarPP
