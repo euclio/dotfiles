@@ -69,6 +69,5 @@ main = do
         , logHook            = myLogHook h
         }
         `additionalKeysP`
-        [ ("S-<Insert>", pasteSelection)
-        , ("M-S l", spawn "xlock")
+        [ ("M-S l", spawn "xlock")
         ]
