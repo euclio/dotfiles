@@ -14,7 +14,7 @@ set -x MANPAGER "/bin/sh -c \"col -b |                                  \
 set -x PYTHONSTARTUP ~/.pythonrc
 
 # Add gem executables to PATH
-set PATH $PATH (ruby -e 'puts Gem.user_dir')/bin
+set PATH $PATH (ruby -e 'puts Gem.user_dir')/bin /opt/android-sdk/tools /opt/android-sdk/platform-tools
 
 set VIRTUALFISH_HOME ~/repos
 # Add virtualenvwrapper-style aliases to virtualfish
