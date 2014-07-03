@@ -3,6 +3,11 @@
 *.hi
 *.pyc
 
+# SSH Files
+_ssh/id_rsa
+_ssh/id_rsa.pub
+_ssh/known_hosts
+
 # Xmonad files
 _xmonad/xmonad-x86_64-linux
 _xmonad/xmonad.errors
