@@ -6,9 +6,11 @@ import GHC.IO.Handle.Types
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ICCCMFocus
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
+import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
 import XMonad.Util.EZConfig
@@ -67,6 +69,7 @@ main = do
         , manageHook         = myManageHook <+> manageHook defaultConfig
         , layoutHook         = myLayoutHook
         , logHook            = myLogHook h
+        , startupHook        = setWMName "LG3D"
         }
         `additionalKeysP`
         [ ("M-S l", spawn "xlock")
