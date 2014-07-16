@@ -282,7 +282,7 @@ settings = {
   };
   "fe-text" = { actlist_sort = "refnum"; };
   "fe-common/core" = {
-    theme = "solarized-universal";
+    theme = "defacto";
     hilight_color = "= %R";
 
     beep_msg_level = "MSGS NOTICES INVITES DCC DCCMSGS HILIGHT";
