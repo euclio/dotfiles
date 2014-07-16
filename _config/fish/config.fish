@@ -20,6 +20,9 @@ set VIRTUALFISH_HOME ~/repos
 # Add virtualenvwrapper-style aliases to virtualfish
 set VIRTUALFISH_COMPAT_ALIASES
 
+# Disable flow control. Instead pass Ctrl-S and Ctrl-Q through.
+stty -ixon
+
 source ~/.config/fish/colors.fish
 source ~/.config/fish/scripts/virtualfish/virtual.fish
 source ~/.aliases
