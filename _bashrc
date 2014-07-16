@@ -59,3 +59,8 @@ stty -ixon
 
 # Add ruby gem executables to PATH
 PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+
+# If a local bashrc exists, then source it.
+if [ -f ~/.bashrc_local ]; then
+    . ~/.bashrc_local
+fi
