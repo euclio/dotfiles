@@ -13,5 +13,5 @@ syndaemon -t -k -i 2 -d &
 xbindkeys
 
 # Set background image and start window manager
-feh --bg-scale ~/.config/wallpaper/comments.jpg
+feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
 exec xmonad
