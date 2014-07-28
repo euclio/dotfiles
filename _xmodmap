@@ -1,4 +1,7 @@
-! Replace Caps Lock with Control
-remove Lock = Caps_Lock
-keysym Caps_Lock = Control_L
-add Control = Control_L
+! Replace Caps Lock with Control.
+! Control_L is remapped to nothing, to encourage use of Caps Lock.
+clear Lock
+clear Control
+keycode 37 = NoSymbol
+keycode 66 = Control_L
+add Control = Control_L Control_R
