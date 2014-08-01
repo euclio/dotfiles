@@ -7,10 +7,25 @@ from __future__ import print_function
 from glob import glob
 from os.path import expanduser
 import argparse
+import ctypes
+import ctypes.wintypes
 import os
+import platform
 import shutil
 import sys
 import subprocess
+
+
+def is_admin():
+    """Returns whether the current user has administrator privileges on a
+    Windows system.
+
+    Raises: OSError: The current system is not Windows.
+    """
+    if platform.system() != 'Windows':
+        raise OSError("The current system is not Windows: " +
+                platform.system())
+    return ctypes.windll.shell32.IsUserAnAdmin() != 0
 
 
 def link_file(filename):
@@ -93,6 +108,14 @@ def main():
 
     # The directory containing the dotfiles
     dotfile_dir = os.path.dirname(script_dir)
+
+    # Windows special casing
+    if platform.system() == 'Windows':
+        # Ensure the script is run as Administrator
+        if not is_admin():
+            print("This script must be executed as an administrator.",
+                file=sys.stderr)
+            sys.exit(1)
 
     dotfiles = glob(os.path.join(dotfile_dir, '_*'))
     for dotfile in dotfiles:
