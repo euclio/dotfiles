@@ -47,9 +47,10 @@ def link_file(filename):
         os.path.relpath(os.path.dirname(filename), os.path.dirname(link_name)),
         os.path.basename(filename))
 
-    if _ARGS.verbose:
+    if _ARGS.verbose or _ARGS.dry_run:
         print('linking {} to {}'.format(link_name, file_relpath))
-    os.symlink(file_relpath, link_name)
+    if not _ARGS.dry_run:
+        os.symlink(file_relpath, link_name)
 
 
 def backup_file(filename):
@@ -128,5 +129,8 @@ if __name__ == '__main__':
     _PARSER.add_argument('-f', '--force',
             action='store_true',
             help='overwrites existing backups when moving dotfiles')
+    _PARSER.add_argument('-d', '--dry_run',
+            action='store_true',
+            help='prints out the commands to be run without executing them')
     _ARGS = _PARSER.parse_args()
     main()
