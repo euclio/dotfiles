@@ -28,7 +28,19 @@ def is_admin():
     return ctypes.windll.shell32.IsUserAnAdmin() != 0
 
 
-def link_file(filename):
+def my_documents_location():
+    """Returns the location of the current user's "My Documents" folder."""
+    CSIDL_PERSONAL = 5      # My Documents
+    SHGFP_TYPE_CURRENT = 0  # Current, not default value
+
+    path_buffer = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+    ctypes.windll.shell32.SHGetFolderPathW(0, CSIDL_PERSONAL, 0,
+            SHGFP_TYPE_CURRENT, path_buffer)
+    return os.path.abspath(path_buffer.value)
+
+
+def link_file(filename, destination=os.path.realpath(os.path.expanduser('~')),
+        *, add_dot=True):
     """Creates a symbolic link in the home directory to the given dotfile.
 
     Places any file that already exists in the file's location in the
@@ -40,10 +52,10 @@ def link_file(filename):
         dotfilename = '.' + dotfilename[1:]
 
     # Add the 'dot' to the dotfile if there is none (fix for vimrc and gvimrc)
-    if dotfilename[0] != '.':
+    if add_dot and dotfilename[0] != '.':
         dotfilename = '.' + dotfilename
 
-    link_name = os.path.join(os.path.realpath(expanduser('~')), dotfilename)
+    link_name = os.path.join(destination, dotfilename)
 
     # Remove existing symbolic links and back up any existing file or directory
     # at the desired link location
@@ -116,6 +128,10 @@ def main():
             print("This script must be executed as an administrator.",
                 file=sys.stderr)
             sys.exit(1)
+
+        # The main autohotkey script must reside in My Documents.
+        link_file(os.path.join(dotfile_dir, 'win', 'AutoHotkey.ahk'),
+            destination=my_documents_location(), add_dot=False)
 
     dotfiles = glob(os.path.join(dotfile_dir, '_*'))
     for dotfile in dotfiles:
