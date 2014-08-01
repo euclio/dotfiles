@@ -8,7 +8,6 @@ from glob import glob
 from os.path import expanduser
 import argparse
 import ctypes
-import ctypes.wintypes
 import os
 import platform
 import shutil
@@ -30,6 +29,8 @@ def is_admin():
 
 def my_documents_location():
     """Returns the location of the current user's "My Documents" folder."""
+    import ctypes.wintypes
+
     CSIDL_PERSONAL = 5      # My Documents
     SHGFP_TYPE_CURRENT = 0  # Current, not default value
 
