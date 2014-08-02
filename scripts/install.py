@@ -27,17 +27,26 @@ def is_admin():
     return ctypes.windll.shell32.IsUserAnAdmin() != 0
 
 
-def my_documents_location():
-    """Returns the location of the current user's "My Documents" folder."""
+def _get_folder_path(csidl_value):
     import ctypes.wintypes
-
-    CSIDL_PERSONAL = 5      # My Documents
     SHGFP_TYPE_CURRENT = 0  # Current, not default value
 
     path_buffer = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-    ctypes.windll.shell32.SHGetFolderPathW(0, CSIDL_PERSONAL, 0,
+    ctypes.windll.shell32.SHGetFolderPathW(0, csidl_value, 0,
             SHGFP_TYPE_CURRENT, path_buffer)
     return os.path.abspath(path_buffer.value)
+
+
+def my_documents_location():
+    """Returns the location of the current user's "My Documents" folder."""
+    CSIDL_PERSONAL = 5      # My Documents
+    return _get_folder_path(CSIDL_PERSONAL)
+
+
+def startup_location():
+    """Returns the location of the current user's "Startup" folder."""
+    CSIDL_STARTUP = 7       # Startup
+    return _get_folder_path(CSIDL_STARTUP)
 
 
 def link_file(filename, destination=os.path.realpath(os.path.expanduser('~')),
@@ -130,9 +139,18 @@ def main():
                 file=sys.stderr)
             sys.exit(1)
 
+        # AutoHotKey Setup
+        default_script_path = os.path.join(
+                dotfile_dir, 'win', 'AutoHotkey.ahk')
+
         # The main autohotkey script must reside in My Documents.
-        link_file(os.path.join(dotfile_dir, 'win', 'AutoHotkey.ahk'),
+        link_file(default_script_path,
             destination=my_documents_location(), add_dot=False)
+
+        # We want the main script to start at startup, so we also link it to
+        # the startup folder.
+        link_file(default_script_path,
+            destination=startup_location(), add_dot=False)
 
     dotfiles = glob(os.path.join(dotfile_dir, '_*'))
     for dotfile in dotfiles:
