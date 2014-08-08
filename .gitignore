@@ -20,9 +20,11 @@ _config/fish/fish_history
 _config/fish/fishd.*
 _config/fish/generated_completions
 _config/google-googletalkplugin/
+_config/google-musicmanager/
 _config/googlecl
 _config/gtk-2.0/gtkfilechooser.ini
 _config/guvcview
+_config/icedtea-web
 _config/libreoffice
 _config/pulse
 _config/Thunar
