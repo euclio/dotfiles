@@ -8,6 +8,7 @@ from glob import glob
 from os.path import expanduser
 import argparse
 import ctypes
+import logging
 import os
 import platform
 import shutil
@@ -49,13 +50,44 @@ def startup_location():
     return _get_folder_path(CSIDL_STARTUP)
 
 
-def link_file(filename, destination=os.path.realpath(os.path.expanduser('~')),
-        *, add_dot=True):
+def _execute(function, *args):
+    """Invokes function with *args if dry_run is False. Otherwise, logs the
+    invocation."""
+    if _ARGS.dry_run:
+        logging.info('DRY RUN: %s %s', function.__name__, args)
+    else:
+        function(*args)
+
+
+def delete_file_or_directory(filename):
+    if os.path.isdir(filename):
+        _execute(shutil.rmtree, filename)
+    else:
+        _execute(os.remove, filename)
+
+
+def move_file_or_directory(filename):
+    _execute(shutil.move, filename, dotfile_backup)
+
+
+def create_symbolic_link(file_path, link_name):
+    _execute(os.symlink, file_path, link_name)
+
+
+def create_directory(directory):
+    _execute(os.mkdir, directory)
+
+
+def link_file(filename, destination=None, *, add_dot=True):
     """Creates a symbolic link in the home directory to the given dotfile.
 
     Places any file that already exists in the file's location in the
     dotfile_backup folder.
     """
+
+    # If no destination is specified, back up into the home directory.
+    if destination is None:
+        destination = os.path.realpath(os.path.expanduser('~'))
 
     dotfilename = os.path.basename(filename)
     if dotfilename[0] == '_':
@@ -70,31 +102,31 @@ def link_file(filename, destination=os.path.realpath(os.path.expanduser('~')),
     # Remove existing symbolic links and back up any existing file or directory
     # at the desired link location
     if os.path.islink(link_name):
-        if _ARGS.verbose:
-            print('removing symbolic link at {}'.format(link_name))
-        os.remove(link_name)
+        logging.info('removing symbolic link at %s', link_name)
+        delete_file_or_directory(link_name)
     elif os.path.isfile(link_name) or os.path.isdir(link_name):
-        backup_succeeded = backup_file(link_name)
-        if not backup_succeeded:
-            print('did not link {}'.format(link_name), file=sys.stderr)
-            return
+        try:
+            backup_file(link_name)
+        except FileExistsError:
+            logging.warning('Could not backup %s, file exists in %s',
+                    link_name, _ARGS.backup)
+            logging.warning('Did not link %s', link_name)
 
     # Get the relative path to the actual dotfile
     file_relpath = os.path.join(
         os.path.relpath(os.path.dirname(filename), os.path.dirname(link_name)),
         os.path.basename(filename))
 
-    if _ARGS.verbose or _ARGS.dry_run:
-        print('linking {} to {}'.format(link_name, file_relpath))
-    if not _ARGS.dry_run:
-        os.symlink(file_relpath, link_name)
+    logging.info('linking %s to %s', link_name, file_relpath)
+    create_symbolic_link(file_relpath, link_name)
 
 
 def backup_file(filename):
     """Backs up a file into the dotfile backup directory.
 
-    Returns:
-        A boolean indicating whether the backup succeeded or failed.
+    Raises:
+        FileExistsError if there is already a file with the same name in the
+        backup directory.
     """
     dotfile_backup = os.path.realpath(_ARGS.backup)
     if os.path.exists(dotfile_backup):
@@ -102,29 +134,26 @@ def backup_file(filename):
             raise ValueError('The specified backup directory already exists '
                              'but is not a directory.')
     else:
-        if _ARGS.verbose:
-            print('creating backup directory {}'.format(dotfile_backup))
-        os.mkdir(dotfile_backup)
+        logging.info('creating backup directory %s', dotfile_backup)
+        create_directory(dotfile_backup)
+
     backup_location = os.path.join(dotfile_backup, os.path.basename(filename))
 
-    if _ARGS.verbose:
-        print('backing up {} into {}'.format(filename, dotfile_backup))
-    if os.path.exists(backup_location):
-        if _ARGS.force:
-            if os.path.isdir(backup_location):
-                shutil.rmtree(backup_location)
-            else:
-                os.remove(backup_location)
-        else:
-            print('did not backup {}, {} exists'.format(
-                filename, backup_location), file=sys.stderr)
-            return False
-    shutil.move(filename, dotfile_backup)
-    return True
+    logging.info('backing up %s into %s', filename, dotfile_backup)
+    if _ARGS.force and os.path.exists(backup_location):
+        remove_file(backup_location)
+    move_file_or_directory(filename, dotfile_backup)
 
 
 def main():
     """The main function of execution."""
+    log_format = "%(levelname)s: %(message)s"
+    if _ARGS.verbose:
+        logging.basicConfig(format=log_format, level=logging.DEBUG)
+        logging.info("Verbose output.")
+    else:
+        logging.basicConfig(format=log_format)
+
     # The directory containing this script
     script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -135,8 +164,7 @@ def main():
     if platform.system() == 'Windows':
         # Ensure the script is run as Administrator
         if not is_admin():
-            print("This script must be executed as an administrator.",
-                file=sys.stderr)
+            logging.error('This script must be executed as an administrator.')
             sys.exit(1)
 
         # AutoHotKey Setup
@@ -144,13 +172,13 @@ def main():
                 dotfile_dir, 'win', 'AutoHotkey.ahk')
 
         # The main autohotkey script must reside in My Documents.
-        link_file(default_script_path,
-            destination=my_documents_location(), add_dot=False)
+        link_file(default_script_path, destination=my_documents_location(),
+                add_dot=False)
 
         # We want the main script to start at startup, so we also link it to
         # the startup folder.
-        link_file(default_script_path,
-            destination=startup_location(), add_dot=False)
+        link_file(default_script_path, destination=startup_location(),
+                add_dot=False)
 
     dotfiles = glob(os.path.join(dotfile_dir, '_*'))
     for dotfile in dotfiles:
