@@ -1,4 +1,1 @@
-# Log X output to a file
-alias startx='startx &> ~/.xlog'
-
 source ~/.aliases
