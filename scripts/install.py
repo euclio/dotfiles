@@ -11,6 +11,7 @@ import ctypes
 import logging
 import os
 import platform
+import tempfile
 import shutil
 import sys
 import subprocess
@@ -99,12 +100,19 @@ def link_file(filename, destination=None, *, add_dot=True):
 
     link_name = os.path.join(destination, dotfilename)
 
+    # Get the relative path to the actual dotfile
+    file_relpath = os.path.join(
+        os.path.relpath(os.path.dirname(filename), os.path.dirname(link_name)),
+        os.path.basename(filename))
+
+    logging.info('linking %s to %s', link_name, file_relpath)
+
     # Remove existing symbolic links and back up any existing file or directory
     # at the desired link location
     if os.path.islink(link_name):
         logging.info('removing symbolic link at %s', link_name)
         delete_file_or_directory(link_name)
-    elif os.path.isfile(link_name) or os.path.isdir(link_name):
+    elif os.path.isfile(link_name):
         try:
             backup_file(link_name)
         except FileExistsError:
@@ -112,13 +120,18 @@ def link_file(filename, destination=None, *, add_dot=True):
                     link_name, _ARGS.backup)
             logging.warning('Did not link %s', link_name)
 
-    # Get the relative path to the actual dotfile
-    file_relpath = os.path.join(
-        os.path.relpath(os.path.dirname(filename), os.path.dirname(link_name)),
-        os.path.basename(filename))
-
-    logging.info('linking %s to %s', link_name, file_relpath)
-    create_symbolic_link(file_relpath, link_name)
+        create_symbolic_link(file_relpath, link_name)
+    elif os.path.isdir(link_name):
+        # In this case (such as .config), we should move all the contents into
+        # a temporary directory, create the link, and then move the contents
+        # back in.
+        tmp_dir = tempfile.mkdtemp()
+        files = os.listdir(link_name)
+        for filename in files:
+            move_file_or_directory(filename, tmp_dir)
+        delete_file_or_directory(link_name)
+        create_symbolic_link(file_relpath, link_name)
+        delete_file_or_directory(tmp_dir)
 
 
 def backup_file(filename):
