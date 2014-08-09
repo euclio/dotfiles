@@ -28,16 +28,18 @@ def install(dotfile_dir, backup_dir):
         sys.exit(1)
 
     # AutoHotKey Setup
-    default_script_path = os.path.join(dotfile_dir, 'win', 'AutoHotkey.ahk')
+    ahk_path = os.path.join(dotfile_dir, 'win', 'AutoHotkey.ahk')
+    default_ahk_path = os.path.join(my_documents_location(),
+                                    os.path.basename(ahk_path))
+    startup_ahk_path = os.path.join(startup_location(),
+                                    os.path.basename(ahk_path))
 
     # The main autohotkey script must reside in My Documents.
-    link_file(default_script_path, backup_dir,
-              destination=my_documents_location(), add_dot=False)
+    link_file(ahk_path, backup_dir, link_name=default_ahk_path)
 
     # We want the main script to start at startup, so we also link it to
     # the startup folder.
-    link_file(default_script_path, backup_dir,
-              destination=startup_location(), add_dot=False)
+    link_file(ahk_path, backup_dir, link_name=startup_ahk_path)
 
 
 def is_admin():

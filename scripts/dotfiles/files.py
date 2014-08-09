@@ -5,6 +5,8 @@ import os
 import shutil
 import tempfile
 
+HOME_DIRECTORY = os.path.realpath(os.path.expanduser('~'))
+
 
 def delete_file_or_directory(filename):
     """Deletes a file or directory filename."""
@@ -62,34 +64,34 @@ def backup_file(filename, backup_dir, force=False):
     move_file_or_directory(filename, dotfile_backup)
 
 
-def link_file(filename, backup_dir, destination=None, add_dot=True):
-    """Creates a symbolic link in the home directory to the given dotfile.
-
-    Places any file that already exists in the file's location in the
-    dotfile_backup folder.
+def link_file(filename, backup_dir, link_name=None):
+    """
+    Creates a symbolic link in the home directory to the given dotfile.
 
     Arguments:
-        filename - The file that the link should point to.
-        destination - Where the link should be located. Defaults to the user's
-            home directory.
-        add_dot - Whether the link should have a "dot" prepended to its name.
-            This is useful for files (especially those on Windows) that are not
-            "dotfiles" but are still considered part of the configuration.
+        filename - The absolute path of the file that the link should point to.
+        backup_dir - The absolute path of a folder. If a file exists where the
+        symbolic link will be created, the file at that location will be moved
+        to this folder to back it up.
+        link_name - If specified, the symbolic link will be created with this
+            name. Otherwise, the link name will be determined by the following
+            process:
+
+            1. Get the basename of the file to be linked to. If the basename
+               has a leading underscore, it will be replaced by a dot.
+            2. Append the basename to the user's home directory.
+
+            This is useful for files (particularly those on Windows) that are
+            not "dotfiles" but are still considered part of the configuration.
     """
 
-    # If no destination is specified, back up into the home directory.
-    if destination is None:
-        destination = os.path.realpath(os.path.expanduser('~'))
-
-    dotfilename = os.path.basename(filename)
-    if dotfilename[0] == '_':
-        dotfilename = '.' + dotfilename[1:]
-
-    # Add the 'dot' to the dotfile if there is none (fix for vimrc and gvimrc)
-    if add_dot and dotfilename[0] != '.':
-        dotfilename = '.' + dotfilename
-
-    link_name = os.path.join(destination, dotfilename)
+    # If no name is specified, create the link name by replacing the leading
+    # underscore with a dot, and place the file in the home directory.
+    if link_name is None:
+        dotfile_name = os.path.basename(filename)
+        if dotfile_name.startswith('_'):
+            dotfile_name = '.' + dotfile_name[1:]
+        link_name = os.path.join(HOME_DIRECTORY, dotfile_name)
 
     # Get the relative path to the actual dotfile
     file_relpath = os.path.join(

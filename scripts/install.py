@@ -5,14 +5,13 @@ dotfiles directory."""
 from __future__ import print_function
 
 from glob import glob
-from os.path import expanduser
 import argparse
 import logging
 import os
 import platform
 import subprocess
 
-from dotfiles.files import link_file
+from dotfiles import files
 
 
 def main():
@@ -37,7 +36,7 @@ def main():
 
     dotfiles = glob(os.path.join(dotfile_dir, '_*'))
     for dotfile in dotfiles:
-        link_file(dotfile, _ARGS.backup)
+        files.link_file(dotfile, _ARGS.backup)
 
     # Check if the computer has Vim 7.4. If not, then we need to link the vimrc
     # and gvimrc.
@@ -50,8 +49,8 @@ def main():
         if vim_version < '7.4':
             vimrc = os.path.join(dotfile_dir, '_vim', 'vimrc')
             gvimrc = os.path.join(dotfile_dir, '_vim', 'gvimrc')
-            link_file(vimrc, _ARGS.backup)
-            link_file(gvimrc, _ARGS.backup)
+            files.link_file(vimrc, _ARGS.backup)
+            files.link_file(gvimrc, _ARGS.backup)
     except OSError as err:
         if err.errno == os.errno.ENOENT:
             pass            # Vim isn't installed
@@ -65,7 +64,7 @@ if __name__ == '__main__':
         'files in the dotfiles directory.')
     _PARSER.add_argument(
         '-b', '--backup',
-        default=os.path.join(expanduser(os.path.join('~', 'dotfiles.old'))),
+        default=files.HOME_DIRECTORY,
         help='where to move any existing files that will be overwritten')
     _PARSER.add_argument(
         '-v', '--verbose',
