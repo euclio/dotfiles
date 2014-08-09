@@ -1,0 +1,131 @@
+"""File operations for installing dotfiles."""
+import errno
+import logging
+import os
+import shutil
+import tempfile
+
+
+def delete_file_or_directory(filename):
+    """Deletes a file or directory filename."""
+    if os.path.isdir(filename) and not os.path.islink(filename):
+        _execute(shutil.rmtree, filename)
+    else:
+        _execute(os.remove, filename)
+
+
+def move_file_or_directory(filename, destination):
+    """Move a file or directory filename to the destination."""
+    _execute(shutil.move, filename, destination)
+
+
+def create_symbolic_link(file_path, link_name):
+    """Create a symbolic link at link_name that points to file_path."""
+    _execute(os.symlink, file_path, link_name)
+
+
+def create_directory(directory):
+    """Create a directory at the given path."""
+    _execute(os.mkdir, directory)
+
+
+def _execute(function, *args, dry_run=False):
+    """Invokes function with *args if dry_run is False. Otherwise, logs the
+    invocation."""
+    if dry_run:
+        logging.info('DRY RUN: %s %s', function.__name__, args)
+    else:
+        function(*args)
+
+
+def backup_file(filename, backup_dir, force=False):
+    """Backs up a file into the dotfile backup directory.
+
+    Raises:
+        FileExistsError if there is already a file with the same name in the
+        backup directory.
+    """
+    dotfile_backup = os.path.realpath(backup_dir)
+    if os.path.exists(dotfile_backup):
+        if not os.path.isdir(dotfile_backup):
+            raise ValueError('The specified backup directory already exists '
+                             'but is not a directory.')
+    else:
+        logging.info('creating backup directory %s', dotfile_backup)
+        create_directory(dotfile_backup)
+
+    backup_location = os.path.join(dotfile_backup, os.path.basename(filename))
+
+    logging.info('backing up %s into %s', filename, dotfile_backup)
+    if force and os.path.exists(backup_location):
+        delete_file_or_directory(backup_location)
+    move_file_or_directory(filename, dotfile_backup)
+
+
+def link_file(filename, backup_dir, destination=None, add_dot=True):
+    """Creates a symbolic link in the home directory to the given dotfile.
+
+    Places any file that already exists in the file's location in the
+    dotfile_backup folder.
+
+    Arguments:
+        filename - The file that the link should point to.
+        destination - Where the link should be located. Defaults to the user's
+            home directory.
+        add_dot - Whether the link should have a "dot" prepended to its name.
+            This is useful for files (especially those on Windows) that are not
+            "dotfiles" but are still considered part of the configuration.
+    """
+
+    # If no destination is specified, back up into the home directory.
+    if destination is None:
+        destination = os.path.realpath(os.path.expanduser('~'))
+
+    dotfilename = os.path.basename(filename)
+    if dotfilename[0] == '_':
+        dotfilename = '.' + dotfilename[1:]
+
+    # Add the 'dot' to the dotfile if there is none (fix for vimrc and gvimrc)
+    if add_dot and dotfilename[0] != '.':
+        dotfilename = '.' + dotfilename
+
+    link_name = os.path.join(destination, dotfilename)
+
+    # Get the relative path to the actual dotfile
+    file_relpath = os.path.join(
+        os.path.relpath(os.path.dirname(filename), os.path.dirname(link_name)),
+        os.path.basename(filename))
+
+    logging.info('linking %s to %s', link_name, file_relpath)
+
+    # Remove existing symbolic links and back up any existing file or directory
+    # at the desired link location
+    if os.path.islink(link_name):
+        logging.info('removing symbolic link at %s', link_name)
+        delete_file_or_directory(link_name)
+    elif os.path.isfile(link_name):
+        logging.info('%s is a file, attempting to back up', link_name)
+        try:
+            backup_file(link_name, backup_dir)
+        except OSError as exc:
+            if exc.errno == errno.EEXIST:
+                logging.warning('Could not backup %s, file exists in %s',
+                                link_name, backup_dir)
+                logging.warning('Did not link %s', link_name)
+            else:
+                raise
+    elif os.path.isdir(link_name):
+        logging.info('%s is a directory, attempting to back up', link_name)
+        # In this case (such as .config), we should move all the contents into
+        # a temporary directory, create the link, and then move the contents
+        # back in.
+        tmp_dir = tempfile.mkdtemp()
+        files = os.listdir(link_name)
+        for filename in files:
+            move_file_or_directory(filename, tmp_dir)
+        delete_file_or_directory(link_name)
+        create_symbolic_link(file_relpath, link_name)
+        delete_file_or_directory(tmp_dir)
+        return
+
+    create_symbolic_link(file_relpath, link_name)
