@@ -68,8 +68,8 @@ def delete_file_or_directory(filename):
         _execute(os.remove, filename)
 
 
-def move_file_or_directory(filename):
-    _execute(shutil.move, filename, dotfile_backup)
+def move_file_or_directory(filename, destination):
+    _execute(shutil.move, filename, destination)
 
 
 def create_symbolic_link(file_path, link_name):
