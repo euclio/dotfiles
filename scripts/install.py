@@ -84,6 +84,14 @@ def link_file(filename, destination=None, *, add_dot=True):
 
     Places any file that already exists in the file's location in the
     dotfile_backup folder.
+
+    Arguments:
+        filename - The file that the link should point to.
+        destination - Where the link should be located. Defaults to the user's
+            home directory.
+        add_dot - Whether the link should have a "dot" prepended to its name.
+            This is useful for files (especially those on Windows) that are not
+            "dotfiles" but are still considered part of the configuration.
     """
 
     # If no destination is specified, back up into the home directory.
