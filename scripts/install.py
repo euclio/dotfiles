@@ -187,6 +187,11 @@ def main():
 
     # Windows special casing
     if platform.system() == 'Windows':
+        # Check for Python 3
+        if not sys.version_info.major >= 3:
+            logging.error('Due to how Python 2 handles symlinks on Windows, this script must be executed under Python 3.')
+            sys.exit(1)
+
         # Ensure the script is run as Administrator
         if not is_admin():
             logging.error('This script must be executed as an administrator.')
