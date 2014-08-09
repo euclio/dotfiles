@@ -8,6 +8,7 @@ from glob import glob
 from os.path import expanduser
 import argparse
 import ctypes
+import errno
 import logging
 import os
 import platform
@@ -79,7 +80,7 @@ def create_directory(directory):
     _execute(os.mkdir, directory)
 
 
-def link_file(filename, destination=None, *, add_dot=True):
+def link_file(filename, destination=None, add_dot=True):
     """Creates a symbolic link in the home directory to the given dotfile.
 
     Places any file that already exists in the file's location in the
@@ -123,10 +124,13 @@ def link_file(filename, destination=None, *, add_dot=True):
     elif os.path.isfile(link_name):
         try:
             backup_file(link_name)
-        except FileExistsError:
-            logging.warning('Could not backup %s, file exists in %s',
-                    link_name, _ARGS.backup)
-            logging.warning('Did not link %s', link_name)
+        except OSError as e:
+            if e.errno == errno.EEXIST:
+                logging.warning('Could not backup %s, file exists in %s',
+                        link_name, _ARGS.backup)
+                logging.warning('Did not link %s', link_name)
+            else:
+                raise
 
         create_symbolic_link(file_relpath, link_name)
     elif os.path.isdir(link_name):
