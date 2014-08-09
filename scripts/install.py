@@ -9,7 +9,6 @@ import argparse
 import logging
 import os
 import platform
-import subprocess
 
 from dotfiles import files
 
@@ -36,26 +35,11 @@ def main():
 
     dotfiles = glob(os.path.join(dotfile_dir, '_*'))
     for dotfile in dotfiles:
+        # Vim special casing
+        if os.path.basename(dotfile) == '_vim':
+            files.link_vim(dotfile, _ARGS.backup)
+            continue
         files.link_file(dotfile, _ARGS.backup)
-
-    # Check if the computer has Vim 7.4. If not, then we need to link the vimrc
-    # and gvimrc.
-    try:
-        vim_version_output = (
-            subprocess.check_output(['vim', '--version']).decode('utf-8'))
-        # Split the string into lines, then examine the first line:
-        #   VIM - Vi IMproved <VERSION>
-        vim_version = vim_version_output.split('\n')[0].split(' ')[4]
-        if vim_version < '7.4':
-            vimrc = os.path.join(dotfile_dir, '_vim', 'vimrc')
-            gvimrc = os.path.join(dotfile_dir, '_vim', 'gvimrc')
-            files.link_file(vimrc, _ARGS.backup)
-            files.link_file(gvimrc, _ARGS.backup)
-    except OSError as err:
-        if err.errno == os.errno.ENOENT:
-            pass            # Vim isn't installed
-        else:
-            raise
 
 
 if __name__ == '__main__':

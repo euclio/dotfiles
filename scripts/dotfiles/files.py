@@ -2,7 +2,9 @@
 import errno
 import logging
 import os
+import platform
 import shutil
+import subprocess
 import tempfile
 
 HOME_DIRECTORY = os.path.realpath(os.path.expanduser('~'))
@@ -64,6 +66,33 @@ def backup_file(filename, backup_dir, force=False):
     move_file_or_directory(filename, dotfile_backup)
 
 
+def link_vim(vim_folder, backup_dir):
+    """Special casing for linking Vim's configuration."""
+    if platform.system() == 'Windows':
+        dotvim = os.path.join(HOME_DIRECTORY, 'vimfiles')
+    else:
+        dotvim = os.path.join(HOME_DIRECTORY, '.vim')
+
+    link_file(vim_folder, backup_dir, link_name=dotvim)
+
+    # Check if the computer has Vim 7.4.
+    # If not, then we need to link the vimrc and gvimrc.
+    try:
+        vim_version_output = (
+            subprocess.check_output(['vim', '--version']).decode('utf-8'))
+        # Split the string into lines, then examine the first line:
+        #   VIM - Vi IMproved <VERSION>
+        vim_version = vim_version_output.split('\n')[0].split(' ')[4]
+        if vim_version < '7.4':
+            link_file(os.path.join(vim_folder, 'vimrc'), backup_dir)
+            link_file(os.path.join(vim_folder, 'gvimrc'), backup_dir)
+    except OSError as err:
+        if err.errno == os.errno.ENOENT:
+            pass            # Vim isn't installed
+        else:
+            raise
+
+
 def link_file(filename, backup_dir, link_name=None):
     """
     Creates a symbolic link in the home directory to the given dotfile.
@@ -77,9 +106,10 @@ def link_file(filename, backup_dir, link_name=None):
             name. Otherwise, the link name will be determined by the following
             process:
 
-            1. Get the basename of the file to be linked to. If the basename
-               has a leading underscore, it will be replaced by a dot.
-            2. Append the basename to the user's home directory.
+            1. Get the basename of the file to be linked to.
+            2. If the basename has a leading underscore, it will be replaced by
+               a dot. Otherwise, a dot will be prepended.
+            3. Append the basename to the user's home directory.
 
             This is useful for files (particularly those on Windows) that are
             not "dotfiles" but are still considered part of the configuration.
@@ -122,7 +152,8 @@ def link_file(filename, backup_dir, link_name=None):
         # a temporary directory, create the link, and then move the contents
         # back in.
         tmp_dir = tempfile.mkdtemp()
-        files = os.listdir(link_name)
+        files = [os.path.join(link_name, basename)
+                 for basename in os.listdir(link_name)]
         for filename in files:
             move_file_or_directory(filename, tmp_dir)
         delete_file_or_directory(link_name)
