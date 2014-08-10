@@ -52,15 +52,16 @@ def backup_file(filename, backup_dir, dry_run, force=False):
     dotfile_backup = os.path.realpath(backup_dir)
     if os.path.exists(dotfile_backup):
         if not os.path.isdir(dotfile_backup):
-            raise ValueError('The specified backup directory already exists '
-                             'but is not a directory.')
+            logging.error('The specified backup directory %s already exists'
+                          ' and is not a directory. Aborting.')
+            raise ValueError
     else:
-        logging.info('creating backup directory %s', dotfile_backup)
+        logging.info('Creating backup directory at "%s"', dotfile_backup)
         create_directory(dotfile_backup, dry_run)
 
     backup_location = os.path.join(dotfile_backup, os.path.basename(filename))
 
-    logging.info('backing up %s into %s', filename, dotfile_backup)
+    logging.info('Backing up "%s" into "%s"...', filename, dotfile_backup)
     if force and os.path.exists(backup_location):
         delete_file_or_directory(backup_location, dry_run)
     move_file_or_directory(filename, dotfile_backup, dry_run)
@@ -127,26 +128,26 @@ def link_file(filename, backup_dir, dry_run, link_name=None):
         os.path.relpath(os.path.dirname(filename), os.path.dirname(link_name)),
         os.path.basename(filename))
 
-    logging.info('linking %s to %s', link_name, file_relpath)
-
     # Remove existing symbolic links and back up any existing file or directory
     # at the desired link location
     if os.path.islink(link_name):
-        logging.info('removing symbolic link at %s', link_name)
+        logging.info('Removing symbolic link "%s"', link_name)
         delete_file_or_directory(link_name, dry_run)
     elif os.path.isfile(link_name):
-        logging.info('%s is a file, attempting to back up', link_name)
+        logging.info('"%s" is a file, attempting to back up to "%s"',
+                     link_name, backup_dir)
         try:
             backup_file(link_name, backup_dir, dry_run)
         except OSError as exc:
             if exc.errno == errno.EEXIST:
-                logging.warning('Could not backup %s, file exists in %s',
+                logging.warning('Could not backup "%s", file exists in "%s"',
                                 link_name, backup_dir)
-                logging.warning('Did not link %s', link_name)
+                logging.warning('Did not link "%s"', link_name)
             else:
                 raise
     elif os.path.isdir(link_name):
-        logging.info('%s is a directory, attempting to back up', link_name)
+        logging.info('"%s" is a directory, attempting to back up to "%s"',
+                     link_name, backup_dir)
         # In this case (such as .config), we should move all the contents into
         # a temporary directory, create the link, and then move the contents
         # back in.
@@ -160,4 +161,5 @@ def link_file(filename, backup_dir, dry_run, link_name=None):
         delete_file_or_directory(tmp_dir, dry_run)
         return
 
+    logging.info('Linking "%s" -> "%s"', link_name, file_relpath)
     create_symbolic_link(file_relpath, link_name, dry_run)
