@@ -13,10 +13,35 @@ import platform
 from dotfiles import files
 
 
+def parse_arguments():
+    """Generate command line arguments."""
+    parser = argparse.ArgumentParser(
+        description='Create symbolic links from the home directory to the '
+        'files in the dotfiles directory.')
+    parser.add_argument(
+        '-b', '--backup',
+        default=files.HOME_DIRECTORY,
+        help='where to move any existing files that will be overwritten')
+    parser.add_argument(
+        '-v', '--verbose',
+        action='store_true',
+        help='enables verbose output')
+    parser.add_argument(
+        '-f', '--force',
+        action='store_true',
+        help='overwrites existing backups when moving dotfiles')
+    parser.add_argument(
+        '-d', '--dry_run',
+        action='store_true',
+        help='prints out the commands to be run without executing them')
+    return parser.parse_args()
+
+
 def main():
     """The main function of execution."""
+    args = parse_arguments()
     log_format = "%(levelname)s: %(message)s"
-    if _ARGS.verbose:
+    if args.verbose:
         logging.basicConfig(format=log_format, level=logging.DEBUG)
         logging.info("Verbose output.")
     else:
@@ -31,36 +56,16 @@ def main():
     # Windows special casing
     if platform.system() == 'Windows':
         from dotfiles import windows
-        windows.install(dotfile_dir, _ARGS.backup)
+        windows.install(dotfile_dir, args.backup, args.dry_run)
 
     dotfiles = glob(os.path.join(dotfile_dir, '_*'))
     for dotfile in dotfiles:
         # Vim special casing
         if os.path.basename(dotfile) == '_vim':
-            files.link_vim(dotfile, _ARGS.backup)
+            files.link_vim(dotfile, args.backup, args.dry_run)
             continue
-        files.link_file(dotfile, _ARGS.backup)
+        files.link_file(dotfile, args.backup, args.dry_run)
 
 
 if __name__ == '__main__':
-    _PARSER = argparse.ArgumentParser(
-        description='Create symbolic links from the home directory to the '
-        'files in the dotfiles directory.')
-    _PARSER.add_argument(
-        '-b', '--backup',
-        default=files.HOME_DIRECTORY,
-        help='where to move any existing files that will be overwritten')
-    _PARSER.add_argument(
-        '-v', '--verbose',
-        action='store_true',
-        help='enables verbose output')
-    _PARSER.add_argument(
-        '-f', '--force',
-        action='store_true',
-        help='overwrites existing backups when moving dotfiles')
-    _PARSER.add_argument(
-        '-d', '--dry_run',
-        action='store_true',
-        help='prints out the commands to be run without executing them')
-    _ARGS = _PARSER.parse_args()
     main()

@@ -10,39 +10,39 @@ import tempfile
 HOME_DIRECTORY = os.path.realpath(os.path.expanduser('~'))
 
 
-def delete_file_or_directory(filename):
+def delete_file_or_directory(filename, dry_run):
     """Deletes a file or directory filename."""
     if os.path.isdir(filename) and not os.path.islink(filename):
-        _execute(shutil.rmtree, filename)
+        _execute(shutil.rmtree, filename, dry_run=dry_run)
     else:
-        _execute(os.remove, filename)
+        _execute(os.remove, filename, dry_run=dry_run)
 
 
-def move_file_or_directory(filename, destination):
+def move_file_or_directory(filename, destination, dry_run):
     """Move a file or directory filename to the destination."""
-    _execute(shutil.move, filename, destination)
+    _execute(shutil.move, filename, destination, dry_run=dry_run)
 
 
-def create_symbolic_link(file_path, link_name):
+def create_symbolic_link(file_path, link_name, dry_run):
     """Create a symbolic link at link_name that points to file_path."""
-    _execute(os.symlink, file_path, link_name)
+    _execute(os.symlink, file_path, link_name, dry_run=dry_run)
 
 
-def create_directory(directory):
+def create_directory(directory, dry_run):
     """Create a directory at the given path."""
-    _execute(os.mkdir, directory)
+    _execute(os.mkdir, directory, dry_run=dry_run)
 
 
-def _execute(function, *args, dry_run=False):
+def _execute(function, *args, dry_run):
     """Invokes function with *args if dry_run is False. Otherwise, logs the
     invocation."""
-    if dry_run:
-        logging.info('DRY RUN: %s %s', function.__name__, args)
-    else:
+    qualified_name = '{}.{}'.format(function.__module__, function.__name__)
+    logging.info('Executing %s(%s)', qualified_name, ', '.join(args))
+    if not dry_run:
         function(*args)
 
 
-def backup_file(filename, backup_dir, force=False):
+def backup_file(filename, backup_dir, dry_run, force=False):
     """Backs up a file into the dotfile backup directory.
 
     Raises:
@@ -56,24 +56,24 @@ def backup_file(filename, backup_dir, force=False):
                              'but is not a directory.')
     else:
         logging.info('creating backup directory %s', dotfile_backup)
-        create_directory(dotfile_backup)
+        create_directory(dotfile_backup, dry_run)
 
     backup_location = os.path.join(dotfile_backup, os.path.basename(filename))
 
     logging.info('backing up %s into %s', filename, dotfile_backup)
     if force and os.path.exists(backup_location):
-        delete_file_or_directory(backup_location)
-    move_file_or_directory(filename, dotfile_backup)
+        delete_file_or_directory(backup_location, dry_run)
+    move_file_or_directory(filename, dotfile_backup, dry_run)
 
 
-def link_vim(vim_folder, backup_dir):
+def link_vim(vim_folder, backup_dir, dry_run):
     """Special casing for linking Vim's configuration."""
     if platform.system() == 'Windows':
         dotvim = os.path.join(HOME_DIRECTORY, 'vimfiles')
     else:
         dotvim = os.path.join(HOME_DIRECTORY, '.vim')
 
-    link_file(vim_folder, backup_dir, link_name=dotvim)
+    link_file(vim_folder, backup_dir, dry_run, link_name=dotvim)
 
     # Check if the computer has Vim 7.4.
     # If not, then we need to link the vimrc and gvimrc.
@@ -84,8 +84,8 @@ def link_vim(vim_folder, backup_dir):
         #   VIM - Vi IMproved <VERSION>
         vim_version = vim_version_output.split('\n')[0].split(' ')[4]
         if vim_version < '7.4':
-            link_file(os.path.join(vim_folder, 'vimrc'), backup_dir)
-            link_file(os.path.join(vim_folder, 'gvimrc'), backup_dir)
+            link_file(os.path.join(vim_folder, 'vimrc'), dry_run, backup_dir)
+            link_file(os.path.join(vim_folder, 'gvimrc'), dry_run, backup_dir)
     except OSError as err:
         if err.errno == os.errno.ENOENT:
             pass            # Vim isn't installed
@@ -93,7 +93,7 @@ def link_vim(vim_folder, backup_dir):
             raise
 
 
-def link_file(filename, backup_dir, link_name=None):
+def link_file(filename, backup_dir, dry_run, link_name=None):
     """
     Creates a symbolic link in the home directory to the given dotfile.
 
@@ -114,7 +114,6 @@ def link_file(filename, backup_dir, link_name=None):
             This is useful for files (particularly those on Windows) that are
             not "dotfiles" but are still considered part of the configuration.
     """
-
     # If no name is specified, create the link name by replacing the leading
     # underscore with a dot, and place the file in the home directory.
     if link_name is None:
@@ -134,11 +133,11 @@ def link_file(filename, backup_dir, link_name=None):
     # at the desired link location
     if os.path.islink(link_name):
         logging.info('removing symbolic link at %s', link_name)
-        delete_file_or_directory(link_name)
+        delete_file_or_directory(link_name, dry_run)
     elif os.path.isfile(link_name):
         logging.info('%s is a file, attempting to back up', link_name)
         try:
-            backup_file(link_name, backup_dir)
+            backup_file(link_name, backup_dir, dry_run)
         except OSError as exc:
             if exc.errno == errno.EEXIST:
                 logging.warning('Could not backup %s, file exists in %s',
@@ -155,10 +154,10 @@ def link_file(filename, backup_dir, link_name=None):
         files = [os.path.join(link_name, basename)
                  for basename in os.listdir(link_name)]
         for filename in files:
-            move_file_or_directory(filename, tmp_dir)
-        delete_file_or_directory(link_name)
-        create_symbolic_link(file_relpath, link_name)
-        delete_file_or_directory(tmp_dir)
+            move_file_or_directory(filename, tmp_dir, dry_run)
+        delete_file_or_directory(link_name, dry_run)
+        create_symbolic_link(file_relpath, link_name, dry_run)
+        delete_file_or_directory(tmp_dir, dry_run)
         return
 
-    create_symbolic_link(file_relpath, link_name)
+    create_symbolic_link(file_relpath, link_name, dry_run)
