@@ -12,6 +12,9 @@ syndaemon -t -k -i 2 -d &
 # Enable key remapping
 xbindkeys
 
+# Fix for Chromium Issue #370022
+xcompmgr -a &
+
 # Set background image and start window manager
 feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
 exec xmonad
