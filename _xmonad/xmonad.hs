@@ -1,20 +1,17 @@
-{-# OPTIONS_GHC -fno-warn-missing-signatures #-}
-
 import Data.Monoid
 import GHC.IO.Handle.Types
 
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ICCCMFocus
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
+import XMonad.Layout.LayoutModifier
 import XMonad.Util.EZConfig
-import XMonad.Util.Paste
 import XMonad.Util.Run
 
 myTerminal :: String
@@ -26,6 +23,7 @@ myNormalBorderColor     = "#d0d0d0"
 myFocusedBorderColor :: String
 myFocusedBorderColor    = "#ffa500"
 
+myLayoutHook :: ModifiedLayout SmartBorder (ModifiedLayout AvoidStruts (Choose Tall (Choose (Mirror Tall) Full))) Window
 myLayoutHook            = smartBorders $ avoidStruts $
                           layoutHook defaultConfig
 
