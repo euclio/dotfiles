@@ -15,6 +15,7 @@ _xmonad/xmonad.errors
 # Ignored Settings
 _config/autostart
 _config/chromium
+_config/configstore
 _config/deluge
 _config/fish/fish_history
 _config/fish/fishd.*
@@ -26,7 +27,10 @@ _config/gtk-2.0/gtkfilechooser.ini
 _config/guvcview
 _config/icedtea-web
 _config/libreoffice
+_config/menus
 _config/pulse
+_config/QtProject.conf
+_config/smplayer
 _config/Thunar
 _config/Trolltech.conf
 _config/vlc
