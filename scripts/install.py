@@ -64,6 +64,12 @@ def main():
         if os.path.basename(dotfile) == '_vim':
             files.link_vim(dotfile, args.backup, args.dry_run)
             continue
+
+        # Git special casing
+        if os.path.basename(dotfile) == '_gitconfig':
+            files.link_git(dotfile, args.backup, args.dry_run)
+            continue
+
         files.link_file(dotfile, args.backup, args.dry_run)
 
 
