@@ -1,11 +1,3 @@
-Host wilkes
-    HostName wilkes.cs.hmc.edu
-    User cs105gra
-
-Host bomb
-    HostName wilkes.cs.hmc.edu
-    User bomb
-
 Host pomona
     HostName vpn.cs.pomona.edu
     User arussell
