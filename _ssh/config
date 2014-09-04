@@ -1,3 +1,7 @@
 Host pomona
     HostName vpn.cs.pomona.edu
     User arussell
+
+Host knuth
+    HostName knuth.cs.hmc.edu
+    User acrussell
