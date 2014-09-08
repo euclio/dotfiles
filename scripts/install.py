@@ -20,7 +20,7 @@ def parse_arguments():
         'files in the dotfiles directory.')
     parser.add_argument(
         '-b', '--backup',
-        default=files.HOME_DIRECTORY,
+        default=os.path.join(files.HOME_DIRECTORY, 'dotfiles.old'),
         help='where to move any existing files that will be overwritten')
     parser.add_argument(
         '-v', '--verbose',
