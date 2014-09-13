@@ -4,6 +4,7 @@ import logging
 import os
 import platform
 import shutil
+import stat
 import subprocess
 import tempfile
 
@@ -13,7 +14,15 @@ HOME_DIRECTORY = os.path.realpath(os.path.expanduser('~'))
 def delete_file_or_directory(filename, dry_run):
     """Deletes a file or directory filename."""
     if os.path.isdir(filename) and not os.path.islink(filename):
-        _execute(shutil.rmtree, filename, dry_run=dry_run)
+        try:
+            _execute(shutil.rmtree, filename, dry_run=dry_run)
+        except WindowsError:
+            # On Windows, files sometimes fail to delete properly if they are
+            # marked readonly.
+            os.chmod(filename,
+                     stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)  # 0777
+            _execute(shutil.rmtree, filename, dry_run=dry_run)
+
     else:
         _execute(os.remove, filename, dry_run=dry_run)
 
