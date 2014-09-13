@@ -132,10 +132,22 @@ def link_file(filename, backup_dir, dry_run, link_name=None):
             dotfile_name = '.' + dotfile_name[1:]
         link_name = os.path.join(HOME_DIRECTORY, dotfile_name)
 
-    # Get the relative path to the actual dotfile
-    file_relpath = os.path.join(
-        os.path.relpath(os.path.dirname(filename), os.path.dirname(link_name)),
-        os.path.basename(filename))
+    # Get the path that the dotfile should point to.  We attempt to get a
+    # relative path from the name of the dotfile to the actual file.  On
+    # Windows, if the files are on different drives, we use the full path to
+    # the file instead.
+    try:
+        dotfile_path = os.path.join(
+            os.path.relpath(os.path.dirname(filename),
+                            os.path.dirname(link_name)),
+            os.path.basename(filename))
+    except ValueError:
+        if platform.system() == 'Windows':
+            # On Windows, the paths may be on different drives. We need to use
+            # the full path instead.
+            dotfile_path = filename
+        else:
+            raise
 
     # Remove existing symbolic links and back up any existing file or directory
     # at the desired link location
@@ -166,9 +178,9 @@ def link_file(filename, backup_dir, dry_run, link_name=None):
         for filename in files:
             move_file_or_directory(filename, tmp_dir, dry_run)
         delete_file_or_directory(link_name, dry_run)
-        create_symbolic_link(file_relpath, link_name, dry_run)
+        create_symbolic_link(dotfile_path, link_name, dry_run)
         delete_file_or_directory(tmp_dir, dry_run)
         return
 
-    logging.info('Linking "%s" -> "%s"', link_name, file_relpath)
-    create_symbolic_link(file_relpath, link_name, dry_run)
+    logging.info('Linking "%s" -> "%s"', link_name, dotfile_path)
+    create_symbolic_link(dotfile_path, link_name, dry_run)
