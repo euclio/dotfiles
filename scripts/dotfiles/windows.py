@@ -35,11 +35,11 @@ def install(dotfile_dir, backup_dir, dry_run):
                                     os.path.basename(ahk_path))
 
     # The main autohotkey script must reside in My Documents.
-    link_file(ahk_path, dry_run, backup_dir, link_name=default_ahk_path)
+    link_file(ahk_path, backup_dir, dry_run, link_name=default_ahk_path)
 
     # We want the main script to start at startup, so we also link it to
     # the startup folder.
-    link_file(ahk_path, dry_run, backup_dir, link_name=startup_ahk_path)
+    link_file(ahk_path, backup_dir, dry_run, link_name=startup_ahk_path)
 
 
 def is_admin():
