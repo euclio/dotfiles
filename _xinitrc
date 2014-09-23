@@ -15,6 +15,9 @@ xbindkeys
 # Fix for Chromium Issue #370022
 xcompmgr -a &
 
+# Open web browser
+x-www-browser &
+
 # Set background image and start window manager
 feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
 exec xmonad
