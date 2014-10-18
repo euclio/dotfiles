@@ -1,1 +1,4 @@
-$out_dir = 'latexmk'
+$out_dir = 'latexmk';
+$pdf_mode = 1;
+$pdf_latex = "pdflatex --shell-escape %O %S";
+$preview_continuous_mode = 1;
