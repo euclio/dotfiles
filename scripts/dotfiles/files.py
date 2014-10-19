@@ -76,14 +76,15 @@ def backup_file(filename, backup_dir, dry_run, force=False):
     move_file_or_directory(filename, dotfile_backup, dry_run)
 
 
-def link_vim(vim_folder, backup_dir, dry_run):
+def link_vim(vim_folder, backup_dir, dry_run, check_only=False):
     """Special casing for linking Vim's configuration."""
     if platform.system() == 'Windows':
         dotvim = os.path.join(HOME_DIRECTORY, 'vimfiles')
     else:
         dotvim = os.path.join(HOME_DIRECTORY, '.vim')
 
-    link_file(vim_folder, backup_dir, dry_run, link_name=dotvim)
+    link_file(vim_folder, backup_dir, dry_run, link_name=dotvim,
+              check_only=check_only)
 
     # Check if the computer has Vim 7.4.
     # If not, then we need to link the vimrc and gvimrc.
@@ -94,13 +95,84 @@ def link_vim(vim_folder, backup_dir, dry_run):
         #   VIM - Vi IMproved <VERSION>
         vim_version = vim_version_output.split('\n')[0].split(' ')[4]
         if vim_version < '7.4':
-            link_file(os.path.join(vim_folder, 'vimrc'), dry_run, backup_dir)
-            link_file(os.path.join(vim_folder, 'gvimrc'), dry_run, backup_dir)
+            link_file(os.path.join(vim_folder, 'vimrc'), dry_run, backup_dir,
+                      check_only=check_only)
+            link_file(os.path.join(vim_folder, 'gvimrc'), dry_run, backup_dir,
+                      check_only=check_only)
     except OSError as err:
         if err.errno == os.errno.ENOENT:
             pass            # Vim isn't installed
         else:
             raise
+
+
+def get_link_target(link_path, dotfile_path):
+    """Returns the path that should be contained in the link to the dotfile.
+
+    In general, the path will be a relative path from the path of the link to
+    the path of the dotfile. On Windows, if the files are on different drives,
+    the full path to the dotfile is used instead.
+    """
+    try:
+
+        return os.path.join(
+            os.path.relpath(os.path.dirname(dotfile_path),
+                            os.path.dirname(link_path)),
+            os.path.basename(dotfile_path))
+    except ValueError:
+        if platform.system() == 'Windows':
+            # On Windows, the paths may be on different drives. We need to use
+            # the full path instead.
+            return dotfile_path
+        else:
+            raise
+
+
+def get_link_path(dotfile_path):
+    """Returns the absolute path to where the dotfile should be linked.
+
+    This is accomplished by replacing the leading underscore of the file with a
+    dot, and then appending that filename to the home directory.
+
+    If the filename does not start with an underscore, a dot is prepended.
+    """
+    dotfile_name = os.path.basename(dotfile_path)
+    if dotfile_name.startswith('_'):
+        link_name = '.' + dotfile_name[1:]
+    else:
+        link_name = '.' + dotfile_name
+    return os.path.join(HOME_DIRECTORY, link_name)
+
+
+def backup(filename, link_target, backup_dir, dry_run):
+    """Backs up a file by moving it into a specified directory. If the file
+    already exists in the directory, the backup is aborted.
+    """
+    if os.path.isfile(filename):
+        logging.info('"%s" is a file, attempting to back up to "%s"',
+                     filename, backup_dir)
+        try:
+            backup_file(filename, backup_dir, dry_run)
+        except OSError as exc:
+            if exc.errno == errno.EEXIST:
+                logging.warning('Could not backup "%s", file exists in "%s"',
+                                filename, backup_dir)
+            raise
+    elif os.path.isdir(filename):
+        logging.info('"%s" is a directory, attempting to back up to "%s"',
+                     filename, backup_dir)
+        # In this case (such as .config), we should move all the contents into
+        # a temporary directory, create the link, and then move the contents
+        # back in.
+        tmp_dir = tempfile.mkdtemp()
+        files_to_move = [os.path.join(filename, basename)
+                         for basename in os.listdir(filename)]
+        for file_to_move in files_to_move:
+            move_file_or_directory(file_to_move, tmp_dir, dry_run)
+        delete_file_or_directory(filename, dry_run)
+        create_symbolic_link(link_target, filename, dry_run)
+        delete_file_or_directory(tmp_dir, dry_run)
+        return
 
 
 def link_file(filename, backup_dir, dry_run=False, check_only=False,
@@ -128,10 +200,7 @@ def link_file(filename, backup_dir, dry_run=False, check_only=False,
     # If no name is specified, create the link name by replacing the leading
     # underscore with a dot, and place the file in the home directory.
     if link_name is None:
-        dotfile_name = os.path.basename(filename)
-        if dotfile_name.startswith('_'):
-            dotfile_name = '.' + dotfile_name[1:]
-        link_name = os.path.join(HOME_DIRECTORY, dotfile_name)
+        link_name = get_link_path(filename)
 
     if check_only:
         if not os.path.islink(link_name):
@@ -139,55 +208,19 @@ def link_file(filename, backup_dir, dry_run=False, check_only=False,
                             os.path.basename(link_name))
         return
 
-    # Get the path that the dotfile should point to.  We attempt to get a
-    # relative path from the name of the dotfile to the actual file.  On
-    # Windows, if the files are on different drives, we use the full path to
-    # the file instead.
-    try:
-        dotfile_path = os.path.join(
-            os.path.relpath(os.path.dirname(filename),
-                            os.path.dirname(link_name)),
-            os.path.basename(filename))
-    except ValueError:
-        if platform.system() == 'Windows':
-            # On Windows, the paths may be on different drives. We need to use
-            # the full path instead.
-            dotfile_path = filename
-        else:
-            raise
+    link_target = get_link_target(link_name, filename)
 
     # Remove existing symbolic links and back up any existing file or directory
     # at the desired link location
     if os.path.islink(link_name):
         logging.info('Removing symbolic link "%s"', link_name)
         delete_file_or_directory(link_name, dry_run)
-    elif os.path.isfile(link_name):
-        logging.info('"%s" is a file, attempting to back up to "%s"',
-                     link_name, backup_dir)
+    else:
         try:
-            backup_file(link_name, backup_dir, dry_run)
-        except OSError as exc:
-            if exc.errno == errno.EEXIST:
-                logging.warning('Could not backup "%s", file exists in "%s"',
-                                link_name, backup_dir)
-                logging.warning('Did not link "%s"', link_name)
-            else:
-                raise
-    elif os.path.isdir(link_name):
-        logging.info('"%s" is a directory, attempting to back up to "%s"',
-                     link_name, backup_dir)
-        # In this case (such as .config), we should move all the contents into
-        # a temporary directory, create the link, and then move the contents
-        # back in.
-        tmp_dir = tempfile.mkdtemp()
-        files = [os.path.join(link_name, basename)
-                 for basename in os.listdir(link_name)]
-        for filename in files:
-            move_file_or_directory(filename, tmp_dir, dry_run)
-        delete_file_or_directory(link_name, dry_run)
-        create_symbolic_link(dotfile_path, link_name, dry_run)
-        delete_file_or_directory(tmp_dir, dry_run)
-        return
+            backup(link_name, link_target, backup_dir, dry_run)
+        except OSError:
+            logging.info("Backup failed for %s. Skipping.", link_name)
+            return
 
-    logging.info('Linking "%s" -> "%s"', link_name, dotfile_path)
-    create_symbolic_link(dotfile_path, link_name, dry_run)
+    logging.info('Linking "%s" -> "%s"', link_name, link_target)
+    create_symbolic_link(link_target, link_name, dry_run)
