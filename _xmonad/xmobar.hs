@@ -9,7 +9,7 @@ Config { font = "xft:Terminus (TTF),DejaVu Sans Mono"
                     , Run BatteryP ["BAT0"]
                                    ["-t", "Batt: <left>% (<timeleft>)<acstatus>",
                                    "--", "-f", "AC0/online",
-                                   "-O", " <fc=yellow>++</fc>",
+                                   "-O", " <fc=yellow>⚡</fc>",
                                    "-l", "red",
                                    "-i", "", "-o", ""] 10
                     , Run Wireless "wlp3s0" [] 10
