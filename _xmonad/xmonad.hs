@@ -35,11 +35,12 @@ myManageHook = composeAll . concat $
     ]
   where
     myChatApps =
-        [ "crx_nckgahadagoaajjgafhacjanaoiihapd" -- Chrome Hangouts Extension
+        [ "crx_nckgahadagoaajjgafhacjanaoiihapd" -- Hangouts Chrome Extension
+        , "crx_knipolnnllmklapflnccelgolnpehhpl" -- Hangouts Chrome App
         ]
 
 chatPlacement :: Placement
-chatPlacement = withGaps (0, 20, 20, 0) (inBounds (smart (1, 1)))
+chatPlacement = withGaps (0, 0, 22, 0) (inBounds (smart (1, 1)))
 
 myLogHook :: Handle -> X()
 myLogHook h = dynamicLogWithPP $ xmobarPP
