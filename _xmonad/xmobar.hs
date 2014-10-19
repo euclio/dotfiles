@@ -1,4 +1,4 @@
-Config { font = "xft:Terminus (TTF)"
+Config { font = "xft:Terminus (TTF),DejaVu Sans Mono"
        , bgColor = "#1c1b1a"
        , fgColor = "#ffffff"
        , position = Bottom
