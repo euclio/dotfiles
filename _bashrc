@@ -65,6 +65,9 @@ stty -ixon
 # Add ruby gem executables to PATH
 PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 
+# Use antialiased fonts and GTK look and feel for Swing applications.
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+
 # If a local bashrc exists, then source it.
 if [ -f ~/.bashrc_local ]; then
     . ~/.bashrc_local

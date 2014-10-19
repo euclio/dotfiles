@@ -23,6 +23,9 @@ set VIRTUALFISH_COMPAT_ALIASES
 # Disable flow control. Instead pass Ctrl-S and Ctrl-Q through.
 stty -ixon
 
+# Use antialiased fonts and GTK look and feel for Swing applications.
+set -x _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+
 source ~/.config/fish/colors.fish
 source ~/.config/fish/scripts/virtualfish/virtual.fish
 source ~/.aliases
