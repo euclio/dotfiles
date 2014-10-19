@@ -16,7 +16,7 @@ xbindkeys
 xcompmgr -a &
 
 # Open web browser
-x-www-browser &
+xdg-open http:// &
 
 # Set background image and start window manager
 feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
