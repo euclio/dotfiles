@@ -13,10 +13,10 @@ Config { font = "xft:Terminus (TTF),DejaVu Sans Mono"
                                    "-l", "red",
                                    "-i", "", "-o", ""] 10
                     , Run Wireless "wlp3s0" [] 10
-                    , Run Com "/bin/bash" ["-c", "~/dotfiles/scripts/get_volume.sh"] "vol" 10
+                    , Run Volume "default" "Master" [] 10
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %wlp3s0wi% | %battery% | %vol% | %cpu% | %memory%     <fc=#ee9a00>%date%</fc> | %KONT%"
+       , template = "%StdinReader% }{ %wlp3s0wi% | %battery% | %default:Master% | %cpu% | %memory%     <fc=#ee9a00>%date%</fc> | %KONT%"
        }
