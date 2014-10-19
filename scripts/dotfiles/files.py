@@ -103,7 +103,8 @@ def link_vim(vim_folder, backup_dir, dry_run):
             raise
 
 
-def link_file(filename, backup_dir, dry_run, link_name=None):
+def link_file(filename, backup_dir, dry_run=False, check_only=False,
+              link_name=None):
     """
     Creates a symbolic link in the home directory to the given dotfile.
 
@@ -131,6 +132,12 @@ def link_file(filename, backup_dir, dry_run, link_name=None):
         if dotfile_name.startswith('_'):
             dotfile_name = '.' + dotfile_name[1:]
         link_name = os.path.join(HOME_DIRECTORY, dotfile_name)
+
+    if check_only:
+        if not os.path.islink(link_name):
+            logging.warning('Dotfile %s not installed.',
+                            os.path.basename(link_name))
+        return
 
     # Get the path that the dotfile should point to.  We attempt to get a
     # relative path from the name of the dotfile to the actual file.  On

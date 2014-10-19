@@ -34,6 +34,10 @@ def parse_arguments():
         '-d', '--dry_run',
         action='store_true',
         help='prints out the commands to be run without executing them')
+    parser.add_argument(
+        '-c', '--check',
+        action='store_true',
+        help='checks whether dotfiles are installed or not.')
     return parser.parse_args()
 
 
@@ -56,7 +60,8 @@ def main():
     # Windows special casing
     if platform.system() == 'Windows':
         from dotfiles import windows
-        windows.install(dotfile_dir, args.backup, args.dry_run)
+        windows.install(dotfile_dir, args.backup, args.dry_run,
+                        check_only=args.check)
 
     dotfiles = glob(os.path.join(dotfile_dir, '_*'))
     for dotfile in dotfiles:
@@ -64,7 +69,8 @@ def main():
         if os.path.basename(dotfile) == '_vim':
             files.link_vim(dotfile, args.backup, args.dry_run)
             continue
-        files.link_file(dotfile, args.backup, args.dry_run)
+        files.link_file(dotfile, args.backup, args.dry_run,
+                        check_only=args.check)
 
 
 if __name__ == '__main__':

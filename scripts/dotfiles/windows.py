@@ -14,7 +14,7 @@ CSIDL_PERSONAL = 5      # My Documents
 CSIDL_STARTUP = 7       # Startup
 
 
-def install(dotfile_dir, backup_dir, dry_run):
+def install(dotfile_dir, backup_dir, dry_run, check_only=False):
     """Handle installation of Windows-specific dotfiles."""
     # Check for Python 3
     if not sys.version_info.major >= 3:
@@ -35,11 +35,13 @@ def install(dotfile_dir, backup_dir, dry_run):
                                     os.path.basename(ahk_path))
 
     # The main autohotkey script must reside in My Documents.
-    link_file(ahk_path, backup_dir, dry_run, link_name=default_ahk_path)
+    link_file(ahk_path, backup_dir, dry_run, check_only=check_only,
+              link_name=default_ahk_path)
 
     # We want the main script to start at startup, so we also link it to
     # the startup folder.
-    link_file(ahk_path, backup_dir, dry_run, link_name=startup_ahk_path)
+    link_file(ahk_path, backup_dir, dry_run, check_only=check_only,
+              link_name=startup_ahk_path)
 
 
 def is_admin():
