@@ -15,6 +15,7 @@ _xmonad/xmonad.errors
 # Ignored Settings
 _config/autostart
 _config/configstore
+_config/dconf
 _config/deluge
 _config/desmume
 _config/fish/fish_history
@@ -26,6 +27,7 @@ _config/google-musicmanager/
 _config/googlecl
 _config/gtk-2.0/gtkfilechooser.ini
 _config/guvcview
+_config/gvbam
 _config/icedtea-web
 _config/libreoffice
 _config/menus
@@ -36,5 +38,6 @@ _config/smplayer
 _config/Thunar
 _config/Trolltech.conf
 _config/unity3d
+_config/VirtualBox
 _config/vlc
 _config/xfce4
