@@ -7,6 +7,7 @@
 	helper = cache --timeout=3600
 [core]
 	editor = vim
+	autocrlf = input
 [mergetool "fugitive"]
 	cmd = gvim -f -c \"Gvdiff\" \"$MERGED\"
 [merge]
