@@ -8,6 +8,7 @@ Config { font = "xft:Terminus (TTF),DejaVu Sans Mono"
                     , Run Date "%a %b %_d %l:%M" "date" 10
                     , Run BatteryP ["BAT0"]
                                    ["-t", "Batt: <left>% (<timeleft>)<acstatus>",
+                                   "-L", "15", "-l", "red",
                                    "--", "-f", "AC0/online",
                                    "-O", " <fc=yellow>⚡</fc>",
                                    "-l", "red",
