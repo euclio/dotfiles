@@ -18,7 +18,7 @@ myTerminal :: String
 myTerminal              = "urxvt -e fish"
 
 myNormalBorderColor :: String
-myNormalBorderColor     = "#d0d0d0"
+myNormalBorderColor     = "#393939"
 
 myFocusedBorderColor :: String
 myFocusedBorderColor    = "#ffa500"
