@@ -2,6 +2,7 @@ function fish_prompt
     set n (set_color normal)             # Normal color
     set ve (set_color magenta)           # Virtualenv color
     set wd (set_color yellow)            # Working directory color
+    set bl (set_color blue)              # Git prompt color
 
     # Remember the color to use for the status
     if [ $status -eq 0 ]
@@ -25,9 +26,9 @@ function fish_prompt
     end
 
     printf "$st┌ $n"
-    printf "%s@%s:$wd%s$n" (whoami) (hostname) (prompt_pwd)
+    printf "%s@%s:$wd%s$bl%s$n" (whoami) (hostname) (prompt_pwd) (__fish_git_prompt)
     if set -q VIRTUAL_ENV
-        printf " $ve(%s)$n" (basename "$VIRTUAL_ENV")
+        printf " $ve<%s>$n" (basename "$VIRTUAL_ENV")
     end
     echo
     printf "$st└╌╌┄┄ $vi❯❯$n " $mode
