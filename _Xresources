@@ -54,3 +54,11 @@ URxvt.url-select.underline:     true
 ! Gray
 *color7:                #ADADA9
 *color15:               #FFFFFF
+
+! Screensaver font settings
+XLock.fpsfont:          -*-fixed-medium-*-*-*-14-*-*-*-*-*-r
+XLock.font:             -*-fixed-medium-*-*-*-14-*-*-*-*-*-r
+XLock.planfont:         -*-fixed-medium-*-*-*-14-*-*-*-*-*-r
+XLock.fontset:          -*-fixed-medium-*-*-*-14-*-*-*-*-*-r
+XLock.planfontset:      -*-fixed-medium-*-*-*-14-*-*-*-*-*-r
+XLock.messagefont:      -*-fixed-medium-*-*-*-14-*-*-*-*-*-r
