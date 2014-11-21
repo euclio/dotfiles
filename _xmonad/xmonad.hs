@@ -71,5 +71,5 @@ main = do
         , startupHook        = setWMName "LG3D"
         }
         `additionalKeysP`
-        [ ("M-S l", spawn "xlock")
+        [ ("M-S-l", spawn "xlock")
         ]
