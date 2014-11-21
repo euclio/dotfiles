@@ -1,5 +1,8 @@
 xrdb ~/.Xresources
 
+# Disable screen blanking
+xset -dpms; xset s off
+
 # Use a normal cursor for X
 xsetroot -cursor_name left_ptr
 
