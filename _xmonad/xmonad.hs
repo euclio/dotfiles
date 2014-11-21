@@ -72,4 +72,6 @@ main = do
         }
         `additionalKeysP`
         [ ("M-S-l", spawn "xlock")
+        , ("M-s", spawn "maim")
+        , ("M-S-s", spawn "maim --select")
         ]
