@@ -74,4 +74,5 @@ main = do
         [ ("M-S-l", spawn "xlock")
         , ("M-s", spawn "maim")
         , ("M-S-s", spawn "maim --select")
+        , ("M-S-r", spawn "lxrandr")
         ]
