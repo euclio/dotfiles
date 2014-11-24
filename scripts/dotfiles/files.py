@@ -42,12 +42,12 @@ def create_directory(directory, dry_run):
     _execute(os.mkdir, directory, dry_run=dry_run)
 
 
-def _execute(function, *args, dry_run):
+def _execute(function, *args, **kwargs):
     """Invokes function with *args if dry_run is False. Otherwise, logs the
     invocation."""
     qualified_name = '{}.{}'.format(function.__module__, function.__name__)
     logging.info('Executing %s(%s)', qualified_name, ', '.join(args))
-    if not dry_run:
+    if not kwargs['dry_run']:
         function(*args)
 
 
