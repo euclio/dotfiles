@@ -1,0 +1,10 @@
+[Unit]
+Description=RXVT-Unicode Daemon
+Requires=urxvtd.socket
+
+[Service]
+ExecStart=/usr/bin/urxvtd -q -o
+Environment=RXVT_SOCKET=%h/.urxvt/urxvtd-%H
+
+[Install]
+WantedBy=default.target

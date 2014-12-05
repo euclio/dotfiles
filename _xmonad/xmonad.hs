@@ -15,7 +15,7 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
 myTerminal :: String
-myTerminal              = "urxvt -e fish"
+myTerminal              = "urxvtc -e fish"
 
 myNormalBorderColor :: String
 myNormalBorderColor     = "#393939"
