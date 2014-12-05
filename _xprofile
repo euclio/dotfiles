@@ -1,0 +1,27 @@
+#!/bin/sh
+
+xrdb ~/.Xresources
+
+# Disable screen blanking
+xset -dpms; xset s off
+
+# Use a normal cursor for X
+xsetroot -cursor_name left_ptr
+
+# Enable custom keyboard mappings
+xmodmap $HOME/.xmodmap
+
+# Disable touchpad while typing
+syndaemon -t -k -i 2 -d &
+
+# Enable key remapping
+xbindkeys
+
+# Fix for Chromium Issue #370022
+xcompmgr -a &
+
+# Open web browser
+xdg-open http:// &
+
+# Set background image and start window manager
+feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
