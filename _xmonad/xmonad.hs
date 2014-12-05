@@ -75,4 +75,9 @@ main = do
         , ("M-s", spawn "maim")
         , ("M-S-s", spawn "maim --select")
         , ("M-S-r", spawn "lxrandr")
+        -- Unfortunately, ASUS laptops don't report the screen brightness
+        -- function keys to X. Thus, we have to make up new key combinations to
+        -- change the screen brightness.
+        , ("M-S-5", spawn "asus-screen-brightness down")
+        , ("M-S-6", spawn "asus-screen-brightness up")
         ]
