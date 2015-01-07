@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source ~/.bashrc
+
 xrdb ~/.Xresources
 
 # Disable screen blanking

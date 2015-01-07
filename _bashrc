@@ -1,16 +1,17 @@
-# Make default editor into vim
-export EDITOR=/usr/bin/vim
+#!/bin/sh
 
-# Use vim as the manpager
-export MANPAGER="/bin/sh -c \"col -b |
-    vim -R +AirlineToggle \
-        -c 'set ft=man ts=8 nolist noru nonu nornu noma nosc tw=0 ls=0' -\""
+[[ -z $XDG_CONFIG_HOME ]] && export XDG_CONFIG_HOME="$HOME/.config"
+
+[[ -f $XDG_CONFIG_HOME/bash/env.sh ]] && source $XDG_CONFIG_HOME/bash/env.sh
 
 # Use vi-style keybindings when in the terminal
 set -o vi
 
-# Enable autocomplete in Python interpreter
-export PYTHONSTARTUP=~/.pythonrc
+# Disable flow control. Instead pass Ctrl-S and Ctrl-Q through.
+stty -ixon
+
+# Allows bash aliases to be stored in a different file
+[[ -f $XDG_CONFIG_HOME/bash/aliases.sh ]] && source $XDG_CONFIG_HOME/bash/aliases.sh
 
 # Make terminal advertise 256 color support (from Ubuntu default .bash_profile)
 if [ "$TERM" = "xterm" ] ; then
@@ -43,7 +44,7 @@ if [ "$TERM" = "xterm" ] ; then
     fi
 fi
 
-
+# Bash-specific aliases
 # SSH into a tmux session
 ssht() {
     ssh $* -t 'tmux attach || tmux || /bin/bash'
@@ -54,21 +55,5 @@ multiadb() {
     adb devices | tail -n +2 | cut -sf 1 | xargs -iX adb -s X ${@:1}
 }
 
-# Allows bash aliases to be stored in a different file
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# Disable flow control. Instead pass Ctrl-S and Ctrl-Q through.
-stty -ixon
-
-# Add ruby gem executables to PATH
-PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
-
-# Use antialiased fonts and GTK look and feel for Swing applications.
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
-
-# If a local bashrc exists, then source it.
-if [ -f ~/.bashrc_local ]; then
-    . ~/.bashrc_local
-fi
+# If a local bashrc exists, then source it (overriding other configuration)
+[[ -f $XDG_CONFIG_HOME/bash/bashrc_local ]] && source $XDG_CONFIG_HOME/bash/bashrc_local
