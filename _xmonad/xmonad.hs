@@ -58,7 +58,7 @@ myUrgentConfig = UrgencyConfig
 main :: IO()
 main = do
     h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-    xmonad $ withUrgencyHookC NoUrgencyHook myUrgentConfig
+    xmonad $ ewmh $ withUrgencyHookC NoUrgencyHook myUrgentConfig
         defaultConfig
         { terminal           = myTerminal
         , modMask            = mod4Mask
