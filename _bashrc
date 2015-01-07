@@ -4,6 +4,8 @@
 
 [[ -f $XDG_CONFIG_HOME/bash/env.sh ]] && source $XDG_CONFIG_HOME/bash/env.sh
 
+[[ -f $XDG_CONFIG_HOME/bash/xdg.sh ]] && source $XDG_CONFIG_HOME/bash/xdg.sh
+
 # Use vi-style keybindings when in the terminal
 set -o vi
 
