@@ -9,7 +9,7 @@ export MANPAGER="/bin/sh -c \"col -b |
         -c 'set ft=man ts=8 nolist noru nonu nornu noma nosc tw=0 ls=0' -\""
 
 # Enable autocomplete in Python interpreter
-export PYTHONSTARTUP=~/.pythonrc
+export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
 
 # Add ruby gem executables to PATH
 export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
