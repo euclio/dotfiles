@@ -8,6 +8,7 @@
 [core]
 	editor = vim
 	autocrlf = input
+	excludesfile = $XDG_CONFIG_HOME/gitignore
 [mergetool "fugitive"]
 	cmd = gvim -f -c \"Gvdiff\" \"$MERGED\"
 [merge]
