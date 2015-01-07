@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Set background image
+feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
+
 source ~/.bashrc
 
 xrdb ~/.Xresources
@@ -24,6 +27,3 @@ xcompmgr -a &
 
 # Open web browser
 xdg-open http:// &
-
-# Set background image and start window manager
-feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
