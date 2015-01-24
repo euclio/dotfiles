@@ -10,6 +10,10 @@ Config { font = "xft:Terminus (TTF),DejaVu Sans Mono,Symbola"
                     , Run Cpu ["-t", "🖳 <total>%", " -L", "3", "-H", "50",
                                "--normal", "green", "--high", "red"] 10
                     , Run Memory ["-t", "🗈 <usedratio>%"] 10
+                    , Run DiskU [("/", "<used>/<size>"),
+                                 ("/home", "<used>/<size>")]
+                                ["-L", "20", "-H", "50", "-m", "1", "-p", "3"]
+                                20
                     , Run Date "%a %b %_d %l:%M" "date" 10
                     , Run BatteryP ["BAT0"]
                                    ["-t", "⚡ <left>% (<timeleft>)<acstatus>",
@@ -26,5 +30,5 @@ Config { font = "xft:Terminus (TTF),DejaVu Sans Mono,Symbola"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %wlp3s0wi% | %battery% | %default:Master% | %cpu% | %memory%     <fc=#ee9a00>%date%</fc> | %KONT%"
+       , template = "%StdinReader% }{ %wlp3s0wi% | %battery% | %default:Master% | %cpu% | %memory% | %disku%    <fc=#ee9a00>%date%</fc> | %KONT%"
        }
