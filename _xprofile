@@ -1,9 +1,16 @@
 #!/bin/sh
 
+[[ -z $XDG_CONFIG_HOME ]] && export XDG_CONFIG_HOME="$HOME/.config"
+[[ -z $XDG_DATA_HOME ]] && export XDG_DATA_HOME="$HOME/.local/share"
+[[ -z $XDG_CACHE_HOME ]] && export XDG_CACHE_HOME="$HOME/.cache"
+[[ -f $XDG_CONFIG_HOME/bash/xdg.sh ]] && source $XDG_CONFIG_HOME/bash/xdg.sh
+
+[[ -f $XDG_CONFIG_HOME/bash/env.sh ]] && source $XDG_CONFIG_HOME/bash/env.sh
+
 # Set background image
 feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
 
-source ~/.bashrc
+source $XDG_CONFIG_HOME/bash/bashrc
 
 xrdb $XDG_CONFIG_HOME/x/resources
 
