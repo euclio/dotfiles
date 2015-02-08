@@ -76,36 +76,6 @@ def backup_file(filename, backup_dir, dry_run, force=False):
     move_file_or_directory(filename, dotfile_backup, dry_run)
 
 
-def link_vim(vim_folder, backup_dir, dry_run, check_only=False):
-    """Special casing for linking Vim's configuration."""
-    if platform.system() == 'Windows':
-        dotvim = os.path.join(HOME_DIRECTORY, 'vimfiles')
-    else:
-        dotvim = os.path.join(HOME_DIRECTORY, '.vim')
-
-    link_file(vim_folder, backup_dir, dry_run, link_name=dotvim,
-              check_only=check_only)
-
-    # Check if the computer has Vim 7.4.
-    # If not, then we need to link the vimrc and gvimrc.
-    try:
-        vim_version_output = (
-            subprocess.check_output(['vim', '--version']).decode('utf-8'))
-        # Split the string into lines, then examine the first line:
-        #   VIM - Vi IMproved <VERSION>
-        vim_version = vim_version_output.split('\n')[0].split(' ')[4]
-        if vim_version < '7.4':
-            link_file(os.path.join(vim_folder, 'vimrc'), dry_run, backup_dir,
-                      check_only=check_only)
-            link_file(os.path.join(vim_folder, 'gvimrc'), dry_run, backup_dir,
-                      check_only=check_only)
-    except OSError as err:
-        if err.errno == os.errno.ENOENT:
-            pass            # Vim isn't installed
-        else:
-            raise
-
-
 def get_link_target(link_path, dotfile_path):
     """Returns the path that should be contained in the link to the dotfile.
 

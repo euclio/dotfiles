@@ -18,3 +18,6 @@ export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 # Fix apperance of Swing applications in tiling window manager
 export _JAVA_AWT_WM_NONREPARENTING=1
+
+# Set vimrc's location to $XDG_CONFIG_HOME
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'

@@ -1,10 +1,9 @@
-[submodule "_vim"]
-	path = _vim
-	url = https://github.com/euclio/vim-settings
-	branch = master
 [submodule "_irssi/scripts/facebook-bitlbee-rename"]
 	path = _irssi/scripts/facebook-bitlbee-rename
 	url = https://github.com/avar/irssi-bitlbee-facebook-rename.git
 [submodule "_config/fish/scripts/virtualfish"]
 	path = _config/fish/scripts/virtualfish
 	url = https://github.com/adambrenecki/virtualfish.git
+[submodule "_config/vim"]
+	path = _config/vim
+	url = https://github.com/euclio/vim-settings.git

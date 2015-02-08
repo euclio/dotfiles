@@ -65,10 +65,6 @@ def main():
 
     dotfiles = glob(os.path.join(dotfile_dir, '_*'))
     for dotfile in dotfiles:
-        # Vim special casing
-        if os.path.basename(dotfile) == '_vim':
-            files.link_vim(dotfile, args.backup, args.dry_run)
-            continue
         files.link_file(dotfile, args.backup, args.dry_run,
                         check_only=args.check)
 
