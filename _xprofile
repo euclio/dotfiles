@@ -5,7 +5,7 @@ feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
 
 source ~/.bashrc
 
-xrdb ~/.Xresources
+xrdb $XDG_CONFIG_HOME/x/resources
 
 # Disable screen blanking
 xset -dpms; xset s off
@@ -14,13 +14,13 @@ xset -dpms; xset s off
 xsetroot -cursor_name left_ptr
 
 # Enable custom keyboard mappings
-xmodmap $HOME/.xmodmap
+xmodmap $XDG_CONFIG_HOME/x/modmap
 
 # Disable touchpad while typing
 syndaemon -t -k -i 2 -d &
 
 # Enable key remapping
-xbindkeys
+xbindkeys -f $XDG_CONFIG_HOME/x/bindkeys
 
 # Fix for Chromium Issue #370022
 xcompmgr -a &
