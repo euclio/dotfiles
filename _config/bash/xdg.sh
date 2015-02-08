@@ -1,4 +1,4 @@
-#1/bin/sh
+#!/bin/sh
 
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export HISTFILE="$XDG_DATA_HOME/bash/history"
