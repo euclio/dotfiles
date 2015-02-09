@@ -1,5 +1,8 @@
+import Control.Monad
+import Data.Char
 import Data.Monoid
 import GHC.IO.Handle.Types
+import System.FilePath
 
 import XMonad
 import XMonad.Hooks.DynamicLog
@@ -55,7 +58,31 @@ myUrgentConfig = UrgencyConfig
     ,   remindWhen   = Dont
     }
 
-main :: IO()
+-- Returns the directory where screenshots should be stored. Currently stores
+-- screenshots in a subdirectory of the $XDG_PICTURES_DIR.
+screenshotDirectory :: IO String
+screenshotDirectory = do
+    -- TODO: Do this at compile time
+    xdgPicturesDir <- liftM rstrip (runProcessWithInput "xdg-user-dir" ["PICTURES"] [])
+    return $ xdgPicturesDir </> "screenshot"
+
+-- Retrieves the current date and time to create a filename for a screenshot.
+screenshotDateFormat :: IO String
+screenshotDateFormat =
+    liftM rstrip (runProcessWithInput "date" [dateFormat] [])
+  where
+    dateFormat :: String
+    dateFormat = "+%F-%T"
+
+-- Returns the command to use to create a screenshot in the correct directory.
+screenshotCommand :: [String] -> IO String
+screenshotCommand extraArgs = do
+    dateFormat <- screenshotDateFormat
+    directory <- screenshotDirectory
+    let fileName = directory </> dateFormat <.> "png"
+    return $ "maim" ++ " " ++ unwords extraArgs ++ " " ++ fileName
+
+main :: IO ()
 main = do
     h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
     xmonad $ ewmh $ withUrgencyHookC NoUrgencyHook myUrgentConfig
@@ -72,8 +99,8 @@ main = do
         }
         `additionalKeysP`
         [ ("M-S-l", spawn "xlock")
-        , ("M-s", spawn "maim")
-        , ("M-S-s", spawn "maim --select")
+        , ("M-s", liftIO (screenshotCommand []) >>= spawn)
+        , ("M-S-s", liftIO (screenshotCommand ["-s"]) >>= spawn)
         , ("M-S-r", spawn "lxrandr")
         -- Unfortunately, ASUS laptops don't report the screen brightness
         -- function keys to X. Thus, we have to make up new key combinations to
@@ -81,3 +108,7 @@ main = do
         , ("M-<F5>", spawn "asus-screen-brightness down")
         , ("M-<F6>", spawn "asus-screen-brightness up")
         ]
+
+-- Strips trailing whitespace from a string
+rstrip :: String -> String
+rstrip = reverse . dropWhile isSpace . reverse
