@@ -98,15 +98,15 @@ main = do
         , startupHook        = setWMName "LG3D"
         }
         `additionalKeysP`
-        [ ("M-S-l", spawn "xlock")
+        [ ("M-S-l", safeSpawnProg "xlock")
         , ("M-s", liftIO (screenshotCommand []) >>= spawn)
         , ("M-S-s", liftIO (screenshotCommand ["-s"]) >>= spawn)
-        , ("M-S-r", spawn "lxrandr")
+        , ("M-S-r", safeSpawnProg "lxrandr")
         -- Unfortunately, ASUS laptops don't report the screen brightness
         -- function keys to X. Thus, we have to make up new key combinations to
         -- change the screen brightness.
-        , ("M-<F5>", spawn "asus-screen-brightness down")
-        , ("M-<F6>", spawn "asus-screen-brightness up")
+        , ("M-<F5>", safeSpawn "asus-screen-brightness" ["down"])
+        , ("M-<F6>", safeSpawn "asus-screen-brightness" ["up"])
         ]
 
 -- Strips trailing whitespace from a string
