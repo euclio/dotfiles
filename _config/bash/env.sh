@@ -24,3 +24,6 @@ export VIMINIT='let $MYVIMRC=$XDG_CONFIG_HOME . "/vim/vimrc" | source $MYVIMRC'
 
 # Increase SBT's cache size
 export SBT_OPTS="-XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xms1g -Xmx1g"
+
+# Store npmrc in config directory
+export npm_config_userconfig=$XDG_CONFIG_HOME/nodejs/npmrc
