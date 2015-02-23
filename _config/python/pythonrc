@@ -1,2 +1,26 @@
-import rlcompleter, readline
+import atexit
+import os
+import readline
+import rlcompleter
+
+history_path = os.path.expandvars('$XDG_DATA_HOME/python/history')
+
+# Use tab for autocomplete
 readline.parse_and_bind('tab:complete')
+
+
+def save_history(history_path=history_path):
+    import readline
+    readline.write_history_file(history_path)
+
+try:
+    readline.read_history_file(history_path)
+except IOError:
+    if not os.path.exists(os.path.dirname(history_path)):
+        os.makedirs(os.path.dirname(history_path))
+    open(history_path, 'a').close()
+
+atexit.register(save_history)
+
+# Delete all local variables so they don't appear in the interpreter
+del atexit, os, readline, rlcompleter, history_path, save_history
