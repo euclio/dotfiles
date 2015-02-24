@@ -10,5 +10,6 @@ alias nicklist='cat $HOME/.irssi/nicklistfifo'
 # Give words command history
 alias words='rlwrap words'
 
-# Make tmux obey the XDG directory specification
+# Workarounds to make programs obey the XDG base directory specification
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
+alias irssi="irssi --home $XDG_CONFIG_HOME/irssi"

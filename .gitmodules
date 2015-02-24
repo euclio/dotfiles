@@ -1,5 +1,5 @@
-[submodule "_irssi/scripts/facebook-bitlbee-rename"]
-	path = _irssi/scripts/facebook-bitlbee-rename
+[submodule "_config/irssi/scripts/facebook-bitlbee-rename"]
+	path = _config/irssi/scripts/facebook-bitlbee-rename
 	url = https://github.com/avar/irssi-bitlbee-facebook-rename.git
 [submodule "_config/fish/scripts/virtualfish"]
 	path = _config/fish/scripts/virtualfish
