@@ -3,6 +3,9 @@
 # Make default editor into vim
 export EDITOR=/usr/bin/vim
 
+# Use xdg to determine the default browser
+export BROWSER="/usr/bin/xdg-open http://"
+
 # Use vim as the manpager
 export MANPAGER="/bin/sh -c \"col -b |
     vim -R +AirlineToggle \
