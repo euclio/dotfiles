@@ -26,7 +26,7 @@ function fish_prompt
     end
 
     printf "$st┌ $n"
-    printf "%s@%s:$wd%s$bl%s$n" (whoami) (hostname) (prompt_pwd) (__fish_git_prompt)
+    printf "%s@%s $wd%s$bl%s$n" (whoami) (hostname) (prompt_pwd) (__fish_git_prompt)
     if set -q VIRTUAL_ENV
         printf " $ve<%s>$n" (basename "$VIRTUAL_ENV")
     end
