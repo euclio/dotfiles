@@ -3,7 +3,7 @@ configstore
 dconf
 deluge
 desmume
-fish/fish_history
+fish/fish_history*
 fish/fishd.*
 fish/generated_completions
 google-chrome-unstable
