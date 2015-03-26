@@ -1,11 +1,13 @@
 function fish_prompt
+    # Save the value of the last status for later
+    set last_status $status
+
     set n (set_color normal)             # Normal color
     set ve (set_color magenta)           # Virtualenv color
     set wd (set_color yellow)            # Working directory color
     set bl (set_color blue)              # Git prompt color
 
-    # Remember the color to use for the status
-    if [ $status -eq 0 ]
+    if [ $last_status -eq 0 ]
         set st (set_color green --bold)      # Status success
     else
         set st (set_color red --bold)        # Status error code
