@@ -1,5 +1,0 @@
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-# Start X automatically at login.
-# By not using exec, it is possible to drop into a tty by killing the server
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx
