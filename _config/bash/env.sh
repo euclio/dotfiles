@@ -15,7 +15,9 @@ export MANPAGER="/bin/sh -c \"col -b |
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
 
 # Add ruby gem executables to PATH
-export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+if type "ruby" > /dev/null; then
+    export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+fi
 
 # Use antialiased fonts and GTK look and feel for Swing applications.
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
