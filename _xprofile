@@ -1,5 +1,7 @@
 #!/bin/sh
 
+[ -f $HOME/.profile ] && source $HOME/.profile
+
 # Set background image
 feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
 
