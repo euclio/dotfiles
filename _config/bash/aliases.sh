@@ -5,7 +5,7 @@ alias ls='ls --color=auto'
 alias kohina='mplayer -prefer-ipv4 -playlist http://anka.org:8080/fresh.ogg.m3u'
 
 # Quick way to show irssi nicklist
-alias nicklist='cat $HOME/.irssi/nicklistfifo'
+alias nicklist="cat $XDG_CONFIG_HOME/irssi/nicklistfifo"
 
 # Give words command history
 alias words='rlwrap words'
