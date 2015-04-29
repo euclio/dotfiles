@@ -26,6 +26,3 @@ xbindkeys -f $XDG_CONFIG_HOME/x/bindkeys
 
 # Fix for Chromium Issue #370022
 xcompmgr -a &
-
-# Open web browser
-xdg-open http:// &

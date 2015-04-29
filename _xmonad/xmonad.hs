@@ -5,6 +5,7 @@ import GHC.IO.Handle.Types
 import System.FilePath
 
 import XMonad
+import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -14,11 +15,13 @@ import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.NoBorders
 import XMonad.Layout.LayoutModifier
+import XMonad.Prompt
+import XMonad.Prompt.Shell
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
 myTerminal :: String
-myTerminal              = "urxvtc -e fish"
+myTerminal              = "urxvt -e fish"
 
 myNormalBorderColor :: String
 myNormalBorderColor     = "#393939"
@@ -30,7 +33,7 @@ myLayoutHook :: ModifiedLayout SmartBorder (ModifiedLayout AvoidStruts (Choose T
 myLayoutHook            = smartBorders $ avoidStruts $
                           layoutHook defaultConfig
 
-myManageHook :: Query (Endo WindowSet)
+myManageHook :: ManageHook
 myManageHook = composeAll . concat $
     [ [ isFullscreen --> doFullFloat ]
     , [ appName =? c --> (placeHook chatPlacement <+> doFloat) | c <- myChatApps ]
@@ -82,6 +85,14 @@ screenshotCommand extraArgs = do
     let fileName = directory </> dateFormat <.> "png"
     return $ "maim" ++ " " ++ unwords extraArgs ++ " " ++ fileName
 
+myStartupHook :: X ()
+myStartupHook = do
+    myBrowser <- liftIO getBrowser
+    spawnOn "1" myBrowser       -- Slightly misleading, the browser has to
+                                -- spawn on the first workspace.
+    spawnOn "2" myTerminal
+    setWMName "LG3D"
+
 main :: IO ()
 main = do
     h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
@@ -92,10 +103,12 @@ main = do
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
         , handleEventHook    = fullscreenEventHook
-        , manageHook         = myManageHook <+> manageHook defaultConfig
+        , manageHook         = manageHook defaultConfig
+                                    <+> manageSpawn
+                                    <+> myManageHook
         , layoutHook         = myLayoutHook
         , logHook            = myLogHook h
-        , startupHook        = setWMName "LG3D"
+        , startupHook        = myStartupHook
         }
         `additionalKeysP`
         [ ("M-S-l", safeSpawnProg "xlock")
