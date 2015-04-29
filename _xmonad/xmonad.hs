@@ -102,11 +102,8 @@ main = do
         , ("M-s", liftIO (screenshotCommand []) >>= spawn)
         , ("M-S-s", liftIO (screenshotCommand ["-s"]) >>= spawn)
         , ("M-S-r", safeSpawnProg "lxrandr")
-        -- Unfortunately, ASUS laptops don't report the screen brightness
-        -- function keys to X. Thus, we have to make up new key combinations to
-        -- change the screen brightness.
-        , ("M-<F5>", safeSpawn "asus-screen-brightness" ["down"])
-        , ("M-<F6>", safeSpawn "asus-screen-brightness" ["up"])
+        , ("<XF86KbdBrightnessUp>", safeSpawn "asus-kbd-backlight" ["up"])
+        , ("<XF86KbdBrightnessDown>", safeSpawn "asus-kbd-backlight" ["down"])
         ]
 
 -- Strips trailing whitespace from a string
