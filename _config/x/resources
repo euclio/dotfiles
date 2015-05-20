@@ -18,6 +18,9 @@ URxvt*saveLines:                12000
 URxvt.iso14755:                 true
 URxvt.iso14755_52:              false
 
+! Fix for Ranger image preview
+URxvt.depth:                    0
+
 URxvt*loginShell:               true
 
 URxvt*urgentOnBell:             true
