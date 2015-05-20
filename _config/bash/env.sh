@@ -33,3 +33,6 @@ export SBT_OPTS="-XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xms1g -X
 
 # Store npmrc in config directory
 export npm_config_userconfig=$XDG_CONFIG_HOME/nodejs/npmrc
+
+# Store ccache in cache dir
+export CCACHE_DIR=$XDG_CACHE_HOME/ccache
