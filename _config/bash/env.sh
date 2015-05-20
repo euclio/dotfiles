@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Add local bin to PATH
+export PATH="$XDG_DATA_HOME/bin:$PATH"
+
 # Make default editor into vim
 export EDITOR=/usr/bin/vim
 
