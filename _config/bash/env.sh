@@ -39,3 +39,6 @@ export npm_config_userconfig=$XDG_CONFIG_HOME/nodejs/npmrc
 
 # Store ccache in cache dir
 export CCACHE_DIR=$XDG_CACHE_HOME/ccache
+
+# Store development package sources in data dir
+export SRCDEST=$XDG_DATA_HOME/makepkg
