@@ -14,6 +14,10 @@ URxvt*letterSpace:              -1
 URxvt.scrollBar:                false
 URxvt*saveLines:                12000
 
+! Disable ISO-14755 mode
+URxvt.iso14755:                 true
+URxvt.iso14755_52:              false
+
 URxvt*loginShell:               true
 
 URxvt*urgentOnBell:             true
