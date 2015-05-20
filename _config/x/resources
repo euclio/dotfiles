@@ -1,3 +1,5 @@
+! vi: syntax=xdefaults
+
 ! Font settings
 Xft.antialias:          1
 Xft.autohint:           0

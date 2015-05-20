@@ -1,3 +1,5 @@
+! vi: syntax=xmodmap
+
 ! Replace Caps Lock with Control.
 ! Control_L is remapped to nothing, to encourage use of Caps Lock.
 clear Lock

@@ -1,3 +1,5 @@
+# vi: syntax=gitconfig
+
 [user]
 	email = arussell123@gmail.com
 	name = Andy Russell
