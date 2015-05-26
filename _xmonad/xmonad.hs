@@ -13,12 +13,14 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.Place
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
-import XMonad.Layout.NoBorders
 import XMonad.Layout.LayoutModifier
+import XMonad.Layout.NoBorders
 import XMonad.Prompt
 import XMonad.Prompt.Shell
+import XMonad.StackSet
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
+import XMonad.Util.Scratchpad
 
 myTerminal :: String
 myTerminal              = "urxvt -e fish"
@@ -38,12 +40,16 @@ myManageHook = composeAll . concat $
     [ [ isFullscreen --> doFullFloat ]
     , [ appName =? c --> (placeHook chatPlacement <+> doFloat) | c <- myChatApps ]
     , [ manageDocks ]
+    , [ manageScratchpad ]
     ]
   where
     myChatApps =
         [ "crx_nckgahadagoaajjgafhacjanaoiihapd" -- Hangouts Chrome Extension
         , "crx_knipolnnllmklapflnccelgolnpehhpl" -- Hangouts Chrome App
         ]
+
+manageScratchpad :: ManageHook
+manageScratchpad = scratchpadManageHookDefault
 
 chatPlacement :: Placement
 chatPlacement = withGaps (0, 0, 300, 0) (inBounds (smart (1, 1)))
@@ -88,9 +94,11 @@ screenshotCommand extraArgs = do
 myStartupHook :: X ()
 myStartupHook = do
     myBrowser <- liftIO getBrowser
-    spawnOn "1" myBrowser       -- Slightly misleading, the browser has to
-                                -- spawn on the first workspace.
-    spawnOn "2" myTerminal
+    -- Spawn the default browser. However, since browsers are 'factory'
+    -- applications, we can't actually specify which workspace it should appear
+    -- on. Thus, it will appear on whichever workspace we happen to be on when
+    -- the window is created.
+    spawnOn "1" myBrowser
     setWMName "LG3D"
 
 main :: IO ()
@@ -123,6 +131,8 @@ main = do
         , ("M-f", safeSpawn "urxvt" ["-e", "fish", "-c", "ranger"])
         -- Open graphical file manager
         , ("M-S-f", safeSpawn "xdg-open" ["~"])
+        -- Open scratchpad terminal
+        , ("M-t", scratchpadSpawnActionCustom ("urxvt -name scratchpad -e fish"))
         , ("<XF86KbdBrightnessUp>", safeSpawn "asus-kbd-backlight" ["up"])
         , ("<XF86KbdBrightnessDown>", safeSpawn "asus-kbd-backlight" ["down"])
         ]
