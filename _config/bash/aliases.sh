@@ -13,3 +13,6 @@ alias words='rlwrap words'
 # Workarounds to make programs obey the XDG base directory specification
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias irssi="irssi --home $XDG_CONFIG_HOME/irssi"
+
+# Update all packages, including development packages
+alias pacu='pacaur -Syu --devel --needed'
