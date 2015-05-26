@@ -4,7 +4,7 @@
 export PATH="$XDG_DATA_HOME/bin:$PATH"
 
 # Make default editor into vim
-export EDITOR=/usr/bin/vim
+export EDITOR=vim
 
 # Use xdg to determine the default browser
 export BROWSER="/usr/bin/xdg-open http://"
