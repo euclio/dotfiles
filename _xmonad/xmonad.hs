@@ -49,7 +49,12 @@ myManageHook = composeAll . concat $
         ]
 
 manageScratchpad :: ManageHook
-manageScratchpad = scratchpadManageHookDefault
+manageScratchpad = scratchpadManageHook (RationalRect l t w h)
+  where
+    h = 0.1
+    w = 1
+    t = 0
+    l = 1 - w
 
 chatPlacement :: Placement
 chatPlacement = withGaps (0, 0, 300, 0) (inBounds (smart (1, 1)))
@@ -59,7 +64,10 @@ myLogHook h = dynamicLogWithPP $ xmobarPP
     {   ppOutput = hPutStrLn h
     ,   ppOrder = \(ws:_:t:_) -> [ws,t]
     ,   ppUrgent = xmobarColor "yellow" "red"
+    ,   ppHidden = noScratchpad
     }
+  where
+    noScratchpad ws = if ws == "NSP" then "" else ws
 
 myUrgentConfig :: UrgencyConfig
 myUrgentConfig = UrgencyConfig
