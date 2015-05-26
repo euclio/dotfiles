@@ -140,7 +140,7 @@ main = do
         -- Open graphical file manager
         , ("M-S-f", safeSpawn "xdg-open" ["~"])
         -- Open scratchpad terminal
-        , ("M-t", scratchpadSpawnActionCustom ("urxvt -name scratchpad -e fish"))
+        , ("M-`", scratchpadSpawnActionCustom ("urxvt -name scratchpad -e fish"))
         , ("<XF86KbdBrightnessUp>", safeSpawn "asus-kbd-backlight" ["up"])
         , ("<XF86KbdBrightnessDown>", safeSpawn "asus-kbd-backlight" ["down"])
         ]
