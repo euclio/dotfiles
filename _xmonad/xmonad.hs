@@ -111,10 +111,18 @@ main = do
         , startupHook        = myStartupHook
         }
         `additionalKeysP`
+        -- Lock PC
         [ ("M-S-l", safeSpawnProg "xlock")
+        -- Take screenshot
         , ("M-s", liftIO (screenshotCommand []) >>= spawn)
+        -- Take screenshot (with selection)
         , ("M-S-s", liftIO (screenshotCommand ["-s"]) >>= spawn)
+        -- Open screen management
         , ("M-S-r", safeSpawnProg "lxrandr")
+        -- Open terminal file manager
+        , ("M-f", safeSpawn "urxvt" ["-e", "fish", "-c", "ranger"])
+        -- Open graphical file manager
+        , ("M-S-f", safeSpawn "xdg-open" ["~"])
         , ("<XF86KbdBrightnessUp>", safeSpawn "asus-kbd-backlight" ["up"])
         , ("<XF86KbdBrightnessDown>", safeSpawn "asus-kbd-backlight" ["down"])
         ]
