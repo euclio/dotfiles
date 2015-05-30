@@ -1,8 +1,9 @@
 # Colorize ls by default
 alias ls='ls --color=auto'
 
-# Chiptune music stream
+# Chiptune music streams
 alias kohina='mplayer -prefer-ipv4 -playlist http://anka.org:8080/fresh.ogg.m3u'
+alias rainwave='mplayer -prefer-ipv4 -playlist http://chiptune.rainwave.cc/tune_in/4.ogg'
 
 # Quick way to show irssi nicklist
 alias nicklist="cat $XDG_CONFIG_HOME/irssi/nicklistfifo"
