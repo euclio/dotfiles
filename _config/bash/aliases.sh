@@ -17,3 +17,6 @@ alias irssi="irssi --home $XDG_CONFIG_HOME/irssi"
 
 # Update all packages, including development packages
 alias pacu='pacaur -Syu --devel --needed'
+
+# Put SBT's config in the config directory, and the ivy cache in the cache
+alias sbt="sbt -Dsbt.global.base=$XDG_CONFIG_HOME/sbt -Dsbt.ivy.home=$XDG_CACHE_HOME/ivy"

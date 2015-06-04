@@ -42,3 +42,6 @@ export CCACHE_DIR=$XDG_CACHE_HOME/ccache
 
 # Store development package sources in data dir
 export SRCDEST=$XDG_DATA_HOME/makepkg
+
+# Set Maven configuration directory
+export M2_HOME="$XDG_CONFIG_HOME/m2"
