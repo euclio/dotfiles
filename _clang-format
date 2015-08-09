@@ -1,0 +1,25 @@
+---
+BasedOnStyle: LLVM
+AlignTrailingComments: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+BinPackArguments: false
+IndentCaseLabels: true
+IndentWidth: 4
+MaxEmptyLinesToKeep: 1
+SpaceAfterCStyleCast: true
+UseTab: Never
+---
+Language: Cpp
+AccessModifierOffset: -4
+AlwaysBreakTemplateDeclarations: true
+DerivePointerAlignment: true
+---
+Language: Java
+ColumnLimit: 120
+
+# vim: ft=yaml
