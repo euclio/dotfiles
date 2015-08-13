@@ -24,7 +24,7 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 
-import XMobar (xmobarCommand)
+import XMobar (xmobar)
 
 myTerminal :: String
 myTerminal              = "urxvt -e fish"
@@ -118,7 +118,7 @@ main :: IO ()
 main = do
     GIO.setFileSystemEncoding GIO.char8     -- workaround for xmonad #611
     hostname <- getHostName
-    xmobar <- spawnPipe (xmobarCommand hostname)
+    xmobarProc <- spawnPipe (XMobar.xmobar hostname)
     xmonad $ ewmh $ withUrgencyHookC NoUrgencyHook myUrgentConfig
         defaultConfig
         { terminal           = myTerminal
@@ -130,7 +130,7 @@ main = do
                                     <+> manageSpawn
                                     <+> myManageHook
         , layoutHook         = myLayoutHook
-        , logHook            = myLogHook xmobar
+        , logHook            = myLogHook xmobarProc
         , startupHook        = myStartupHook
         }
         `additionalKeysP`

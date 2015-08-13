@@ -1,16 +1,17 @@
-module XMobar (xmobarCommand) where
+module XMobar (xmobar) where
 
 import Data.List
+import Text.Printf
 
 xmobarComParameters :: [String] -> String
-xmobarComParameters [] = " [] "
-xmobarComParameters c = " [\"" ++ intercalate "\",\"" c ++ "\"] "
+xmobarComParameters [] = "[]"
+xmobarComParameters c = printf "[\"%s\"]" (intercalate "\", \"" c)
 
 xmobarStdin :: String
 xmobarStdin = "Run StdinReader"
 
 xmobarCommands :: [String] -> String
-xmobarCommands c = "--commands=\'[" ++ intercalate ", " c ++ "]\'"
+xmobarCommands c = printf "--commands='[%s]'" (intercalate ", " c)
 
 xmobarBattery :: Integer -> String
 xmobarBattery refreshRate = unwords
@@ -98,19 +99,43 @@ xmobarVolume mixer element refreshRate = unwords
     , show refreshRate
     ]
 
+defaultCommands :: String -> [String]
+defaultCommands wirelessInterface =
+    [ xmobarStdin
+    , xmobarWireless wirelessInterface 10
+    , xmobarVolume "default" "Master" 10
+    , xmobarCpu 10
+    , xmobarMemory 10
+    , xmobarDiskU 600
+    , xmobarDate 10
+    , xmobarWeather "KONT" 3600
+    ]
+
+leftTemplate :: String
+leftTemplate = "%StdinReader% }{ "
+
+rightTemplate interface =
+    "%" ++ interface ++ "wi% | %default:Master% | %cpu% | %memory% | " ++
+    "%disku%    <fc=#ee9a00>%date%</fc> | %KONT%"
+
+templateParameter :: String -> String
+templateParameter template = printf " -t '%s'" template
+
 xmobarTemplate :: String -> String
-xmobarTemplate _ =
-    xmobarCommands [ xmobarStdin
-                   , xmobarWireless "wlp3s0" 10
-                   , xmobarBattery 60
-                   , xmobarVolume "default" "Master" 10
-                   , xmobarCpu 10
-                   , xmobarMemory 10
-                   , xmobarDiskU 600
-                   , xmobarDate 10
-                   , xmobarWeather "KONT" 3600
-                   ]
-    ++ " -t \'%StdinReader% }{ %wlp3s0wi% | %battery% | %default:Master% | %cpu% | %memory% | %disku%    <fc=#ee9a00>%date%</fc> | %KONT%\'"
+xmobarTemplate "apollo" =
+    xmobarCommands (defaultCommands interface)
+    ++ templateParameter (leftTemplate ++ rightTemplate interface)
+  where
+    interface = "enp0s20u3"
+
+xmobarTemplate "dionysus" =
+    xmobarCommands (defaultCommands interface ++ [xmobarBattery 60])
+    ++ templateParameter (leftTemplate ++ " %battery% |" ++
+                          rightTemplate interface)
+  where
+    interface = "wlp3s0"
+
+xmobarTemplate _ = ""
 
 xmobarLook :: String
 xmobarLook = unwords
@@ -123,6 +148,6 @@ xmobarLook = unwords
 xmobarParameters :: String -> String
 xmobarParameters hostname = unwords [xmobarLook, xmobarTemplate hostname]
 
-xmobarCommand :: String -> String
-xmobarCommand hostname =
+xmobar :: String -> String
+xmobar hostname =
     unwords ["xmobar", xmobarLook, (xmobarParameters hostname)]
