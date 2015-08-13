@@ -99,6 +99,9 @@ xmobarVolume mixer element refreshRate = unwords
     , show refreshRate
     ]
 
+weatherStation :: String
+weatherStation = "KSUS"
+
 defaultCommands :: String -> [String]
 defaultCommands wirelessInterface =
     [ xmobarStdin
@@ -108,7 +111,7 @@ defaultCommands wirelessInterface =
     , xmobarMemory 10
     , xmobarDiskU 600
     , xmobarDate 10
-    , xmobarWeather "KONT" 3600
+    , xmobarWeather weatherStation 3600
     ]
 
 leftTemplate :: String
@@ -116,7 +119,7 @@ leftTemplate = "%StdinReader% }{ "
 
 rightTemplate interface =
     "%" ++ interface ++ "wi% | %default:Master% | %cpu% | %memory% | " ++
-    "%disku%    <fc=#ee9a00>%date%</fc> | %KONT%"
+    "%disku%    <fc=#ee9a00>%date%</fc> | %" ++ weatherStation ++ "%"
 
 templateParameter :: String -> String
 templateParameter template = printf " -t '%s'" template
