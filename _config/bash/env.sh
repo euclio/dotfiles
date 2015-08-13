@@ -40,8 +40,12 @@ export npm_config_userconfig=$XDG_CONFIG_HOME/nodejs/npmrc
 # Store ccache in cache dir
 export CCACHE_DIR=$XDG_CACHE_HOME/ccache
 
+# makepkg
 # Store development package sources in data dir
 export SRCDEST=$XDG_DATA_HOME/makepkg
+
+# Compress using multiple threads
+export COMPRESSXZ=(xz -T 0 -c -z -)
 
 # Set Maven configuration directory
 export M2_HOME="$XDG_CONFIG_HOME/m2"
