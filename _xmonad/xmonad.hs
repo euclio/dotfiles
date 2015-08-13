@@ -2,7 +2,9 @@ import Control.Monad
 import Data.Char
 import Data.Monoid
 import GHC.IO.Handle.Types
+import Network.BSD
 import System.FilePath
+import GHC.IO.Encoding as GIO
 
 import XMonad
 import XMonad.Actions.SpawnOn
@@ -21,6 +23,8 @@ import XMonad.StackSet
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
+
+import XMobar (xmobarCommand)
 
 myTerminal :: String
 myTerminal              = "urxvt -e fish"
@@ -46,6 +50,7 @@ myManageHook = composeAll . concat $
     myChatApps =
         [ "crx_nckgahadagoaajjgafhacjanaoiihapd" -- Hangouts Chrome Extension
         , "crx_knipolnnllmklapflnccelgolnpehhpl" -- Hangouts Chrome App
+        , "org.gamefolk.roomfullofcats.RoomFullOfCatsApp"
         ]
 
 manageScratchpad :: ManageHook
@@ -97,7 +102,7 @@ screenshotCommand extraArgs = do
     dateFormat <- screenshotDateFormat
     directory <- screenshotDirectory
     let fileName = directory </> dateFormat <.> "png"
-    return $ "maim" ++ " " ++ unwords extraArgs ++ " " ++ fileName
+    return $ unwords ["maim", unwords extraArgs, fileName]
 
 myStartupHook :: X ()
 myStartupHook = do
@@ -111,7 +116,9 @@ myStartupHook = do
 
 main :: IO ()
 main = do
-    h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+    GIO.setFileSystemEncoding GIO.char8     -- workaround for xmonad #611
+    hostname <- getHostName
+    xmobar <- spawnPipe (xmobarCommand hostname)
     xmonad $ ewmh $ withUrgencyHookC NoUrgencyHook myUrgentConfig
         defaultConfig
         { terminal           = myTerminal
@@ -123,7 +130,7 @@ main = do
                                     <+> manageSpawn
                                     <+> myManageHook
         , layoutHook         = myLayoutHook
-        , logHook            = myLogHook h
+        , logHook            = myLogHook xmobar
         , startupHook        = myStartupHook
         }
         `additionalKeysP`
