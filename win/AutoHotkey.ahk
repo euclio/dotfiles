@@ -4,6 +4,9 @@ EnvSetX(variable, value){
 }
 
 ; Set some environment variables
+if (%HOME% == "") {
+  EnvSetX("HOME", "%HOMEDRIVE%%HOMEPATH%")
+}
 EnvSetX("XDG_CONFIG_HOME", "%HOME%\.config")
 EnvSetX("XDG_DATA_HOME", "%HOME%\.local\share")
 EnvSetX("XDG_CACHE_HOME", "%HOME%\.cache")
