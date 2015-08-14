@@ -14,7 +14,7 @@ EnvUpdate
 
 ; Variables necessary for Vim
 EnvSetX("VIMINIT", "let $MYVIMRC=$XDG_CONFIG_HOME . '/vim/vimrc' | source $MYVIMRC")
-EnvSetX(GVIMINIT, "let $MYGVIMRC=$XDG_CONFIG_HOME . '/vim/gvimrc/ | source $MYGVIMRC")
+EnvSetX("GVIMINIT", "let $MYGVIMRC=$XDG_CONFIG_HOME . '/vim/gvimrc/' | source $MYGVIMRC")
 
 ; Treat Caps Lock as Left Control and disable Left Control.
 Capslock::Ctrl
