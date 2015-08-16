@@ -37,7 +37,7 @@ xmobarMemory refreshRate = unwords
     ]
 
 xmobarDate :: Integer -> String
-xmobarDate refreshRate = "Run Date \"%a %b %_d %l:%M\" \"date\" " ++
+xmobarDate refreshRate = "Run Date \"<fc=#ee9a00>%a %b %_d %l:%M</fc>\" \"date\" " ++
                          show refreshRate
 
 xmobarWeather :: String -> Integer -> String
@@ -119,7 +119,7 @@ leftTemplate = "%StdinReader% }{ "
 
 rightTemplate interface =
     "%" ++ interface ++ "wi% | %default:Master% | %cpu% | %memory% | " ++
-    "%disku%    <fc=#ee9a00>%date%</fc> | %" ++ weatherStation ++ "%"
+    "%disku%     %date% | %" ++ weatherStation ++ "%"
 
 templateParameter :: String -> String
 templateParameter template = printf " -t '%s'" template
@@ -133,7 +133,7 @@ xmobarTemplate "apollo" =
 
 xmobarTemplate "dionysus" =
     xmobarCommands (defaultCommands interface ++ [xmobarBattery 60])
-    ++ templateParameter (leftTemplate ++ " %battery% |" ++
+    ++ templateParameter (leftTemplate ++ " %battery% | " ++
                           rightTemplate interface)
   where
     interface = "wlp3s0"
