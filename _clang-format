@@ -21,5 +21,8 @@ DerivePointerAlignment: true
 ---
 Language: Java
 ColumnLimit: 120
+---
+Language: JavaScript
+SpacesInContainerLiterals: false
 
 # vim: ft=yaml
