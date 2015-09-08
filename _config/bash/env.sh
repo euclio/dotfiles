@@ -19,7 +19,7 @@ export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
 
 # Add ruby gem executables to PATH
 if type "ruby" > /dev/null; then
-    export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+  export PATH="$(ruby -e 'if defined?(Gem) then puts Gem.user_dir + "/bin" end'):$PATH"
 fi
 
 # Use antialiased fonts and GTK look and feel for Swing applications.
