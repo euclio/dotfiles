@@ -49,3 +49,7 @@ export COMPRESSXZ=(xz -T 0 -c -z -)
 
 # Set Maven configuration directory
 export M2_HOME="$XDG_CONFIG_HOME/m2"
+
+if type "ag" 2>&1 /dev/null; then
+  export FZF_DEFAULT_COMMAND='ag -l -g ""'
+fi
