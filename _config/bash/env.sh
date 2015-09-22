@@ -18,7 +18,7 @@ export MANPAGER="/bin/sh -c \"col -b |
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
 
 # Add ruby gem executables to PATH
-if type "ruby" 2>&1 /dev/null; then
+if type "ruby" >/dev/null 2>&1; then
   export PATH="$(ruby -e 'if defined?(Gem) then puts Gem.user_dir + "/bin:" end')$PATH"
 fi
 
@@ -50,6 +50,6 @@ export COMPRESSXZ=(xz -T 0 -c -z -)
 # Set Maven configuration directory
 export M2_HOME="$XDG_CONFIG_HOME/m2"
 
-if type "ag" 2>&1 /dev/null; then
+if type "ag" >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='ag -l -g ""'
 fi
