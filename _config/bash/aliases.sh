@@ -23,3 +23,6 @@ alias sbt="sbt -Dsbt.global.base=$XDG_CONFIG_HOME/sbt -Dsbt.ivy.home=$XDG_CACHE_
 
 # Put latexmk's config in the config directory
 alias latexmk="latexmk -r $XDG_CONFIG_HOME/latexmk/latexmkrc"
+
+# Perforce
+alias pshelved="p4 changes -u $USER -s shelved"
