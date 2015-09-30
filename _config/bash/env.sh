@@ -53,3 +53,7 @@ export M2_HOME="$XDG_CONFIG_HOME/m2"
 if type "ag" >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='ag -l -g ""'
 fi
+
+# Perforce Settings
+export P4DIFF='git --no-pager diff --no-index'
+export P4MERGE='vimdiff'
