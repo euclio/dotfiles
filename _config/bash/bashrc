@@ -3,6 +3,16 @@
 # Use vi-style keybindings when in the terminal
 set -o vi
 
+# History settings
+# Create the history file if it doesn't exist
+[[ ! -f $(dirname $HISTFILE) ]] && mkdir -p $(dirname $HISTFILE)
+export HISTSIZE=500000
+export HISTFILESIZE=$HISTSIZE
+export HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+# Sync history across multiple terminals (useful for tmux)
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
 # Disable flow control. Instead pass Ctrl-S and Ctrl-Q through.
 stty -ixon
 
