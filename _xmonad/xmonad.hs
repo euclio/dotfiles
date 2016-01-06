@@ -39,9 +39,47 @@ myLayoutHook :: ModifiedLayout SmartBorder (ModifiedLayout AvoidStruts (Choose T
 myLayoutHook            = smartBorders $ avoidStruts $
                           layoutHook defaultConfig
 
+-- The `hasProperty` and `isSplash` are taken (graciously) from
+-- https://github.com/fancypantalons/XMonad-Config/blob/master/xmonad.hs
+
+-- Returns a query which checks if the window has the given property.
+hasProperty :: String -> Query Bool
+hasProperty name = ask >>= \w -> liftX $ withDisplay $ queryFunc w
+  where queryFunc window display = do
+          atom <- getAtom name
+
+          prop8 <- io $ getWindowProperty8 display atom window
+          prop16 <- io $ getWindowProperty16 display atom window
+          prop32 <- io $ getWindowProperty32 display atom window
+
+          --
+          -- This is actually the opposite of the Maybe monad (I want to
+          -- *continue* on Nothing), so I can't just use a monad here.
+          --
+          case prop8 of
+            Just x  -> return True
+            Nothing ->
+              case prop16 of
+                Just x  -> return True
+                Nothing ->
+                  case prop32 of
+                    Just x  -> return True
+                    Nothing -> return False
+
+-- Use EWMH tags to determine if the window type in question is
+-- a splash window or not (among others, this works for Gnome Do).
+--
+-- The second stanza is a special case for the Eclipse splash screen
+-- which decided to do things differently...
+isSplash :: Query Bool
+isSplash =
+  (isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_SPLASH") <||>
+  ((hasProperty "_MOTIF_WM_HINTS") <&&> (className =? "Eclipse"))
+
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
     [ [ isFullscreen --> doFullFloat ]
+    , [ isSplash --> doIgnore ]
     , [ appName =? c --> (placeHook chatPlacement <+> doFloat) | c <- myChatApps ]
     , [ manageDocks ]
     , [ manageScratchpad ]
