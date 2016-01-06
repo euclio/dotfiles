@@ -43,6 +43,7 @@ export CCACHE_DIR=$XDG_CACHE_HOME/ccache
 # makepkg
 # Store development package sources in data dir
 export SRCDEST=$XDG_DATA_HOME/makepkg
+export AURDEST=$XDG_DATA_HOME/aur
 
 # Compress using multiple threads
 export COMPRESSXZ=(xz -T 0 -c -z -)
