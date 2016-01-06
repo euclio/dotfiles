@@ -100,7 +100,7 @@ xmobarVolume mixer element refreshRate = unwords
     ]
 
 weatherStation :: String
-weatherStation = "KSUS"
+weatherStation = "KBOS"
 
 defaultCommands :: String -> [String]
 defaultCommands wirelessInterface =
