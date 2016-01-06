@@ -174,6 +174,8 @@ main = do
         `additionalKeysP`
         -- Lock PC
         [ ("M-S-l", safeSpawnProg "xlock")
+        -- Open dmenu
+        , ("M-p", safeSpawn "dmenu_run" ["-fn", "terminus (ttf)-9"])
         -- Take screenshot
         , ("M-s", liftIO (screenshotCommand []) >>= spawn)
         -- Take screenshot (with selection)
