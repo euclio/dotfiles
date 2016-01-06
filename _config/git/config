@@ -25,3 +25,5 @@
 	cm = commit -v
 [color]
 	ui = auto
+[rebase]
+	autostash = true
