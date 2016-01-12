@@ -163,7 +163,7 @@ main = do
         , modMask            = mod4Mask
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
-        , handleEventHook    = fullscreenEventHook
+        , handleEventHook    = docksEventHook <+> fullscreenEventHook
         , manageHook         = manageHook defaultConfig
                                     <+> manageSpawn
                                     <+> myManageHook
