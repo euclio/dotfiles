@@ -13,3 +13,8 @@ Host pomona
 Host knuth
     HostName knuth.cs.hmc.edu
     User acrussell
+
+Host aur.archlinux.org
+    IdentityFile ~/.ssh/id_rsa-aur
+    User aur
+    Port 22
