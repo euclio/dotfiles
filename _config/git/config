@@ -27,3 +27,5 @@
 	ui = auto
 [rebase]
 	autostash = true
+[commit]
+	template = ~/.config/git/commit-template
