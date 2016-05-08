@@ -26,3 +26,6 @@ alias latexmk="latexmk -r $XDG_CONFIG_HOME/latexmk/latexmkrc"
 
 # Perforce
 alias pshelved="p4 changes -u $USER -s shelved"
+
+# Live life on the edge
+alias vim='nvim'
