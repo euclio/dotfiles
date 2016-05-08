@@ -10,6 +10,8 @@ Xft.rgba:               rgb
 
 ! xterm Settings
 xterm*faceName:                 Terminus\ (TTF):pixelsize=12
+xterm*termName:                 xterm-256color
+XTerm*locale:                   true
 
 ! URxvt Settings
 URxvt.font:                     xft:Terminus\ (TTF):pixelsize=14,xft:Inconsolata\-g:hintstyle=hintf:pixelsize=14,xft:DejaVu Sans Mono:pixelsize=14,xft:Symbola:pixelsize=14
