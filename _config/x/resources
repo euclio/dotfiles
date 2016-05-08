@@ -12,6 +12,7 @@ Xft.rgba:               rgb
 URxvt.font:                     xft:Terminus\ (TTF):pixelsize=14,xft:Inconsolata\-g:hintstyle=hintf:pixelsize=14,xft:DejaVu Sans Mono:pixelsize=14,xft:Symbola:pixelsize=14
 URxvt.scrollBar:                false
 URxvt*saveLines:                12000
+URxvt.cursorBlink:              1
 
 ! Disable ISO-14755 mode
 URxvt.iso14755:                 true
