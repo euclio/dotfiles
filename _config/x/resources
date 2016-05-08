@@ -14,7 +14,10 @@ xterm*termName:                 xterm-256color
 XTerm*locale:                   true
 
 ! URxvt Settings
-URxvt.font:                     xft:Terminus\ (TTF):pixelsize=14,xft:Inconsolata\-g:hintstyle=hintf:pixelsize=14,xft:DejaVu Sans Mono:pixelsize=14,xft:Symbola:pixelsize=14
+URxvt.font:                     xft:Terminus\ (TTF):pixelsize=12, \
+                                xft:Inconsolata\-g:hintstyle=hintfull, \
+                                xft:DejaVu Sans Mono,\
+                                xft:Symbola
 URxvt.scrollBar:                false
 URxvt*saveLines:                12000
 URxvt.cursorBlink:              1
