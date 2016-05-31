@@ -29,3 +29,5 @@
 	autostash = true
 [commit]
 	template = ~/.config/git/commit-template
+[help]
+    autocorrect = 10
