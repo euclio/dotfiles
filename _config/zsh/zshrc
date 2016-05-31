@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+
+# zsh package manager
+source $XDG_CONFIG_HOME/zsh/antigen/antigen.zsh
+
+# vi keybindings
+bindkey -v
+
+# make backspace work in insert mode
+bindkey '^?' backward-delete-char
+
+export HISTFILE=$XDG_DATA_HOME/zsh/history
+export SAVEHIST=50000
+
+# Share history between all shells
+setopt inc_append_history
+setopt share_history
+
+# fish-style autosuggestions
+antigen bundle zsh-users/zsh-autosuggestions
+
+# syntax highlighting must be bundled last
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[command]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=cyan'
+
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[function]='fg=yellow'
