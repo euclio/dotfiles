@@ -5,8 +5,6 @@
 # Set background image
 feh --bg-scale ~/.config/wallpaper/disintegrate.jpg
 
-source $XDG_CONFIG_HOME/bash/bashrc
-
 xrdb $XDG_CONFIG_HOME/x/resources
 
 # Disable screen blanking
