@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# In some situations (particularly OS X) we may enter an interactive shell
+# without sourcing .profile. If we haven't set the XDG variables, then we should
+# try sourcing .profile again.
+[[ -z "$XDG_CONFIG_HOME" ]] && source $HOME/.profile
+
+source $XDG_CONFIG_HOME/bash/bashrc

@@ -1,10 +1,14 @@
-#!/bin/sh
+#!/bin/bash
+
+source $XDG_CONFIG_HOME/env/posix/functions.sh
+source $XDG_CONFIG_HOME/env/aliases.sh
 
 # Use vi-style keybindings when in the terminal
 set -o vi
 
 # History settings
 # Create the history file if it doesn't exist
+export HISTFILE="$XDG_DATA_HOME/bash/history"
 [[ ! -f $(dirname $HISTFILE) ]] && mkdir -p $(dirname $HISTFILE)
 export HISTSIZE=500000
 export HISTFILESIZE=$HISTSIZE
@@ -15,51 +19,6 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Disable flow control. Instead pass Ctrl-S and Ctrl-Q through.
 stty -ixon
-
-# Allows bash aliases to be stored in a different file
-[[ -f $XDG_CONFIG_HOME/bash/aliases.sh ]] && source $XDG_CONFIG_HOME/bash/aliases.sh
-
-# Make terminal advertise 256 color support (from Ubuntu default .bash_profile)
-if [ "$TERM" = "xterm" ] ; then
-    if [ -z "$COLORTERM" ] ; then
-        if [ -z "$XTERM_VERSION" ] ; then
-            echo "Warning: Terminal wrongly calling iteself 'xterm'."
-        else
-            case "$XTERM_VERSION" in
-            "XTerm(256)") TERM="xterm-256color" ;;
-            "XTerm(88)") TERM="xterm-88color" ;;
-            "XTerm") ;;
-            *)
-                echo "Warning: Unrecognized XTERM_VERSION: $XTERM_VERSION"
-                ;;
-            esac
-        fi
-    else
-        case "$COLORTERM" in
-            gnome-terminal)
-                # Those crafty Gnome folks require you to check COLORTERM,
-                # but don't allow you to just *favor* the setting over TERM.
-                # Instead you need to compare it and perform some guesses
-                # based upon the value. This is, perhaps, too simplistic.
-                TERM="gnome-256color"
-                ;;
-            *)
-                echo "Warning: Unrecognized COLORTERM: $COLORTERM"
-                ;;
-        esac
-    fi
-fi
-
-# Bash-specific aliases
-# SSH into a tmux session
-ssht() {
-    ssh $* -t 'tmux attach || tmux || /bin/bash'
-}
-
-# Send adb commands to all Android devices connected to the PC.
-multiadb() {
-    adb devices | tail -n +2 | cut -sf 1 | xargs -iX adb -s X ${@:1}
-}
 
 # If a local bashrc exists, then source it (overriding other configuration)
 [[ -f $XDG_CONFIG_HOME/bash/bashrc_local ]] && source $XDG_CONFIG_HOME/bash/bashrc_local
