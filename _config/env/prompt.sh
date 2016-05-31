@@ -59,10 +59,6 @@ function status_color {
 if [ -n "$ZSH_VERSION" ]; then
   setopt prompt_subst
 
-  # To simplify setting the vi prompt, we use some bash-incompatible syntax. So,
-  # we just split that syntax into its own file which is never read by bash.
-  source $XDG_CONFIG_HOME/zsh/prompt.zsh
-
   prompt_top=$'$(status_color)┌ %{$RESET%}$(__local_prompt)$(__user) $(__path) $(__git_prompt)\n'
   prompt_bot='$(status_color)└╌╌┄┄ %{$VI_COLOR%}❯❯ %{$RESET%}'
   PROMPT="$prompt_top$prompt_bot"
