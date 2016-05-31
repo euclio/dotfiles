@@ -31,3 +31,6 @@ alias pshelved="p4 changes -u $USER -s shelved"
 
 # Live life on the edge
 alias vim='nvim'
+
+# Start working
+alias work="ssh athena -t 'tmux -f \$HOME/.config/tmux/tmux.conf attach || tmux -f \$HOME/.config/tmux/tmux.conf || /bin/bash'"
