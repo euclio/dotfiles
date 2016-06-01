@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+source $XDG_CONFIG_HOME/env/posix/functions.sh
+source $XDG_CONFIG_HOME/env/aliases.sh
+
 # zsh package manager
 source $XDG_CONFIG_HOME/zsh/antigen/antigen.zsh
 
