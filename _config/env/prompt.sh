@@ -17,7 +17,7 @@ VI_COLOR=$VI_INSERT
 
 function __local_prompt {
   print "%{$RESET%}$(
-    [ -f $HOME/local_prompt.sh ] && source $HOME/local_prompt.sh
+    [ -f $HOME/.prompt_local ] && source $HOME/.prompt_local
   )"
 }
 
