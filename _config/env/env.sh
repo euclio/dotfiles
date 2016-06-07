@@ -59,6 +59,9 @@ fi
 export P4DIFF='git --no-pager diff --no-index'
 export P4MERGE='vimdiff'
 
+# Use rustc's fancy error format
+export RUST_NEW_ERROR_FORMAT=1
+
 # Add additional environment variables to make applications obey the XDG
 # directory specification.
 source $XDG_CONFIG_HOME/env/xdg.sh
