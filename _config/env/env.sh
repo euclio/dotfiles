@@ -68,3 +68,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Add additional environment variables to make applications obey the XDG
 # directory specification.
 source $XDG_CONFIG_HOME/env/xdg.sh
+
+# Source local, shell-independent variables
+[ -f "$HOME/.env_local" ] && source $HOME/.env_local
