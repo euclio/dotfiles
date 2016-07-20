@@ -13,6 +13,8 @@ bindkey -v
 bindkey '^?' backward-delete-char
 
 export HISTFILE=$XDG_DATA_HOME/zsh/history
+touch $HISTFILE
+
 export SAVEHIST=50000
 
 # Share history between all shells
