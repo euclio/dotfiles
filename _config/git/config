@@ -29,5 +29,6 @@
 	autostash = true
 [commit]
 	template = ~/.config/git/commit-template
+	verbose = true
 [help]
     autocorrect = 10
