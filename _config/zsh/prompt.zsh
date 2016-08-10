@@ -3,6 +3,8 @@ precmd() {
   if [ $__exit_status -eq 148 ]; then
     export __exit_status=0
   fi
+
+  export __time_stamp=$(date '+%Y.%m.%d %H:%M:%S')
 }
 
 function zle-keymap-select {

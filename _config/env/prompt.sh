@@ -59,7 +59,7 @@ function status_color {
 if [ -n "$ZSH_VERSION" ]; then
   setopt prompt_subst
 
-  prompt_top=$'$(status_color)┌ %{$RESET%}$(__local_prompt)$(__user) $(__path) $(__git_prompt)\n'
+  prompt_top=$'$(status_color)┌ %{$RESET%}[$__time_stamp] $(__local_prompt)$(__user) $(__path) $(__git_prompt)\n'
   prompt_bot='$(status_color)└╌╌┄┄ %{$VI_COLOR%}❯❯ %{$RESET%}'
   PROMPT="$prompt_top$prompt_bot"
 fi
