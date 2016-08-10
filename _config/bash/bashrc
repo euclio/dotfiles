@@ -10,8 +10,6 @@ set -o vi
 # Create the history file if it doesn't exist
 export HISTFILE="$XDG_DATA_HOME/bash/history"
 [[ ! -f $(dirname $HISTFILE) ]] && mkdir -p $(dirname $HISTFILE)
-export HISTSIZE=500000
-export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 # Sync history across multiple terminals (useful for tmux)
