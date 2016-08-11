@@ -1,4 +1,4 @@
-# vi: syntax=gitconfig
+# vim: ft=gitconfig
 
 [user]
 	email = arussell123@gmail.com
