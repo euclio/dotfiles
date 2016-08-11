@@ -52,16 +52,16 @@ URxvt.url-select.underline:     true
 *color9:                #FF0033
 
 ! Green
-*color2:                #0FB50F
-*color10:               #00C234
+*color2:                #12dc12
+*color10:               #00ff44
 
 ! Yellow
 *color3:                #F5EF00
 *color11:               #FFB829
 
 ! Blue
-*color4:                #2C5EE4
-*color12:               #2C89C7
+*color4:                #4c7dff
+*color12:               #2b65ff
 
 ! Magenta
 *color5:                #C234C2
