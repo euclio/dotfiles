@@ -19,4 +19,4 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 stty -ixon
 
 # If a local bashrc exists, then source it (overriding other configuration)
-[[ -f $HOME/.bashrc_local ]] && source $HOME/.bashrc_local
+[[ -f $HOME/.local/bashrc ]] && source $HOME/.local/bashrc

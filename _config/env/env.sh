@@ -75,4 +75,4 @@ export SAVEHIST=$HISTSIZE
 source $XDG_CONFIG_HOME/env/xdg.sh
 
 # Source local, shell-independent variables
-[ -f "$XDG_DATA_HOME/env" ] && source $XDG_DATA_HOME/env
+[ -f "$HOME/.local/env" ] && source $HOME/.local/env
