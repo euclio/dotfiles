@@ -9,8 +9,14 @@ precmd() {
 
 function zle-keymap-select {
   case $KEYMAP in
-    vicmd) export VI_COLOR=$VI_COMMAND;;
-    viins|main) export VI_COLOR=$VI_INSERT;;
+    vicmd)
+        export VI_COLOR=$VI_COMMAND
+        echo -ne "\e[2 q"
+        ;;
+    viins|main)
+        export VI_COLOR=$VI_INSERT
+        echo -ne "\e[6 q"
+        ;;
    esac
 
    zle reset-prompt
