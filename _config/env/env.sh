@@ -76,3 +76,6 @@ source $XDG_CONFIG_HOME/env/xdg.sh
 
 # Source local, shell-independent variables
 [ -f "$HOME/.local/env" ] && source $HOME/.local/env
+
+# Set the SSH authorization socket (set by the SSH-agent systemd unit).
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
