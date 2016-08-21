@@ -13,7 +13,7 @@ bindkey -v
 bindkey '^?' backward-delete-char
 
 export HISTFILE=$XDG_DATA_HOME/zsh/history
-touch $HISTFILE
+mkdir -p $(dirname $HISTFILE) && touch $HISTFILE
 
 export SAVEHIST=50000
 
