@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+source $XDG_CONFIG_HOME/env/env.sh
 source $XDG_CONFIG_HOME/env/posix/functions.sh
 source $XDG_CONFIG_HOME/env/aliases.sh
 
