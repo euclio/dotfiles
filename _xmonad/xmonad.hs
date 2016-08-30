@@ -33,7 +33,7 @@ myNormalBorderColor :: String
 myNormalBorderColor     = "#393939"
 
 myFocusedBorderColor :: String
-myFocusedBorderColor    = "#ffa500"
+myFocusedBorderColor    = "#fff700"
 
 myLayoutHook :: ModifiedLayout SmartBorder (ModifiedLayout AvoidStruts (Choose Tall (Choose (Mirror Tall) Full))) Window
 myLayoutHook            = smartBorders $ avoidStruts $
