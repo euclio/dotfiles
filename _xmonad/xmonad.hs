@@ -19,7 +19,7 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
 import XMonad.Prompt
 import XMonad.Prompt.Shell
-import XMonad.StackSet
+import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
@@ -92,7 +92,7 @@ myManageHook = composeAll . concat $
         ]
 
 manageScratchpad :: ManageHook
-manageScratchpad = scratchpadManageHook (RationalRect l t w h)
+manageScratchpad = scratchpadManageHook (W.RationalRect l t w h)
   where
     h = 0.1
     w = 1
@@ -152,6 +152,9 @@ myStartupHook = do
     spawnOn "1" myBrowser
     setWMName "LG3D"
 
+myWorkspaces :: [String]
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
 main :: IO ()
 main = do
     GIO.setFileSystemEncoding GIO.char8     -- workaround for xmonad #611
@@ -161,6 +164,7 @@ main = do
         defaultConfig
         { terminal           = myTerminal
         , modMask            = mod4Mask
+        , workspaces         = myWorkspaces
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
         , handleEventHook    = docksEventHook <+> fullscreenEventHook
@@ -173,7 +177,7 @@ main = do
         }
         `additionalKeysP`
         -- Lock PC
-        [ ("M-S-l", safeSpawnProg "xlock")
+        ([ ("M-S-l", safeSpawnProg "xlock")
         -- Open dmenu
         , ("M-p", safeSpawn "dmenu_run" ["-fn", "terminus (ttf)-9"])
         -- Take screenshot
@@ -190,7 +194,13 @@ main = do
         , ("M-`", scratchpadSpawnActionCustom ("urxvt -name scratchpad -e fish"))
         , ("<XF86KbdBrightnessUp>", safeSpawn "asus-kbd-backlight" ["up"])
         , ("<XF86KbdBrightnessDown>", safeSpawn "asus-kbd-backlight" ["down"])
-        ]
+        ] ++
+        -- Change multi-monitor "greedy view" to view, which is more intuitive.
+        [ (otherModMasks ++ "M-" ++ [key], action tag)
+            | (tag, key) <- zip myWorkspaces "123456789"
+            , (otherModMasks, action) <- [ ("", windows . W.view) -- was W.greedyView
+                                            , ("S-", windows . W.shift)]
+        ])
 
 -- Strips trailing whitespace from a string
 rstrip :: String -> String
