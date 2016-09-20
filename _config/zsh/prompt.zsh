@@ -22,4 +22,6 @@ function zle-keymap-select {
    zle reset-prompt
 }
 
+RPROMPT=$'%{\e[1A%}%{\e[1C%}[$__time_stamp]%{\e[1B%}'
+
 zle -N zle-keymap-select
