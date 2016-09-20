@@ -8,7 +8,6 @@
 [credential]
 	helper = cache --timeout=3600 --socket=$XDG_CACHE_HOME/git/credential-cache/socket
 [core]
-	editor = vim
 	autocrlf = input
 [mergetool "fugitive"]
 	cmd = gvim -f -c \"Gvdiff\" \"$MERGED\"

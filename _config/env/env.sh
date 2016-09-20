@@ -3,8 +3,14 @@
 # Add local bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
 
-# Make default editor into vim
-export EDITOR=vim
+# Make default editor into neovim, then fallback to vim, then fallback to vi.
+__editor() {
+  command -v nvim >/dev/null 2>&1 && { echo 'nvim'; return; }
+  command -v vim >/dev/null 2>&1 && { echo 'vim'; return; }
+  command -v vi >/dev/null 2>&1 && { echo 'vi'; return; }
+}
+editor="$(__editor)"
+export EDITOR="$editor"
 
 # Use xdg to determine the default browser
 export BROWSER="/usr/bin/xdg-open http://"
