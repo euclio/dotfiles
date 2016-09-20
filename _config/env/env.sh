@@ -24,8 +24,9 @@ export MANPAGER="/bin/sh -c \"col -b |
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
 
 # Add ruby gem executables to PATH
-if type "ruby" >/dev/null 2>&1; then
-  export PATH="$(ruby -e 'if defined?(Gem) then puts Gem.user_dir + "/bin:" end')$PATH"
+if command -v "ruby" >/dev/null 2>&1; then
+  gem_dir=$(ruby -e 'if defined?(Gem) then puts Gem.user_dir + "/bin" end')
+  export PATH="$gem_dir:$PATH"
 fi
 
 # Use antialiased fonts and GTK look and feel for Swing applications.
@@ -78,9 +79,11 @@ export SAVEHIST=$HISTSIZE
 
 # Add additional environment variables to make applications obey the XDG
 # directory specification.
+# shellcheck source=/dev/null
 source $XDG_CONFIG_HOME/env/xdg.sh
 
 # Source local, shell-independent variables
+# shellcheck source=/dev/null
 [ -f "$HOME/.local/env" ] && source $HOME/.local/env
 
 # Set the SSH authorization socket (set by the SSH-agent systemd unit).
