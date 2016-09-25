@@ -129,7 +129,7 @@ xmobarTemplate "apollo" =
     xmobarCommands (defaultCommands interface)
     ++ templateParameter (leftTemplate ++ rightTemplate interface)
   where
-    interface = "enp0s20u3"
+    interface = "wlp0s20u4"
 
 xmobarTemplate "dionysus" =
     xmobarCommands (defaultCommands interface ++ [xmobarBattery 60])
