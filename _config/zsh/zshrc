@@ -22,6 +22,8 @@ export SAVEHIST=50000
 setopt inc_append_history
 setopt share_history
 
+autoload -Uz vcs_info
+
 # fish-style autosuggestions
 antigen bundle zsh-users/zsh-autosuggestions
 

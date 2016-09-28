@@ -5,6 +5,8 @@ precmd() {
   fi
 
   export __time_stamp=$(date '+%Y.%m.%d %H:%M:%S')
+
+  vcs_info
 }
 
 function zle-keymap-select {

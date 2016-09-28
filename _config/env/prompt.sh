@@ -59,7 +59,16 @@ function status_color {
 if [ -n "$ZSH_VERSION" ]; then
   setopt prompt_subst
 
-  prompt_top=$'$(status_color)┌%{$RESET%} $(__user) $(__local_prompt)$(__path) $(__git_prompt)\n'
+  # unfortunately, this is too slow to enable
+  zstyle ':vcs_info:*' check-for-changes false
+  zstyle ':vcs_info:*' check-for-staged-changes true
+  zstyle ':vcs_info:*' stagedstr '%F{green}▲%f'
+  zstyle ':vcs_info:*' unstagedstr '%F{red}▼%f'
+  zstyle ':vcs_info:*' formats ' %F{blue}(%s:%b) %c%u%f'
+  zstyle ':vcs_info:*' actionformats ' %F{blue}(%s:%b:%a) %c%u%f'
+  zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b:%r'
+
+  prompt_top=$'$(status_color)┌%{$RESET%} $(__user) $(__local_prompt)$(__path)${vcs_info_msg_0_}\n'
   prompt_bot='$(status_color)└╌╌┄┄ %{$VI_COLOR%}❯❯ %{$RESET%}'
   PROMPT="$prompt_top$prompt_bot"
 fi
