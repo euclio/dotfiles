@@ -1,7 +1,13 @@
 #!/bin/sh
 
 # Colorize ls by default
-alias ls='ls --color=auto'
+if ls --color=auto >/dev/null 2>&1; then
+  # For GNU ls
+  alias ls='ls --color=auto'
+else
+  # For BSD ls
+  export CLICOLOR=1
+fi
 
 # Chiptune music streams
 alias kohina='mplayer -prefer-ipv4 -playlist http://anka.org:8080/fresh.ogg.m3u'
