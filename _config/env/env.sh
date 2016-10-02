@@ -69,6 +69,11 @@ export P4MERGE='vimdiff'
 # Use rustc's fancy error format
 export RUST_NEW_ERROR_FORMAT=1
 
+if command -v rustup >/dev/null; then
+  rust_sysroot=$(rustc --print sysroot)
+  export RUST_SRC_PATH="$rust_sysroot/lib/rustlib/src/rust/src"
+fi
+
 # Add cargo binaries to PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 
