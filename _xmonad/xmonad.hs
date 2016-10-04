@@ -27,7 +27,7 @@ import XMonad.Util.Scratchpad
 import XMobar (xmobar)
 
 myTerminal :: String
-myTerminal              = "urxvt -e zsh"
+myTerminal              = "termite -e zsh"
 
 myNormalBorderColor :: String
 myNormalBorderColor     = "#393939"
