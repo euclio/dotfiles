@@ -81,14 +81,16 @@ myManageHook = composeAll . concat $
     [ [ isFullscreen --> doFullFloat ]
     , [ isSplash --> doIgnore ]
     , [ appName =? c --> (placeHook chatPlacement <+> doFloat) | c <- myChatApps ]
+    , [ appName =? c --> doFloat | c <- myFloatingApps ]
     , [ manageDocks ]
     , [ manageScratchpad ]
     ]
   where
     myChatApps =
-        [ "crx_nckgahadagoaajjgafhacjanaoiihapd" -- Hangouts Chrome Extension
-        , "crx_knipolnnllmklapflnccelgolnpehhpl" -- Hangouts Chrome App
-        , "org.gamefolk.roomfullofcats.RoomFullOfCatsApp"
+        [
+        ]
+    myFloatingApps =
+        [ "org.gamefolk.roomfullofcats.RoomFullOfCatsApp"
         ]
 
 manageScratchpad :: ManageHook
