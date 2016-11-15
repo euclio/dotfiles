@@ -12,8 +12,7 @@ __editor() {
 editor="$(__editor)"
 export EDITOR="$editor"
 
-# Use xdg to determine the default browser
-export BROWSER="/usr/bin/xdg-open"
+export BROWSER="firefox"
 
 # Use vim as the manpager
 export MANPAGER="/bin/sh -c \"col -b |
