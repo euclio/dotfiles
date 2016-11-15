@@ -192,6 +192,8 @@ main = do
         , ("M-f", safeSpawn "urxvt" ["-e", "fish", "-c", "ranger"])
         -- Open graphical file manager
         , ("M-S-f", unsafeSpawn "xdg-open ~")
+        -- Open browser
+        , ("M-b", safeSpawn "xdg-open" ["https://about:blank"])
         -- Open scratchpad terminal
         , ("M-`", scratchpadSpawnActionCustom ("urxvt -name scratchpad -e fish"))
         , ("<XF86KbdBrightnessUp>", safeSpawn "asus-kbd-backlight" ["up"])
