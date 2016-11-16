@@ -30,6 +30,8 @@ antigen bundle zsh-users/zsh-autosuggestions
 # syntax highlighting must be bundled last
 antigen bundle zsh-users/zsh-syntax-highlighting
 
+antigen apply
+
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 typeset -A ZSH_HIGHLIGHT_STYLES
