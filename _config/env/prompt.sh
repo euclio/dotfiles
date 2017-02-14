@@ -7,8 +7,8 @@ MAGENTA="$(tput setaf 5)"
 CYAN="$(tput setaf 6)"
 BOLD="$(tput bold)"
 
-VI_COMMAND="$(tput setaf 154)" # Light green
-VI_INSERT="$(tput setaf 39)"	# Cyan-ish
+VI_COMMAND="$(tput setaf 154)"  # Light green
+VI_INSERT="$(tput setaf 39)"    # Cyan-ish
 
 KEYTIMEOUT=1
 
