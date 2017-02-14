@@ -25,6 +25,9 @@ export SAVEHIST=50000
 setopt inc_append_history
 setopt share_history
 
+# Trim blanks in history
+setopt hist_reduce_blanks
+
 autoload -Uz vcs_info
 
 # fish-style autosuggestions
