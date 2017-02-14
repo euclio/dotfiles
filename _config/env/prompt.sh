@@ -59,7 +59,7 @@ function status_color {
 if [ -n "$ZSH_VERSION" ]; then
   setopt prompt_subst
 
-  # unfortunately, this is too slow to enable
+  # unfortunately, this is too slow to enable on git
   zstyle ':vcs_info:*' check-for-changes false
   zstyle ':vcs_info:*' check-for-staged-changes true
   zstyle ':vcs_info:*' stagedstr '%F{green}▲%f'
