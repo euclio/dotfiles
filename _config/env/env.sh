@@ -83,6 +83,9 @@ export SAVEHIST=$HISTSIZE
 # shellcheck source=/dev/null
 source $XDG_CONFIG_HOME/env/xdg.sh
 
+# shellcheck source=/dev/null
+[ -f /etc/profile.d/vte.sh ] && . /etc/profile.d/vte.sh
+
 # Source local, shell-independent variables
 # shellcheck source=/dev/null
 [ -f "$HOME/.local/env" ] && source $HOME/.local/env
