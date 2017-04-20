@@ -37,8 +37,8 @@ antigen apply
 
 autoload -U +X bashcompinit && bashcompinit
 
-emulate bash -c "source $HOME/.bash_profile"
-emulate bash -c "source $HOME/.local/bashrc"
+emulate bash -c "[[ -f $HOME/.bash_profile ]] && source $HOME/.bash_profile"
+emulate bash -c "[[ -f $HOME/.local/bashrc ]] && source $HOME/.local/bashrc"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
