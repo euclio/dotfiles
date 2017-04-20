@@ -89,3 +89,6 @@ source $XDG_CONFIG_HOME/env/xdg.sh
 
 # Set the SSH authorization socket (set by the SSH-agent systemd unit).
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# Set the TTY used for GPG authentication
+export GPG_TTY=$(tty)
