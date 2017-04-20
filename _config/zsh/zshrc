@@ -21,6 +21,7 @@ export SAVEHIST=50000
 # Share history between all shells
 setopt inc_append_history
 setopt share_history
+setopt hist_reduce_blanks
 
 # Trim blanks in history
 setopt hist_reduce_blanks
