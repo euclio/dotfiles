@@ -1,8 +1,5 @@
 #!/usr/bin/env zsh
 
-autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
-
 source $XDG_CONFIG_HOME/env/env.sh
 source $XDG_CONFIG_HOME/env/posix/functions.sh
 source $XDG_CONFIG_HOME/env/aliases.sh
@@ -37,6 +34,11 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen apply
+
+autoload -U +X bashcompinit && bashcompinit
+
+emulate bash -c "source $HOME/.bash_profile"
+emulate bash -c "source $HOME/.local/bashrc"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
