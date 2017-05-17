@@ -57,8 +57,8 @@ export COMPRESSXZ=(xz -T 0 -c -z -)
 # Set Maven configuration directory
 export M2_HOME="$XDG_CONFIG_HOME/m2"
 
-if command -v ag >/dev/null; then
-  export FZF_DEFAULT_COMMAND='ag -g ""'
+if command -v rg >/dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files'
 fi
 
 # Perforce Settings
