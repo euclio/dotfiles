@@ -10,7 +10,7 @@
 [core]
 	autocrlf = input
 [mergetool "fugitive"]
-	cmd = gvim -f -c \"Gvdiff\" \"$MERGED\"
+	cmd = \"$EDITOR\" -f -c \"Gvdiff\" \"$MERGED\"
 [merge]
 	tool = fugitive
 [branch "master"]
