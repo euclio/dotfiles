@@ -14,10 +14,8 @@ export EDITOR="$editor"
 
 export BROWSER="firefox"
 
-# Use vim as the manpager
-export MANPAGER="/bin/sh -c \"col -b |
-    vim -R +AirlineToggle \
-        -c 'set ft=man ts=8 nolist noru nonu nornu noma nosc tw=0 ls=0' -\""
+# Use nvim as the manpager
+export MANPAGER="nvim +AirlineToggle -c 'set ft=man nosc ls=0' -"
 
 # Enable autocomplete in Python interpreter
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
