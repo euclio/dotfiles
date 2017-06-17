@@ -86,6 +86,13 @@ xmobarWireless interface refreshRate = unwords
     , show refreshRate
     ]
 
+xmobarNetwork :: Integer -> String
+xmobarNetwork refreshRate = unwords
+    [ "Run DynNetwork"
+    , xmobarComParameters [ "--template", "⇅ <rx>KB/<tx>KB" ]
+    , show refreshRate
+    ]
+
 xmobarVolume :: String -> String -> Integer -> String
 xmobarVolume mixer element refreshRate = unwords
     [ "Run Volume"
@@ -106,6 +113,7 @@ defaultCommands :: String -> [String]
 defaultCommands wirelessInterface =
     [ xmobarStdin
     , xmobarWireless wirelessInterface 10
+    , xmobarNetwork 10
     , xmobarVolume "default" "Master" 10
     , xmobarCpu 10
     , xmobarMemory 10
@@ -118,7 +126,7 @@ leftTemplate :: String
 leftTemplate = "%StdinReader% }{ "
 
 rightTemplate interface =
-    "%" ++ interface ++ "wi% | %default:Master% | %cpu% | %memory% | " ++
+    "%" ++ interface ++ "wi% | %dynnetwork% | %default:Master% | %cpu% | %memory% | " ++
     "%disku%     %date% | %" ++ weatherStation ++ "%"
 
 templateParameter :: String -> String
