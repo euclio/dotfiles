@@ -31,3 +31,5 @@
 	verbose = true
 [help]
     autocorrect = 10
+[stash]
+	showPatch = true
