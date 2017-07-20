@@ -5,6 +5,7 @@ type(<scope>): <subject>
 # type should be one of the following:
 # * feat (new feature)
 # * fix (bug fix)
+# * perf (performance fix)
 # * docs (changes to documentation)
 # * style (formatting, missing semi colons, etc; no code change)
 # * refactor (refactoring production code)
