@@ -20,12 +20,6 @@ export MANPAGER="nvim +AirlineToggle -c 'set ft=man nosc ls=0' -"
 # Enable autocomplete in Python interpreter
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
 
-# Add ruby gem executables to PATH
-if command -v "ruby" >/dev/null 2>&1; then
-  gem_dir=$(ruby -e 'if defined?(Gem) then puts Gem.user_dir + "/bin" end')
-  export PATH="$gem_dir:$PATH"
-fi
-
 # Use antialiased fonts and GTK look and feel for Swing applications.
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 # Fix apperance of Swing applications in tiling window manager
