@@ -109,10 +109,9 @@ xmobarVolume mixer element refreshRate = unwords
 weatherStation :: String
 weatherStation = "KBOS"
 
-defaultCommands :: String -> [String]
-defaultCommands wirelessInterface =
+defaultCommands :: [String]
+defaultCommands =
     [ xmobarStdin
-    , xmobarWireless wirelessInterface 10
     , xmobarNetwork 10
     , xmobarVolume "default" "Master" 10
     , xmobarCpu 10
@@ -125,24 +124,23 @@ defaultCommands wirelessInterface =
 leftTemplate :: String
 leftTemplate = "%StdinReader% }{ "
 
-rightTemplate interface =
-    "%" ++ interface ++ "wi% | %dynnetwork% | %default:Master% | %cpu% | %memory% | " ++
+rightTemplate :: String
+rightTemplate =
+    "%dynnetwork% | %default:Master% | %cpu% | %memory% | " ++
     "%disku%     %date% | %" ++ weatherStation ++ "%"
 
 templateParameter :: String -> String
 templateParameter template = printf " -t '%s'" template
 
 xmobarTemplate :: String -> String
-xmobarTemplate "apollo" =
-    xmobarCommands (defaultCommands interface)
-    ++ templateParameter (leftTemplate ++ rightTemplate interface)
-  where
-    interface = "wlp0s20u4"
+xmobarTemplate "apollo" = xmobarCommands defaultCommands ++
+    templateParameter (leftTemplate ++ rightTemplate)
 
-xmobarTemplate "dionysus" =
-    xmobarCommands (defaultCommands interface ++ [xmobarBattery 60])
-    ++ templateParameter (leftTemplate ++ " %battery% | " ++
-                          rightTemplate interface)
+xmobarTemplate "dionysus" = xmobarCommands
+    (defaultCommands ++ [xmobarBattery 60, xmobarWireless interface 10]) ++
+    templateParameter (
+        leftTemplate ++ " %battery% | " ++ "%" ++ interface ++ "wi%" ++
+        rightTemplate)
   where
     interface = "wlp3s0"
 
