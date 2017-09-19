@@ -29,6 +29,7 @@
 [commit]
 	template = ~/.config/git/commit-template
 	verbose = true
+	gpgsign = true
 [help]
     autocorrect = 10
 [stash]
