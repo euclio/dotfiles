@@ -34,3 +34,5 @@
     autocorrect = 10
 [stash]
 	showPatch = true
+[includeIf "gitdir:~/work/"]
+	path = "~/work/.gitconfig"
