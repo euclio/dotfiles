@@ -7,4 +7,6 @@
 
 source $XDG_CONFIG_HOME/zsh/zshrc
 
-[ -f $HOME/.zshrc_local ] && source $HOME/.zshrc_local
+if [ -f $HOME/.zshrc_local ]; then
+    source $HOME/.zshrc_local
+fi
