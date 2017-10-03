@@ -20,6 +20,9 @@ export MANPAGER="nvim +AirlineToggle -c 'set ft=man nosc ls=0' -"
 # Enable autocomplete in Python interpreter
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
 
+# Use Linux colors for MacOS `ls`
+export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
+
 # Use antialiased fonts and GTK look and feel for Swing applications.
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 # Fix apperance of Swing applications in tiling window manager
