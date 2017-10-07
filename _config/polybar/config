@@ -1,0 +1,71 @@
+[bar/main]
+background = #1c1b1a
+foreground = #ffffff
+font-0 = "Terminus (TTF):size=9:antialias=false"
+font-1 = "DejaVu Sans Mono"
+font-2 = "Symbola"
+bottom = true
+module-margin = 1
+separator = |
+modules-left = xmonad-log
+modules-right = network volume cpu memory filesystem date weather
+
+[module/xmonad-log]
+type = custom/script
+exec = python -u $XDG_CONFIG_HOME/polybar/xmonad-log
+tail = true
+
+[module/ewmh]
+type = internal/xworkspaces
+label-active = %{F#ff0}[%name%]%{F-}
+label-occupied = "%name%"
+label-empty =
+
+[module/title]
+type = internal/xwindow
+format-foreground = #0f0
+
+[module/network]
+type = internal/network
+interface = enp4s0
+format-connected = ⇅ <label-connected>
+label-connected = %upspeed% %downspeed%
+
+[module/volume]
+type = internal/volume
+format-volume = <label-volume>
+label-volume = %{F#0f0}🔊%{F-} %percentage%%
+label-muted = %{F#f00}🔇%{F-} %percentage%%
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+format = 🖳 <label>
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 1
+format = 🗈 <label>
+label = %percentage_used%%
+
+[module/filesystem]
+type = internal/fs
+interval = 60
+mount-0 = /
+mount-1 = /home
+label-mounted = %free%/%total%
+
+[module/date]
+type = internal/date
+interval = 1
+date = %a %b %d %l:%M
+format-foreground = #ee9a00
+
+[module/weather]
+type = custom/script
+interval = 3600
+format = ⛅ <label>°F
+exec = $XDG_CONFIG_HOME/polybar/weather
+
+# vim: ft=dosini
