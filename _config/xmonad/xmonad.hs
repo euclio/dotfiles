@@ -1,10 +1,12 @@
+import qualified Codec.Binary.UTF8.String as UTF8
 import Control.Monad
 import Data.Char
 import Data.Monoid
 import GHC.IO.Handle.Types
 import Network.BSD
 import System.FilePath
-import GHC.IO.Encoding as GIO
+import qualified DBus as D
+import qualified DBus.Client as D
 
 import XMonad
 import XMonad.Actions.SpawnOn
@@ -23,8 +25,6 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
-
-import XMobar (xmobar)
 
 myTerminal :: String
 myTerminal              = "termite -e zsh"
@@ -104,11 +104,14 @@ manageScratchpad = scratchpadManageHook (W.RationalRect l t w h)
 chatPlacement :: Placement
 chatPlacement = withGaps (0, 0, 300, 0) (inBounds (smart (1, 1)))
 
-myLogHook :: Handle -> X()
-myLogHook h = dynamicLogWithPP $ xmobarPP
-    {   ppOutput = hPutStrLn h
+myLogHook :: D.Client -> PP
+myLogHook dbus = def
+    {   ppOutput = dbusOutput dbus
+    ,   ppCurrent = polybarColor "#ff0" "" . wrap "[" "]"
+    ,   ppTitle = polybarColor "#0f0" ""
+    ,   ppVisible = wrap "(" ")"
+    ,   ppUrgent = polybarColor "yellow" "red"
     ,   ppOrder = \(ws:_:t:_) -> [ws,t]
-    ,   ppUrgent = xmobarColor "yellow" "red"
     ,   ppHidden = noScratchpad
     }
   where
@@ -119,6 +122,23 @@ myUrgentConfig = UrgencyConfig
     {   suppressWhen = OnScreen
     ,   remindWhen   = Dont
     }
+
+-- Use polybar escape codes to output a string with given foreground and
+-- background colors.
+polybarColor :: String -> String -> String -> String
+polybarColor fg bg = wrap t "%{B- F-}"
+    where t = concat ["%{F", fg, if null bg then "" else "B" ++ bg, "}"]
+
+dbusOutput :: D.Client -> String -> IO ()
+dbusOutput dbus str = do
+    let signal = (D.signal objectPath interfaceName memberName) {
+            D.signalBody = [D.toVariant $ UTF8.decodeString str]
+        }
+    D.emit dbus signal
+  where
+    objectPath = D.objectPath_ "/org/xmonad/Log"
+    interfaceName = D.interfaceName_ "org.xmonad.Log"
+    memberName = D.memberName_ "Update"
 
 -- Returns the directory where screenshots should be stored. Currently stores
 -- screenshots in a subdirectory of the $XDG_PICTURES_DIR.
@@ -159,9 +179,11 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 main :: IO ()
 main = do
-    GIO.setFileSystemEncoding GIO.char8     -- workaround for xmonad #611
     hostname <- getHostName
-    xmobarProc <- spawnPipe (XMobar.xmobar hostname)
+    polybar <- unsafeSpawn "$XDG_CONFIG_HOME/polybar/launch.sh"
+    dbus <- D.connectSession
+    D.requestName dbus (D.busName_ "org.xmonad.Log")
+        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
     xmonad $ ewmh $ withUrgencyHookC NoUrgencyHook myUrgentConfig
         defaultConfig
         { terminal           = myTerminal
@@ -174,7 +196,7 @@ main = do
                                     <+> manageSpawn
                                     <+> myManageHook
         , layoutHook         = myLayoutHook
-        , logHook            = myLogHook xmobarProc
+        , logHook            = dynamicLogWithPP (myLogHook dbus)
         , startupHook        = myStartupHook
         }
         `additionalKeysP`
