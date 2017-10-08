@@ -1,4 +1,5 @@
 [bar/main]
+monitor = ${env:MONITOR}
 background = #1c1b1a
 foreground = #ffffff
 font-0 = "Terminus (TTF):size=9:antialias=false"
