@@ -90,3 +90,6 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # Set the TTY used for GPG authentication
 export GPG_TTY=$(tty)
+
+# Ignore GTK Accessibility Warnings
+export NO_AT_BRIDGE=1
