@@ -246,6 +246,7 @@ main = do
         , ("<XF86KbdBrightnessDown>", safeSpawn "asus-kbd-backlight" ["down"])
         ] ++
         -- Change multi-monitor "greedy view" to view, which is more intuitive.
+        -- This snippet is taken from the Xmonad FAQ.
         [ (otherModMasks ++ "M-" ++ [key], action tag)
             | (tag, key) <- zip myWorkspaces "123456789"
             , (otherModMasks, action) <- [ ("", windows . W.view) -- was W.greedyView
