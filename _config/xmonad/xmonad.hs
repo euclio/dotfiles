@@ -174,6 +174,30 @@ myStartupHook = do
     spawnOn "1" myBrowser
     setWMName "LG3D"
 
+-- By default, XMonad doesn't advertise that it supports fullscreen EMWH hints.
+-- This is a modified version of the function that XMonad calls internally, with
+-- "_NET_WM_STATE_FULLSCREEN" added to the list.
+--
+-- Taken from https://github.com/binarin/rc/blob/58cc3b28045eecc41cdc3b4e2051b38a70117717/.xmonad/xmonad.hs#L251-269
+-- from this thread: https://www.reddit.com/r/xmonad/comments/77szad/cant_go_fullscreen_in_firefox_even_with_ewmh/
+setFullscreenSupported :: X ()
+setFullscreenSupported = withDisplay $ \dpy -> do
+    r <- asks theRoot
+    a <- getAtom "_NET_SUPPORTED"
+    c <- getAtom "ATOM"
+    supp <- mapM getAtom ["_NET_WM_STATE_HIDDEN"
+                         ,"_NET_WM_STATE_FULLSCREEN"
+                         ,"_NET_NUMBER_OF_DESKTOPS"
+                         ,"_NET_CLIENT_LIST"
+                         ,"_NET_CLIENT_LIST_STACKING"
+                         ,"_NET_CURRENT_DESKTOP"
+                         ,"_NET_DESKTOP_NAMES"
+                         ,"_NET_ACTIVE_WINDOW"
+                         ,"_NET_WM_DESKTOP"
+                         ,"_NET_WM_STRUT"
+                         ]
+    io $ changeProperty32 dpy r a c propModeReplace (fmap fromIntegral supp)
+
 myWorkspaces :: [String]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
@@ -197,7 +221,7 @@ main = do
                                     <+> myManageHook
         , layoutHook         = myLayoutHook
         , logHook            = dynamicLogWithPP (myLogHook dbus)
-        , startupHook        = myStartupHook
+        , startupHook        = myStartupHook <+> setFullscreenSupported
         }
         `additionalKeysP`
         -- Lock PC
