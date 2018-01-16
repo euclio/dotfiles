@@ -49,6 +49,9 @@ ZSH_HIGHLIGHT_STYLES[alias]='fg=cyan'
 
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=yellow'
 ZSH_HIGHLIGHT_STYLES[function]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument-unclosed]='fg=red'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument-unclosed]='fg=red'
+ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument-unclosed]='fg=red'
 
 source $XDG_CONFIG_HOME/env/prompt.sh
 source $XDG_CONFIG_HOME/zsh/prompt.zsh
