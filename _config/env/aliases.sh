@@ -14,7 +14,7 @@ alias kohina='mplayer -prefer-ipv4 -playlist http://anka.org:8080/fresh.ogg.m3u'
 alias rainwave='mplayer -prefer-ipv4 -playlist http://chiptune.rainwave.cc/tune_in/4.ogg'
 
 # Quick way to show irssi nicklist
-alias nicklist="cat $XDG_CONFIG_HOME/irssi/nicklistfifo"
+alias nicklist='cat $XDG_CONFIG_HOME/irssi/nicklistfifo'
 
 # Give words command history
 alias words='rlwrap words'
@@ -23,13 +23,13 @@ alias words='rlwrap words'
 alias pacu='pacaur -Syu --devel --needed --noedit'
 
 # Perforce
-alias pshelved="p4 changes -u $USER -s shelved"
+alias pshelved='p4 changes -u $USER -s shelved'
 
 # Live life on the edge
 alias vim='nvim'
 
 # Workarounds to make programs obey the XDG base directory specification
-alias irssi="irssi --home $XDG_CONFIG_HOME/irssi"
-alias latexmk="latexmk -r $XDG_CONFIG_HOME/latexmk/latexmkrc"
-alias sbt="sbt -Dsbt.global.base=$XDG_CONFIG_HOME/sbt -Dsbt.ivy.home=$XDG_CACHE_HOME/ivy"
-alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
+alias irssi='irssi --home $XDG_CONFIG_HOME/irssi'
+alias latexmk='latexmk -r $XDG_CONFIG_HOME/latexmk/latexmkrc'
+alias sbt='sbt -Dsbt.global.base=$XDG_CONFIG_HOME/sbt -Dsbt.ivy.home=$XDG_CACHE_HOME/ivy'
+alias tmux='tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf'
