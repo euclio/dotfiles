@@ -1,7 +1,10 @@
 #!/bin/sh
 
 # Colorize ls by default
-if ls --color=auto >/dev/null 2>&1; then
+if command -v exa >/dev/null 2>&1; then
+  # If present, alias `ls` to `exa`.
+  alias ls=exa
+elif ls --color=auto >/dev/null 2>&1; then
   # For GNU ls
   alias ls='ls --color=auto'
 else
