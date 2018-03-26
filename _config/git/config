@@ -22,6 +22,7 @@
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	cm = commit -v
+	branch-status = for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads
 [color]
 	ui = auto
 [rebase]
