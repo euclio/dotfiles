@@ -23,8 +23,13 @@ export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
 # Use Linux colors for MacOS `ls`
 export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
 
-# Use antialiased fonts and GTK look and feel for Swing applications.
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+# Use antialiased fonts by default for Swing applications.
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
+if [ "$(uname -s)" = "Linux" ]; then
+  # If we're on Linux, then force the GTK look-and-feel.
+  export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+fi
+
 # Fix apperance of Swing applications in tiling window manager
 export _JAVA_AWT_WM_NONREPARENTING=1
 
