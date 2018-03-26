@@ -25,6 +25,10 @@ alias pacu='pacaur -Syu --devel --needed --noedit'
 # Perforce
 alias pshelved='p4 changes -u $USER -s shelved'
 
+# Pass a cargo command to a docker image set up to build static Rust binaries:
+#   $ rust-musl-builder cargo run --release
+alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src ekidd/rust-musl-builder'
+
 # Live life on the edge
 alias vim='nvim'
 
