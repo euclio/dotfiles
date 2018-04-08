@@ -82,7 +82,6 @@ myManageHook = composeAll . concat $
     , [ isSplash --> doIgnore ]
     , [ appName =? c --> (placeHook chatPlacement <+> doFloat) | c <- myChatApps ]
     , [ appName =? c --> doFloat | c <- myFloatingApps ]
-    , [ manageDocks ]
     , [ manageScratchpad ]
     ]
   where
@@ -208,7 +207,7 @@ main = do
     dbus <- D.connectSession
     D.requestName dbus (D.busName_ "org.xmonad.Log")
         [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
-    xmonad $ ewmh $ withUrgencyHookC NoUrgencyHook myUrgentConfig
+    xmonad $ docks $ ewmh $ withUrgencyHookC NoUrgencyHook myUrgentConfig
         defaultConfig
         { terminal           = myTerminal
         , modMask            = mod4Mask
