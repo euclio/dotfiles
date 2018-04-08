@@ -17,7 +17,7 @@ xsetroot -cursor_name left_ptr
 xmodmap $XDG_CONFIG_HOME/x/modmap
 
 # Disable touchpad while typing
-if ! command -v syndaemon >/dev/null 2>&1; then
+if command -v syndaemon >/dev/null; then
   syndaemon -t -k -i 2 -d &
 fi
 
