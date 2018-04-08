@@ -23,7 +23,7 @@ alias nicklist='cat $XDG_CONFIG_HOME/irssi/nicklistfifo'
 alias words='rlwrap words'
 
 # Update all packages, including development packages
-alias pacu='pacaur -Syu --devel --needed --noedit'
+alias pacu='trizen -Syu --devel --needed --noedit'
 
 # Perforce
 alias pshelved='p4 changes -u $USER -s shelved'
