@@ -26,3 +26,6 @@ xbindkeys -f $XDG_CONFIG_HOME/x/bindkeys
 
 # Fix for Chromium Issue #370022
 xcompmgr -a &
+
+# Launch polybar
+source $XDG_CONFIG_HOME/polybar/launch.sh

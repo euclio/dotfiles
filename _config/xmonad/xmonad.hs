@@ -203,7 +203,6 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 main :: IO ()
 main = do
     hostname <- getHostName
-    polybar <- unsafeSpawn "$XDG_CONFIG_HOME/polybar/launch.sh"
     dbus <- D.connectSession
     D.requestName dbus (D.busName_ "org.xmonad.Log")
         [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
