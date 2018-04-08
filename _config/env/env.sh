@@ -12,6 +12,7 @@ __editor() {
 editor="$(__editor)"
 export EDITOR="$editor"
 
+# Set the default browser
 export BROWSER="firefox"
 
 # Use nvim as the manpager
