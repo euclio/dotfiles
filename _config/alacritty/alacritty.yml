@@ -166,4 +166,4 @@ mouse_bindings:
 #
 # You can set this to a path to your favorite shell, e.g. /bin/fish
 shell:
-  program: /usr/bin/zsh
+  program: zsh

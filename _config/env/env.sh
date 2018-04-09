@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# Set SHELL to zsh if it's installed
+if command -v zsh >/dev/null; then
+  SHELL=$(which zsh)
+  export SHELL
+else
+  export SHELL=/bin/bash
+fi
+
 # Add local bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
 
