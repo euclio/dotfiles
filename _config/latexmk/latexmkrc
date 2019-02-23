@@ -1,6 +1,7 @@
 $out_dir = 'latexmk';
 $pdf_mode = 1;
 $pdflatex = q/xelatex -synctex=1 %O %S/;
+$pdf_previewer = 'zathura';
 $preview_continuous_mode = 1;
 $bibtex_use = 2;
 $biber = 'biber --debug %O %S'
