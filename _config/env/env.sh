@@ -21,7 +21,7 @@ editor="$(__editor)"
 export EDITOR="$editor"
 
 # Set the default browser
-export BROWSER="firefox"
+export BROWSER="firefox-nightly"
 
 # Use nvim as the manpager
 export MANPAGER="nvim +AirlineToggle -c 'set ft=man nosc ls=0' -"
