@@ -229,7 +229,7 @@ main = do
         -- Take screenshot
         , ("M-s", liftIO (screenshotCommand []) >>= spawn)
         -- Take screenshot (with selection)
-        , ("M-S-s", liftIO (screenshotCommand ["-s"]) >>= spawn)
+        , ("M-S-s", liftIO (screenshotCommand ["-s", "--noopengl"]) >>= spawn)
         -- Open screen management
         , ("M-S-r", safeSpawnProg "lxrandr")
         -- Open terminal file manager
