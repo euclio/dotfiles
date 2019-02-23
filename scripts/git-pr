@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Based on https://gist.github.com/gnarf/5406589
+
+set -euo pipefail
+
+usage() {
+  cat <<EOF
+  usage: git pr <number>
+     or: git pr clean
+EOF
+}
+
+if [ "$#" -lt 0 ] || [ "$#" -gt 2 ]; then
+  usage
+  exit
+elif [ "$1" = "clean" ]; then
+  git checkout master
+  for name in $(git for-each-ref 'refs/heads/pr/*' --format='%(refname)'); do
+    branch=${name#refs/heads/}
+    git branch -D "$branch"
+  done
+elif echo "$1" | grep -E -q '^[0-9]+$'; then
+  branch="pr/$1"
+  git fetch -fu "${2:-$(git remote | grep ^upstream || echo origin)}" \
+    "refs/pull/$1/head:$branch"
+  git checkout "$branch"
+else
+  usage
+fi
