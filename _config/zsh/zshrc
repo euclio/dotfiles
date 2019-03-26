@@ -4,9 +4,6 @@ source $XDG_CONFIG_HOME/env/env.sh
 source $XDG_CONFIG_HOME/env/posix/functions.sh
 source $XDG_CONFIG_HOME/env/aliases.sh
 
-# zsh package manager
-source $XDG_CONFIG_HOME/zsh/antigen/antigen.zsh
-
 # vi keybindings
 bindkey -v
 
@@ -28,14 +25,7 @@ setopt hist_reduce_blanks
 
 autoload -Uz vcs_info
 
-# fish-style autosuggestions
-antigen bundle zsh-users/zsh-autosuggestions
-
-# syntax highlighting must be bundled last
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-antigen apply
-
+autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
 emulate bash -c "[[ -f $HOME/.bash_profile ]] && source $HOME/.bash_profile"
@@ -55,3 +45,22 @@ ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument-unclosed]='fg=red'
 
 source $XDG_CONFIG_HOME/env/prompt.sh
 source $XDG_CONFIG_HOME/zsh/prompt.zsh
+
+function source_plugin() {
+    local plugin=$1
+    local plugin_path=(/usr/share/zsh/plugins /usr/local/share $HOME/.linuxbrew/share)
+
+    for dir in $plugin_path; do
+        local script="$dir/$plugin"
+
+        if [ -f "$script" ]; then
+            source "$script"
+            return
+        fi
+    done
+}
+
+source_plugin zsh-autosuggestions/zsh-autosuggestions.zsh
+source_plugin zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+unfunction source_plugin

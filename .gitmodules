@@ -4,6 +4,3 @@
 [submodule "_config/vim"]
 	path = _config/vim
 	url = https://github.com/euclio/vim-settings.git
-[submodule "_config/zsh/antigen"]
-	path = _config/zsh/antigen
-	url = https://github.com/zsh-users/antigen
