@@ -1,7 +1,8 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 set -euo pipefail
 
-url=http://tgftp.nws.noaa.gov/data/observations/metar/decoded/KBOS.TXT
+station=KBOS
+url=https://tgftp.nws.noaa.gov/data/observations/metar/decoded/$station.TXT
 
 curl --silent $url | awk '/Temperature/{print int($2)}'
