@@ -1,0 +1,6 @@
+set smartcase
+
+" IdeaVIM doesn't understand `noerrorbells`, but it doesn't have an
+" implementation for `visualbell`, so it's effectively the same thing..
+set noerrorbells
+set visualbell
