@@ -1,11 +1,13 @@
 ImageMagick
 Kitware
 QtProject*
+Signal
 Thunar
 Trolltech.conf
 VirtualBox
 XDK
 autostart
+chromium
 chromium-dev
 configstore
 dconf
@@ -14,6 +16,7 @@ desmume
 fish/fish_history*
 fish/fishd.*
 freshwrapper-data
+git/gitk
 google-chrome
 google-chrome-unstable
 google-googletalkplugin/
@@ -25,11 +28,13 @@ guvcview
 guvcview2
 gvbam
 icedtea-web
+inkscape
 irssi/irssi.pem
 libreoffice
 menus
 pcsx2
 pulse
+qBittorrent
 ranger/bookmarks
 ranger/history
 ranger/tagged
