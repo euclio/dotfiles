@@ -161,7 +161,7 @@ screenshotCommand extraArgs = do
     dateFormat <- screenshotDateFormat
     directory <- screenshotDirectory
     let fileName = directory </> dateFormat <.> "png"
-    return $ unwords ["maim", unwords extraArgs, fileName]
+    return $ unwords ["maim", "--noopengl", unwords extraArgs, fileName]
 
 myStartupHook :: X ()
 myStartupHook = do
