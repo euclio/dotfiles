@@ -1,5 +1,5 @@
 ^\.git(|ignore|modules|attributes)$
 ^README\.md$
-^install\.sh$
+^install\.(sh|py)$
 ^win$
 ^scripts$
