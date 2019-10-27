@@ -4,8 +4,26 @@ My obligatory configuration repository.
 
 ## Installation
 
-Execute `scripts/install.py`. This script will automatically set up symbolic
-links from the home directory to the actual files in this repository. If there
-are any conflicts (e.g., there is a file where the script wants to create a
-symlink), it will back up the file to a directory (default dotfiles.old). For
-more information, see `scripts/install.py --help`.
+### Unix
+
+Requires [GNU stow].
+
+```sh
+$ cd
+$ git clone https://github.com/euclio/dotfiles
+$ ~/dotfiles/install.sh
+```
+
+### Windows
+
+Requires [Python 3] and [Developer mode][win-dev-mode].
+
+```powershell
+> cd ~
+> git clone https://github.com/euclio/dotfiles
+> python3 dotfiles/install.py
+```
+
+[GNU stow]: https://www.gnu.org/software/stow/
+[Python 3]: https://www.python.org
+[win-dev-mode]: https://docs.microsoft.com/en-us/windows/uwp/get-started/enable-your-device-for-development#accessing-settings-for-developers

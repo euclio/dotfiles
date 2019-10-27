@@ -1,6 +1,6 @@
 [submodule "_config/irssi/scripts/facebook-bitlbee-rename"]
-	path = _config/irssi/scripts/facebook-bitlbee-rename
+	path = dot-config/irssi/scripts/facebook-bitlbee-rename
 	url = https://github.com/avar/irssi-bitlbee-facebook-rename.git
 [submodule "_config/vim"]
-	path = _config/vim
+	path = dot-config/vim
 	url = https://github.com/euclio/vim-settings.git
