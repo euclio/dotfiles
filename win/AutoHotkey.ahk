@@ -3,8 +3,10 @@ EnvSetX(variable, value){
   Run, %comspec% /c setx "%variable%" "%value%",, Hide
 }
 
+EnvGet, home, HOME
+
 ; Set some environment variables
-if (%HOME% == "") {
+if (home == "") {
   EnvSetX("HOME", "%HOMEDRIVE%%HOMEPATH%")
 }
 EnvSetX("XDG_CONFIG_HOME", "%HOME%\.config")
