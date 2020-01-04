@@ -18,6 +18,11 @@ EnvUpdate
 EnvSetX("VIMINIT", "let $MYVIMRC=$XDG_CONFIG_HOME . '/vim/vimrc' | source $MYVIMRC")
 EnvSetX("GVIMINIT", "let $MYGVIMRC=$XDG_CONFIG_HOME . '/vim/gvimrc/' | source $MYGVIMRC")
 
+RunWait, rg --help, , Hide
+if (!ErrorLevel) {
+  EnvSetX("FZF_DEFAULT_COMMAND", "rg --files")
+}
+
 ; Treat Caps Lock as Left Control and disable Left Control.
 Capslock::Ctrl
 LCtrl::Return
