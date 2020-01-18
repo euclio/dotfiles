@@ -22,8 +22,7 @@ elif [ "$1" = "clean" ]; then
   done
 elif echo "$1" | grep -E -q '^[0-9]+$'; then
   branch="pr/$1"
-  git fetch -fu "${2:-$(git remote | grep ^upstream || echo origin)}" \
-    "refs/pull/$1/head:$branch"
+  git fetch -fu "${2:-origin}" "refs/pull/$1/head:$branch"
   git checkout "$branch"
 else
   usage
