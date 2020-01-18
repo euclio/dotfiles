@@ -6,7 +6,7 @@ set -euo pipefail
 
 usage() {
   cat <<EOF
-  usage: git pr <number>
+  usage: git pr <number> [<remote>]
      or: git pr clean
 EOF
 }
