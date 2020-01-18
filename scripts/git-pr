@@ -11,7 +11,7 @@ usage() {
 EOF
 }
 
-if [ "$#" -lt 0 ] || [ "$#" -gt 2 ]; then
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
   usage
   exit
 elif [ "$1" = "clean" ]; then
