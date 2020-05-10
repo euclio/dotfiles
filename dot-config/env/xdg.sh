@@ -1,6 +1,7 @@
 #!/bin/sh
 
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export LESSHISTFILE="$XDG_DATA_HOME/less/history"
 export PIP_LOG_FILE="$XDG_DATA_HOME/pip/log"
 export PYLINTHOME="$XDG_DATA_HOME/pylint"
