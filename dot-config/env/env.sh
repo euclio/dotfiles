@@ -108,3 +108,6 @@ export GPG_TTY=$(tty)
 
 # Ignore GTK Accessibility Warnings
 export NO_AT_BRIDGE=1
+
+# bat syntax highlighting theme.
+export BAT_THEME=nocturne

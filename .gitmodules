@@ -4,3 +4,6 @@
 [submodule "_config/vim"]
 	path = dot-config/vim
 	url = https://github.com/euclio/vim-settings.git
+[submodule "dot-config/bat/themes/nocturne"]
+	path = dot-config/bat/themes/nocturne
+	url = https://github.com/euclio/nocturne-tmtheme.git
