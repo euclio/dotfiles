@@ -8,4 +8,7 @@ env.fish
 # ripgrep
 .ignore
 
+# Mac
+.DS_Store
+
 # vim:ft=conf
