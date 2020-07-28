@@ -3,9 +3,6 @@
 source $XDG_CONFIG_HOME/env/posix/functions.sh
 source $XDG_CONFIG_HOME/env/aliases.sh
 
-# Use vi-style keybindings when in the terminal
-set -o vi
-
 # History settings
 # Create the history file if it doesn't exist
 export HISTFILE="$XDG_DATA_HOME/bash/history"
