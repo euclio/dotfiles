@@ -4,6 +4,7 @@ env.fish
 
 # Intellij
 .idea
+*.iml
 
 # ripgrep
 .ignore
