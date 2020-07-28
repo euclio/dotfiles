@@ -10,7 +10,7 @@ Requires [GNU stow].
 
 ```sh
 $ cd
-$ git clone https://github.com/euclio/dotfiles
+$ git clone --recurse-submodules https://github.com/euclio/dotfiles
 $ ~/dotfiles/install.sh
 ```
 
@@ -20,7 +20,7 @@ Requires [Python 3] and [Developer mode][win-dev-mode].
 
 ```powershell
 > cd ~
-> git clone https://github.com/euclio/dotfiles
+> git clone --recurse-submodules https://github.com/euclio/dotfiles
 > python3 dotfiles/install.py
 ```
 
