@@ -46,6 +46,9 @@ ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument-unclosed]='fg=red'
 source $XDG_CONFIG_HOME/env/prompt.sh
 source $XDG_CONFIG_HOME/zsh/prompt.zsh
 
+# List directory contents after changing directory
+chpwd() ls
+
 function source_plugin() {
     local plugin=$1
     local plugin_path=(/usr/share/zsh/plugins /usr/local/share $HOME/.linuxbrew/share)
