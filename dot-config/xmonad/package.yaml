@@ -1,0 +1,14 @@
+name: my-xmonad
+
+dependencies:
+  - base
+  - dbus
+  - filepath
+  - network
+  - utf8-string
+  - xmonad
+  - xmonad-contrib
+
+executables:
+  xmonad:
+    main: Main.hs
