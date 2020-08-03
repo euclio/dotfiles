@@ -22,8 +22,8 @@ import XMonad.Util.Scratchpad
 
 import Lib
 
-myTerminal :: String
-myTerminal              = "termite -e zsh"
+myTerminal :: [String]
+myTerminal = ["termite", "-e", "zsh"]
 
 myNormalBorderColor :: String
 myNormalBorderColor     = "#393939"
@@ -167,7 +167,7 @@ main = do
         [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
     xmonad $ docks $ ewmh $ withUrgencyHookC NoUrgencyHook myUrgentConfig
         def
-        { terminal           = myTerminal
+        { terminal           = unwords myTerminal
         , modMask            = mod4Mask
         , workspaces         = myWorkspaces
         , normalBorderColor  = myNormalBorderColor
@@ -192,13 +192,13 @@ main = do
         -- Open screen management
         , ("M-S-r", safeSpawnProg "lxrandr")
         -- Open terminal file manager
-        , ("M-f", safeSpawn "urxvt" ["-e", "fish", "-c", "ranger"])
+        , ("M-f", safeSpawn (head myTerminal) ["-e", "ranger"])
         -- Open graphical file manager
         , ("M-S-f", unsafeSpawn "xdg-open ~")
         -- Open browser
         , ("M-b", safeSpawn "xdg-open" ["https://about:blank"])
         -- Open scratchpad terminal
-        , ("M-`", scratchpadSpawnActionCustom ("urxvt -name scratchpad -e fish"))
+        , ("M-`", scratchpadSpawnActionCustom (unwords $ myTerminal ++ ["--name=scratchpad"]))
         , ("<XF86KbdBrightnessUp>", safeSpawn "asus-kbd-backlight" ["up"])
         , ("<XF86KbdBrightnessDown>", safeSpawn "asus-kbd-backlight" ["down"])
         ] ++
