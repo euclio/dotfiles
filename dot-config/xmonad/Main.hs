@@ -1,8 +1,5 @@
 import qualified Codec.Binary.UTF8.String as UTF8
-import Control.Monad
-import Data.Char
 import Data.Maybe
-import System.FilePath
 import qualified DBus as D
 import qualified DBus.Client as D
 
@@ -22,6 +19,8 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
+
+import Lib
 
 myTerminal :: String
 myTerminal              = "termite -e zsh"
@@ -124,30 +123,6 @@ dbusOutput dbus str = do
     interfaceName = D.interfaceName_ "org.xmonad.Log"
     memberName = D.memberName_ "Update"
 
--- Returns the directory where screenshots should be stored. Currently stores
--- screenshots in a subdirectory of the $XDG_PICTURES_DIR.
-screenshotDirectory :: IO String
-screenshotDirectory = do
-    -- TODO: Do this at compile time
-    xdgPicturesDir <- liftM rstrip (runProcessWithInput "xdg-user-dir" ["PICTURES"] [])
-    return $ xdgPicturesDir </> "screenshot"
-
--- Retrieves the current date and time to create a filename for a screenshot.
-screenshotDateFormat :: IO String
-screenshotDateFormat =
-    liftM rstrip (runProcessWithInput "date" [dateFormat] [])
-  where
-    dateFormat :: String
-    dateFormat = "+%F-%T"
-
--- Returns the command to use to create a screenshot in the correct directory.
-screenshotCommand :: [String] -> IO String
-screenshotCommand extraArgs = do
-    dateFormat <- screenshotDateFormat
-    directory <- screenshotDirectory
-    let fileName = directory </> dateFormat <.> "png"
-    return $ unwords ["maim", "--noopengl", unwords extraArgs, fileName]
-
 myStartupHook :: X ()
 myStartupHook = do
     myBrowser <- liftIO getBrowser
@@ -211,9 +186,9 @@ main = do
         -- Open dmenu
         , ("M-p", safeSpawn "dmenu_run" ["-fn", "terminus (ttf)-9"])
         -- Take screenshot
-        , ("M-s", liftIO (screenshotCommand []) >>= spawn)
+        , ("M-s", liftIO captureScreen)
         -- Take screenshot (with selection)
-        , ("M-S-s", liftIO (screenshotCommand ["-s", "--noopengl"]) >>= spawn)
+        , ("M-S-s", liftIO captureScreenRegion)
         -- Open screen management
         , ("M-S-r", safeSpawnProg "lxrandr")
         -- Open terminal file manager
@@ -234,7 +209,3 @@ main = do
             , (otherModMasks, action) <- [ ("", windows . W.view) -- was W.greedyView
                                             , ("S-", windows . W.shift)]
         ])
-
--- Strips trailing whitespace from a string
-rstrip :: String -> String
-rstrip = reverse . dropWhile isSpace . reverse

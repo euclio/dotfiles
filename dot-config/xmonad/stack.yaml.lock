@@ -3,7 +3,14 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    hackage: xdg-userdirs-0.1.0.2@sha256:4b25de32b6c6df0ce786a95ddded833980d03149c370414b1d7f5177016bec24,1124
+    pantry-tree:
+      size: 230
+      sha256: 76b0f2bfb730683d1d5dcdd949a728bd3d4b52ea9950191a63c81dd53a5a7b7c
+  original:
+    hackage: xdg-userdirs-0.1.0.2
 snapshots:
 - completed:
     size: 568435

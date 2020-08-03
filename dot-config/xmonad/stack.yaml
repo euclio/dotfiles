@@ -1,3 +1,5 @@
 resolver: lts-10.4
 packages:
   - '.'
+extra-deps:
+  - xdg-userdirs-0.1.0.2

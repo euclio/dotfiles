@@ -3,12 +3,20 @@ name: my-xmonad
 dependencies:
   - base
   - dbus
+  - directory
   - filepath
   - network
+  - time
   - utf8-string
+  - xdg-userdirs
   - xmonad
   - xmonad-contrib
+
+library:
+  source-dirs: src
 
 executables:
   xmonad:
     main: Main.hs
+    dependencies:
+      - my-xmonad

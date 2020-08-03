@@ -8,6 +8,26 @@ name:           my-xmonad
 version:        0.0.0
 build-type:     Simple
 
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_my_xmonad
+  hs-source-dirs:
+      src
+  build-depends:
+      base
+    , dbus
+    , directory
+    , filepath
+    , network
+    , time
+    , utf8-string
+    , xdg-userdirs
+    , xmonad
+    , xmonad-contrib
+  default-language: Haskell2010
+
 executable xmonad
   main-is: Main.hs
   other-modules:
@@ -15,9 +35,13 @@ executable xmonad
   build-depends:
       base
     , dbus
+    , directory
     , filepath
+    , my-xmonad
     , network
+    , time
     , utf8-string
+    , xdg-userdirs
     , xmonad
     , xmonad-contrib
   default-language: Haskell2010
