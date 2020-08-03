@@ -40,3 +40,8 @@ alias irssi='irssi --home $XDG_CONFIG_HOME/irssi'
 alias latexmk='latexmk -r $XDG_CONFIG_HOME/latexmk/latexmkrc'
 alias sbt='sbt -Dsbt.global.base=$XDG_CONFIG_HOME/sbt -Dsbt.ivy.home=$XDG_CACHE_HOME/ivy'
 alias tmux='tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf'
+
+# Alias xdg-open to open for consistency with MacOS.
+if command -v xdg-open >/dev/null 2>&1; then
+  alias open=xdg-open
+fi
