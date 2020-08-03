@@ -1,9 +1,7 @@
 import qualified Codec.Binary.UTF8.String as UTF8
 import Control.Monad
 import Data.Char
-import Data.Monoid
-import GHC.IO.Handle.Types
-import Network.BSD
+import Data.Maybe
 import System.FilePath
 import qualified DBus as D
 import qualified DBus.Client as D
@@ -19,7 +17,6 @@ import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
-import XMonad.Prompt
 import XMonad.Prompt.Shell
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
@@ -37,34 +34,22 @@ myFocusedBorderColor    = "#fff700"
 
 myLayoutHook :: ModifiedLayout SmartBorder (ModifiedLayout AvoidStruts (Choose Tall (Choose (Mirror Tall) Full))) Window
 myLayoutHook            = smartBorders $ avoidStruts $
-                          layoutHook defaultConfig
+                          layoutHook def
 
--- The `hasProperty` and `isSplash` are taken (graciously) from
+-- The `hasProperty` and `isSplash` functions are inspired by
 -- https://github.com/fancypantalons/XMonad-Config/blob/master/xmonad.hs
 
 -- Returns a query which checks if the window has the given property.
 hasProperty :: String -> Query Bool
 hasProperty name = ask >>= \w -> liftX $ withDisplay $ queryFunc w
-  where queryFunc window display = do
+  where queryFunc window disp = do
           atom <- getAtom name
 
-          prop8 <- io $ getWindowProperty8 display atom window
-          prop16 <- io $ getWindowProperty16 display atom window
-          prop32 <- io $ getWindowProperty32 display atom window
+          prop8 <- io $ getWindowProperty8 disp atom window
+          prop16 <- io $ getWindowProperty16 disp atom window
+          prop32 <- io $ getWindowProperty32 disp atom window
 
-          --
-          -- This is actually the opposite of the Maybe monad (I want to
-          -- *continue* on Nothing), so I can't just use a monad here.
-          --
-          case prop8 of
-            Just x  -> return True
-            Nothing ->
-              case prop16 of
-                Just x  -> return True
-                Nothing ->
-                  case prop32 of
-                    Just x  -> return True
-                    Nothing -> return False
+          return $ isJust prop8 || isJust prop16 || isJust prop32
 
 -- Use EWMH tags to determine if the window type in question is
 -- a splash window or not (among others, this works for Gnome Do).
@@ -202,19 +187,18 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 main :: IO ()
 main = do
-    hostname <- getHostName
     dbus <- D.connectSession
-    D.requestName dbus (D.busName_ "org.xmonad.Log")
+    _ <- D.requestName dbus (D.busName_ "org.xmonad.Log")
         [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
     xmonad $ docks $ ewmh $ withUrgencyHookC NoUrgencyHook myUrgentConfig
-        defaultConfig
+        def
         { terminal           = myTerminal
         , modMask            = mod4Mask
         , workspaces         = myWorkspaces
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
         , handleEventHook    = docksEventHook <+> fullscreenEventHook
-        , manageHook         = manageHook defaultConfig
+        , manageHook         = manageHook def
                                     <+> manageSpawn
                                     <+> myManageHook
         , layoutHook         = myLayoutHook
