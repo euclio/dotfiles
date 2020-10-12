@@ -10,6 +10,9 @@ bindkey -v
 # make backspace work in insert mode
 bindkey '^?' backward-delete-char
 
+# Stash current command, restore at next clean prompt.
+bindkey '^q' push-line-or-edit
+
 export HISTFILE=$XDG_DATA_HOME/zsh/history
 mkdir -p $(dirname $HISTFILE) && touch $HISTFILE
 
