@@ -23,6 +23,9 @@ setopt hist_reduce_blanks
 # Trim blanks in history
 setopt hist_reduce_blanks
 
+# Disable flow control to reclaim Ctrl-Q & Ctrl-S for keybindings.
+unsetopt flow_control
+
 autoload -Uz vcs_info
 
 autoload -U +X compinit && compinit
