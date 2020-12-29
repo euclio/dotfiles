@@ -199,8 +199,8 @@ main = do
         , ("M-b", safeSpawn "xdg-open" ["https://about:blank"])
         -- Open scratchpad terminal
         , ("M-`", scratchpadSpawnActionCustom (unwords $ myTerminal ++ ["--name=scratchpad"]))
-        , ("<XF86KbdBrightnessUp>", safeSpawn "asus-kbd-backlight" ["up"])
-        , ("<XF86KbdBrightnessDown>", safeSpawn "asus-kbd-backlight" ["down"])
+        , ("<XF86MonBrightnessUp>", safeSpawn "light" ["-A", "10"])
+        , ("<XF86MonBrightnessDown>", safeSpawn "light" ["-U", "10"])
         ] ++
         -- Change multi-monitor "greedy view" to view, which is more intuitive.
         -- This snippet is taken from the Xmonad FAQ.
