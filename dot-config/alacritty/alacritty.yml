@@ -66,11 +66,6 @@ colors:
     cyan:    '0x00c4c4'
     white:   '0xffffff'
 
-# Disable visual bell
-visual_bell:
-  animation: EaseOutExpo
-  duration: 0
-
 # Key bindings
 #
 # Each binding is defined as an object with some properties. Most of the
