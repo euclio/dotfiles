@@ -1,0 +1,18 @@
+{
+    "position": "bottom",
+    "modules-left": ["river/tags"],
+    "modules-right": ["battery", "network", "pulseaudio", "cpu", "memory", "disk", "clock"],
+    "clock": {
+        "format": "{:%a %b %-d   %-I:%m}"
+    },
+    "cpu": {
+        "format": "{usage}%"
+    },
+    "disk": {
+        "format": "{free} / {total}"
+    },
+    "network": {
+        "interval": 5,
+        "format-wifi": "{essid} {bandwidthUpBits} {bandwidthDownBits}"
+    }
+}
