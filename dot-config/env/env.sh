@@ -110,3 +110,6 @@ export NO_AT_BRIDGE=1
 
 # bat syntax highlighting theme.
 export BAT_THEME=nocturne
+
+# Bemenu options.
+export BEMENU_OPTS="-p '' --fn Terminus --nb=#222222 --hf=#eeeeee --hb=#005577"
