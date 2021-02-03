@@ -1,0 +1,38 @@
+window {
+  background-color: #1c1b1a;
+  color: #ffffff;
+  font: 12px Terminus, Envy Code R, monospace;
+}
+
+.modules-right label {
+  padding: 0 5px;
+  margin: -5px 0;
+}
+
+.modules-right label {
+  border-right: 1px solid #ffffff;
+}
+
+#battery.discharging.warning {
+  color: #ffff00;
+}
+
+#battery.discharging.critical {
+  color: #ff0000;
+}
+
+#clock {
+  color: #ee9a00;
+}
+
+#pulseaudio.muted {
+  color: #ff0000;
+}
+
+#tags button.focused {
+  color: #ffff00;
+}
+
+#tags button:not(.occupied):not(.focused) {
+  opacity: 0;
+}

@@ -2,17 +2,35 @@
     "position": "bottom",
     "modules-left": ["river/tags"],
     "modules-right": ["battery", "network", "pulseaudio", "cpu", "memory", "disk", "clock"],
+    "battery": {
+        "format-charging": "<span foreground=\"yellow\">🗲</span> {capacity}%",
+        "format-discharging": "{capacity}%",
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+    },
     "clock": {
-        "format": "{:%a %b %-d   %-I:%m}"
+        "format": "{:%a %b %-d  %-I:%m}"
     },
     "cpu": {
-        "format": "{usage}%"
+        "format": "💻 {usage}%"
     },
     "disk": {
         "format": "{free} / {total}"
     },
+    "memory": {
+        "format": "📑 {percentage}%"
+    },
     "network": {
         "interval": 5,
-        "format-wifi": "{essid} {bandwidthUpBits} {bandwidthDownBits}"
+        "format-wifi": "⇅ {essid} {bandwidthUpBits} {bandwidthDownBits}"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "🔇 {volume}%",
+        "format-icons": {
+            "default": ["🔊"]
+        }
     }
 }
