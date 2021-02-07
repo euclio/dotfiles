@@ -113,3 +113,8 @@ export BAT_THEME=nocturne
 
 # Bemenu options.
 export BEMENU_OPTS="-p '' --fn Terminus --nb=#222222 --hf=#eeeeee --hb=#005577"
+
+# Start the preferred Wayland compositor.
+function startw() {
+  source $XDG_CONFIG_HOME/env/wayland.sh && river
+}
