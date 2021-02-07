@@ -24,6 +24,7 @@
     },
     "network": {
         "interval": 5,
+        "format-ethernet": "⇅ {bandwidthUpBits} {bandwidthDownBits}",
         "format-wifi": "⇅ {essid} {bandwidthUpBits} {bandwidthDownBits}"
     },
     "pulseaudio": {
