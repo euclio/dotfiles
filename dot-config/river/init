@@ -118,3 +118,6 @@ hash dbus-update-activation-environment 2>/dev/null && \
 
 # Start Waybar
 riverctl spawn waybar
+
+# Wallpaper
+swaybg --image $XDG_CONFIG_HOME/wallpaper/disintegrate.jpg &
