@@ -12,5 +12,5 @@ multiadb() {
 
 # Kill the process using a specific port.
 killport() {
-  lsof -i "tcp:$1" | grep LISTEN | awk '{print 2}' | xargs kill -9
+  lsof -i "tcp:$1" -n -P -t | xargs kill
 }
