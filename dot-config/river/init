@@ -20,10 +20,9 @@ riverctl map normal $mod+Shift Q exit
 # Mod+Return to bump the focused view to the top of the layout stack
 riverctl map normal $mod Return zoom
 
-# Mod+H and Mod+L to decrease/increase the main factor by 5%
-# If using rivertile(1) this determines the width of the main stack.
-riverctl map normal $mod H mod-main-factor -0.05
-riverctl map normal $mod L mod-main-factor +0.05
+# Mod+H and Mod+L to decrease/increase the main_factor value of rivertile by 5%
+riverctl map normal $mod H mod-layout-value rivertile fixed main_factor -0.05
+riverctl map normal $mod L mod-layout-value rivertile fixed main_factor +0.05
 
 # Mod + Left Mouse Button to move views
 riverctl map-pointer normal $mod BTN_LEFT move-view
@@ -77,10 +76,6 @@ done
 # Set repeat rate
 riverctl set-repeat 50 300
 
-# Set the layout on startup
-riverctl layout rivertile left
-riverctl mod-main-factor -0.1
-
 # Set app-ids of views which should float
 riverctl float-filter-add "float"
 riverctl float-filter-add "popup"
@@ -89,8 +84,6 @@ riverctl float-filter-add "popup"
 riverctl focus-follows-cursor normal
 
 # Appearance
-riverctl outer-padding 0
-riverctl view-padding 0
 riverctl border-width 1
 riverctl border-color-unfocused '#393939'
 riverctl border-color-focused '#fff700'
@@ -121,3 +114,10 @@ riverctl spawn waybar
 
 # Wallpaper
 swaybg --image $XDG_CONFIG_HOME/wallpaper/disintegrate.jpg &
+
+# Set the layout on startup
+riverctl default-layout rivertile
+exec rivertile \
+  -outer-padding 0 \
+  -view-padding 0 \
+  -main-factor 0.5
