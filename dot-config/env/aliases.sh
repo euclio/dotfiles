@@ -33,7 +33,9 @@ alias pshelved='p4 changes -u $USER -s shelved'
 alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src ekidd/rust-musl-builder'
 
 # Live life on the edge
-alias vim='nvim'
+if command -v nvim >/dev/null 2>&1; then
+  alias vim='nvim'
+fi
 
 # Workarounds to make programs obey the XDG base directory specification
 alias irssi='irssi --home $XDG_CONFIG_HOME/irssi'
