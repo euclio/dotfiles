@@ -37,6 +37,8 @@
 	showPatch = true
 [includeIf "gitdir:~/work/"]
 	path = "~/work/.gitconfig"
+[includeIf "gitdir:/Volumes/unix/work/"]
+	path = "~/work/.gitconfig"
 [fetch]
 	prune = true
 [rerere]
