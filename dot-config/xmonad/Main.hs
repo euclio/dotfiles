@@ -23,7 +23,7 @@ import XMonad.Util.Scratchpad
 import Lib
 
 myTerminal :: [String]
-myTerminal = ["termite", "-e", "zsh"]
+myTerminal = ["alacritty"]
 
 myNormalBorderColor :: String
 myNormalBorderColor     = "#393939"
