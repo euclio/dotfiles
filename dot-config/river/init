@@ -85,8 +85,8 @@ riverctl focus-follows-cursor normal
 
 # Appearance
 riverctl border-width 1
-riverctl border-color-unfocused '#393939'
-riverctl border-color-focused '#fff700'
+riverctl border-color-unfocused '0x393939'
+riverctl border-color-focused '0xfff700'
 
 # GTK 3 settings.ini is ignored on Wayland, so we need to set the settings
 # manually on startup via gsettings.
