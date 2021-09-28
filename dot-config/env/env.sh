@@ -28,7 +28,7 @@ elif command -v firefox-bin >/dev/null 2>&1; then
 fi
 
 # Use nvim as the manpager
-export MANPAGER="nvim +AirlineToggle -c 'set ft=man nosc ls=0' -"
+export MANPAGER="nvim +AirlineToggle +Man! -c 'set noshowcmd laststatus=0'"
 
 # Enable autocomplete in Python interpreter
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/pythonrc
