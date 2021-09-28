@@ -64,13 +64,13 @@ riverctl map normal $mod F toggle-fullscreen
 for mode in normal locked
 do
     # Audio volume
-    riverctl map $mode None XF86AudioRaiseVolume  spawn amixer -q set Master 5%+
-    riverctl map $mode None XF86AudioLowerVolume  spawn amixer -q set Master 5%-
-    riverctl map $mode None XF86AudioMute         spawn amixer -q set Master toggle
+    riverctl map $mode None XF86AudioRaiseVolume  spawn 'amixer -q set Master 5%+'
+    riverctl map $mode None XF86AudioLowerVolume  spawn 'amixer -q set Master 5%-'
+    riverctl map $mode None XF86AudioMute         spawn 'amixer -q set Master toggle'
 
     # Backlight
-    riverctl map $mode None XF86MonBrightnessUp   spawn light -A 5
-    riverctl map $mode None XF86MonBrightnessDown spawn light -U 5
+    riverctl map $mode None XF86MonBrightnessUp   spawn 'light -A 5'
+    riverctl map $mode None XF86MonBrightnessDown spawn 'light -U 5'
 done
 
 # Set repeat rate
