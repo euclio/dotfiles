@@ -20,13 +20,6 @@ __editor() {
 editor="$(__editor)"
 export EDITOR="$editor"
 
-# Set the default browser
-if command -v firefox-nightly >/dev/null 2>&1; then
-  export BROWSER="firefox-nightly"
-elif command -v firefox-bin >/dev/null 2>&1; then
-  export BROWSER="firefox-bin"
-fi
-
 # Use nvim as the manpager
 export MANPAGER="nvim +AirlineToggle +Man! -c 'set noshowcmd laststatus=0'"
 
