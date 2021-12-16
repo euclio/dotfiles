@@ -24,6 +24,12 @@ riverctl map normal $mod Return zoom
 riverctl map normal $mod H send-layout-cmd rivertile 'main-ratio -0.05'
 riverctl map normal $mod L send-layout-cmd rivertile 'main-ratio +0.05'
 
+# Screenshots
+# shellcheck disable=SC2016
+screenshot_path='$(xdg-user-dir PICTURES)/screenshot/$(date --iso-8601).png'
+riverctl map normal $mod S spawn "grim ${screenshot_path}"
+riverctl map normal $mod+Shift S spawn "slurp | grim -g - ${screenshot_path}"
+
 # Mod + Left Mouse Button to move views
 riverctl map-pointer normal $mod BTN_LEFT move-view
 
