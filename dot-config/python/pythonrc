@@ -2,6 +2,7 @@ import atexit
 import os
 import readline
 import rlcompleter
+import sys
 
 history_path = os.path.expandvars('$XDG_DATA_HOME/python/history')
 
@@ -22,5 +23,8 @@ except IOError:
 
 atexit.register(save_history)
 
+# Typing `exit` should just exit.
+exit.__class__.__repr__ = sys.exit
+
 # Delete all local variables so they don't appear in the interpreter
-del atexit, os, readline, rlcompleter, history_path, save_history
+del atexit, os, readline, rlcompleter, sys, history_path, save_history
