@@ -22,6 +22,9 @@ alias nicklist='cat $XDG_CONFIG_HOME/irssi/nicklistfifo'
 # Give words command history
 alias words='rlwrap words'
 
+# Remove orphan packages
+alias pacro='sudo pacman -Qtdq | sudo pacman -Rns -'
+
 # Update all packages, including development packages
 alias pacu=yay
 
