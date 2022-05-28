@@ -26,7 +26,7 @@ riverctl map normal $mod L send-layout-cmd rivertile 'main-ratio +0.05'
 
 # Screenshots
 # shellcheck disable=SC2016
-screenshot_path='$(xdg-user-dir PICTURES)/screenshot/$(date --iso-8601).png'
+screenshot_path='$(xdg-user-dir PICTURES)/screenshot/$(date --iso-8601=seconds).png'
 riverctl map normal $mod S spawn "grim ${screenshot_path}"
 riverctl map normal $mod+Shift S spawn "slurp | grim -g - ${screenshot_path}"
 
