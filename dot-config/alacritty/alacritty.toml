@@ -1,0 +1,50 @@
+[general]
+live_config_reload = true
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.primary]
+background = "0x1c1b1a"
+bright_foreground = "0xffffff"
+foreground = "0xadada9"
+
+[colors.normal]
+black = "0x1c1b1a"
+blue = "0x2c5ee4"
+cyan = "0x34c2c2"
+green = "0x0fb50f"
+magenta = "0xc234c2"
+red = "0xe0002c"
+white = "0xadada9"
+yellow = "0xf5ef00"
+
+[colors.bright]
+black = "0x78736f"
+blue = "0x2c89c7"
+cyan = "0x00c4c4"
+green = "0x0fb50f"
+magenta = "0xae81ff"
+red = "0xff0033"
+white = "0xffffff"
+yellow = "0xffb829"
+
+[font]
+size = 9.0
+
+[font.normal]
+family = "Terminus (TTF)"
+
+[font.italic]
+family = "DejaVu Sans Mono"
+style = "Oblique"
+
+[font.offset]
+x = 0
+y = 0
+
+[selection]
+save_to_clipboard = true
+
+[terminal.shell]
+program = "zsh"
