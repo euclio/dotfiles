@@ -43,3 +43,5 @@
 	prune = true
 [rerere]
 	enabled = true
+[mergetool]
+	keepBackup = false
