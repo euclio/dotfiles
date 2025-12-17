@@ -43,4 +43,5 @@
 [rerere]
 	enabled = true
 [mergetool]
+	hideResolved = true
 	keepBackup = false
