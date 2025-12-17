@@ -9,10 +9,8 @@
 	helper = cache --timeout=3600 --socket=$XDG_CACHE_HOME/git/credential-cache/socket
 [core]
 	autocrlf = input
-[mergetool "fugitive"]
-	cmd = \"$EDITOR\" -f -c \"Gvdiff\" \"$MERGED\"
 [merge]
-	tool = fugitive
+	tool = vimdiff
 [branch "master"]
 	rebase = true
 [branch]
