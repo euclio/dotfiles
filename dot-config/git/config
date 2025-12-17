@@ -15,6 +15,7 @@
 	rebase = true
 [branch]
     autosetuprebase = always
+	sort = -committerdate
 [pull]
     rebase = true
 [alias]
