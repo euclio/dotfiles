@@ -50,3 +50,6 @@ alias tmux='tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf'
 if command -v xdg-open >/dev/null 2>&1; then
   alias open=xdg-open
 fi
+
+# Prefer Kiro CLI
+alias kiro=kiro-cli
